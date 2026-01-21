@@ -57,7 +57,7 @@ function App() {
   return (
     <div>
       <AnimatePresence mode="wait">
-        <ScrollToTop />
+        {/* <ScrollToTop /> */}
 
         <TopHeader />
 
@@ -131,9 +131,8 @@ function App() {
 
         </Routes>
 
-        <Chat />
-
-        {!shouldHide && <BusinessQuoteForm />}
+        <Chat /> 
+         {!shouldHide && <BusinessQuoteForm />}
         <ScrollToTopButton />
 
         <Footer />

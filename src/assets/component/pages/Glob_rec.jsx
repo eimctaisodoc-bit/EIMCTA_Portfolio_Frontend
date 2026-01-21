@@ -178,7 +178,7 @@ const ISOShowcase = () => {
                                 <div className="mt-auto pt-4 border-t border-amber-100 flex flex-wrap gap-2">
                                     {category.certifications.map((cert, i) => (
                                         <span
-                                            key={i}
+                                           key={`${cert}-${i}`}
                                             className="px-3 py-1 bg-amber-100 text-amber-800 text-sm font-medium rounded-full shadow-sm"
                                         >
                                             {cert}

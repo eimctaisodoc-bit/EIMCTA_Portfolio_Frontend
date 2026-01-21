@@ -1,6 +1,9 @@
 import { Award, ShieldCheck, Utensils, GraduationCap } from 'lucide-react';
 import { motion } from 'framer-motion';
 import React from 'react';
+import img1 from '../../img/14.jpg';
+import img2 from '../../img/21.jpg';
+import img3 from '../../img/20.jpg';  
 import eduimg from '../../img/educationSystem.jpg';
 const AboutCard = () => {
   const services = [
@@ -11,7 +14,7 @@ const AboutCard = () => {
       subtitle: "Quality Management System",
       path: "service/iso/9001",
       description: "ISO 9001 Certification: Elevating Your Business with Quality Management",
-      image: '../../img/14.jpg'
+      image: img1
     },
     {
       id: 2,
@@ -20,7 +23,7 @@ const AboutCard = () => {
       subtitle: "Occupational Health, Safety & Environment",
       path: "service/iso/45001",
       description: "ISO 45001 Certification | Safety Management System: ISO 45001 - 2018",
-     image:'../../img/21.jpg'
+     image: img2
     },
     {
       id: 3,
@@ -29,7 +32,7 @@ const AboutCard = () => {
       subtitle: "Food Safety Standard",
       path: "service/iso/2200",
       description: "ISO 22000 Certification | Food Safety Management System: ISO 22000 & HACCP",
-     image:'../../img/20.jpg'
+     image: img3
     },
     {
       id: 4,

@@ -214,7 +214,7 @@ const ISOConsultancy = () => {
           </AnimatedWhenVisible>
 
           <div className="bg-white p-8 rounded-3xl shadow-md border border-amber-200 transition-all duration-300 hover:shadow-lg">
-            <AnimatedHeader className="mb-10 !text-left">Why ISO Standards Matter?</AnimatedHeader>
+            <AnimatedHeader className="mb-10 text-left">Why ISO Standards Matter?</AnimatedHeader>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 { icon: "📈", title: "Operational Excellence", desc: "Streamline processes for maximum efficiency" },
@@ -393,7 +393,6 @@ const ISOConsultancy = () => {
           </div>
         </div>
         <VideoPlayer />
-         <BusinessQuoteForm />
       </div>
     </>
   );

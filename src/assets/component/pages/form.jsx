@@ -90,9 +90,9 @@ const ServicesDropdown = ({
         } shadow-inner`}
     >
       {(formData.selectedServices.concat(formData.customServices).length > 0) ? (
-        formData.selectedServices.concat(formData.customServices).map((service) => (
+        formData.selectedServices.concat(formData.customServices).map((service,idx) => (
           <div
-            key={service}
+            key={idx}
             className="flex items-center bg-amber-700 text-white text-xs font-medium px-3 py-1.5 rounded-full shadow-md transition-colors hover:bg-amber-800 cursor-default"
           >
             <span>{service}</span>

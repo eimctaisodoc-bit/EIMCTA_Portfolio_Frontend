@@ -529,11 +529,11 @@ const  ISOCertificationForm = () => {
     return (
         <>
             <style dangerouslySetInnerHTML={{ __html: customStyles }} />
-            <div className="min-h-screen bg-gray-50 p-4 sm:p-8 font-arial-narrow">
+            <div className="min-h-screen p-4 sm:p-8 font-arial-narrow">
                 <ConfettiEffect isActive={success} />
                 
                 {/* Main Content Card */}
-                <div className="max-w-7xl mx-auto bg-white rounded-3xl shadow-2xl p-6 sm:p-10 border-t-8 border-amber-500">
+                <div className="max-w-7xl mx-auto bg-white rounded-b-xl rounded-t-3xl shadow  p-6 sm:p-10 border-t-8 border-amber-500">
                     <motion.header 
                         className="text-center mb-10"
                         initial={{ opacity: 0, y: -50 }}

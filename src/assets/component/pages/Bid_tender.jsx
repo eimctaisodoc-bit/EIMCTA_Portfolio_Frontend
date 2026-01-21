@@ -2,13 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 
 // Import Lucid icons (assuming you have them installed)
 // If not, you can install with: npm install lucide-react
-import { 
-  Beaker, 
-  TestTube, 
-  ShieldCheck, 
-  ClipboardCheck, 
-  AlertTriangle, 
-  TrendingUp, 
+import {
+  Beaker,
+  TestTube,
+  ShieldCheck,
+  ClipboardCheck,
+  AlertTriangle,
+  TrendingUp,
   Database,
   Leaf,
   Target,
@@ -20,50 +20,50 @@ import {
 
 // A wrapper component to handle scroll-triggered animations
 const AnimateOnScroll = ({ children, animation, delay, threshold = 0.1, as = 'div', className: wrapperClassName, style: wrapperStyle }) => {
-    const ref = useRef(null);
-    const [isInView, setIsInView] = useState(false);
+  const ref = useRef(null);
+  const [isInView, setIsInView] = useState(false);
 
-    useEffect(() => {
-        const element = ref.current;
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsInView(true);
-                    observer.unobserve(element); // Animate only once
-                }
-            },
-            { threshold }
-        );
-
-        if (element) {
-            observer.observe(element);
+  useEffect(() => {
+    const element = ref.current;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.unobserve(element); // Animate only once
         }
-
-        return () => {
-            if (element) {
-                observer.unobserve(element);
-            }
-        };
-    }, [threshold]);
-
-    const Tag = as;
-
-    return (
-        <Tag
-            ref={ref}
-            className={`${wrapperClassName || ''} opacity-0 ${isInView ? animation : ''}`}
-            style={{ ...wrapperStyle, animationDelay: delay }}
-        >
-            {children}
-        </Tag>
+      },
+      { threshold }
     );
+
+    if (element) {
+      observer.observe(element);
+    }
+
+    return () => {
+      if (element) {
+        observer.unobserve(element);
+      }
+    };
+  }, [threshold]);
+
+  const Tag = as;
+
+  return (
+    <Tag
+      ref={ref}
+      className={`${wrapperClassName || ''} opacity-0 ${isInView ? animation : ''}`}
+      style={{ ...wrapperStyle, animationDelay: delay }}
+    >
+      {children}
+    </Tag>
+  );
 };
 
 
 // Particle Background Component (static version)
 const ParticleBackground = ({ count = 30, color = "amber" }) => {
   const particles = Array.from({ length: count });
-  
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {particles.map((_, i) => (
@@ -88,18 +88,18 @@ const InteractiveCard = ({ icon, title, description }) => {
     <div className="relative group overflow-hidden rounded-2xl p-8 h-full border border-amber-200 bg-white shadow-md hover:shadow-lg transition-transform,box-shadow duration-300 ease-out hover:-translate-y-2 hover:[transform:rotateX(2deg)_rotateY(-1deg)]">
       <div className="absolute inset-0 opacity-10 bg-amber-100" />
       <ParticleBackground count={5} />
-      
+
       <div className="relative z-10 text-center">
         <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
           {icon}
         </div>
-        
+
         <h3 className="text-xl font-bold mb-3 text-amber-900 relative inline-block">
           {title}
           <span className="absolute -bottom-2 left-0 w-0 h-1 bg-amber-400 transition-all duration-300 group-hover:w-full"></span>
         </h3>
         <p className="text-amber-800">{description}</p>
-        
+
       </div>
     </div>
   );
@@ -202,23 +202,21 @@ const TechnicalBidComponent = () => {
 
       {/* Cinematic Hero Section */}
       <div className="relative text-center py-20 lg:py-32 rounded-3xl overflow-hidden mb-20 bg-gradient-to-br from-amber-50 to-amber-100">
-          <ParticleBackground count={40} />
-          <div className="relative z-10 max-w-4xl mx-auto">
-               <div className="inline-block bg-white/80 backdrop-blur-sm text-amber-700 px-6 py-2 rounded-full mb-6 text-sm font-semibold shadow-sm">
-                  EXCELLENCE IN ENVIRONMENTAL MONITORING
-              </div>
-              <AnimateOnScroll as="h1" animation="animate-slideInRight" delay="0.1s" className="text-5xl md:text-7xl font-bold text-amber-900 mb-6 leading-tight text-center">
-                  Transforming <span className="text-amber-700 heading-underline">Environmental Data</span> into Actionable Insights
-              </AnimateOnScroll>
-              <AnimateOnScroll as="p" animation="animate-slideInLeft" delay="0.2s" className="text-xl text-amber-800 text-center max-w-2xl mx-auto mb-10">
-                  We provide comprehensive environmental monitoring solutions that ensure regulatory compliance, protect public health, and support sustainable resource management.
-              </AnimateOnScroll>
-              <AnimateOnScroll animation="animate-slideInUp" delay="0.3s">
-                  <InteractiveButton>Discover Our Services</InteractiveButton>
-              </AnimateOnScroll>
+        <ParticleBackground count={40} />
+        <div className="relative z-10 max-w-4xl mx-auto">
+          <div className="inline-block bg-white/80 backdrop-blur-sm text-amber-700 px-6 py-2 rounded-full mb-6 text-sm font-semibold shadow-sm">
+            EXCELLENCE IN ENVIRONMENTAL MONITORING
           </div>
+          <AnimateOnScroll as="h1" animation="animate-slideInRight" delay="0.1s" className="text-3xl md:text-7xl font-bold text-amber-900 mb-6 leading-tight text-center">
+            Transforming <span className="text-amber-700 heading-underline">Environmental Data</span> into Actionable Insights
+          </AnimateOnScroll>
+          <AnimateOnScroll as="p" animation="animate-slideInLeft" delay="0.2s" className="text-xl text-amber-800 text-justify px-2 max-w-2xl mx-auto mb-10">
+            We provide comprehensive environmental monitoring solutions that ensure regulatory compliance, protect public health, and support sustainable resource management.
+          </AnimateOnScroll>
+
+        </div>
       </div>
-   
+
       {/* Principles of Environmental Monitoring - Parallax Section */}
       <div className="relative overflow-hidden rounded-3xl bg-white border-2 border-amber-200 p-12 mb-20">
         <ParticleBackground count={20} />
@@ -227,18 +225,18 @@ const TechnicalBidComponent = () => {
             <ClipboardCheck className="mr-3 w-4 h-4 sm:w-6 sm:h-6 text-amber-600" />
             <span className="font-medium">Monitoring Principles</span>
           </div>
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-center -mx-[28px]" >
             <div>
               <AnimateOnScroll as="h2" animation="animate-itemVariants" delay="0.1s" className="text-4xl font-bold text-amber-900 mb-2">
                 Our <span className="text-amber-700 heading-underline">Methodological Approach</span> to Environmental Monitoring
               </AnimateOnScroll>
-              <AnimateOnScroll animation="animate-underlineVariant" delay="0.3s" className="w-[80px] h-[4px] bg-amber-400 rounded-full my-4" wrapperStyle={{ transformOrigin: 'left' }}/>
-              
-              <AnimateOnScroll as="p" animation="animate-contentParagraphVariant" delay="0.4s" className="text-lg text-amber-800 mb-8 text-justify leading-relaxed">
+              <AnimateOnScroll animation="animate-underlineVariant" delay="0.3s" className="w-[80px] h-[4px] bg-amber-400 rounded-full my-4" wrapperStyle={{ transformOrigin: 'right' }} />
+
+              <AnimateOnScroll as="p" animation="animate-contentParagraphVariant" delay="0.4s" className="text-lg  text-amber-800 mb-8 text-justify leading-relaxed">
                 Our environmental monitoring follows rigorous scientific principles to ensure accurate, reliable data collection and analysis for informed decision-making and regulatory compliance.
               </AnimateOnScroll>
-              
-              <AnimateOnScroll animation="animate-slideInUp" delay="0.5s" className="bg-white p-8 rounded-2xl shadow-lg border border-amber-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+
+              <AnimateOnScroll animation="animate-slideInUp" delay="0.5s" className="bg-white  rounded-xl  border-amber-100 transition-all duration-300 hover:-translate-y-1">
                 <h3 className="font-semibold text-xl mb-6 text-amber-700 heading-underline">Core Principles:</h3>
                 <ul className="space-y-4">
                   {[
@@ -258,10 +256,10 @@ const TechnicalBidComponent = () => {
                 </ul>
               </AnimateOnScroll>
             </div>
-            
+
             <AnimateOnScroll animation="animate-grow" delay="0.4s" className="relative h-full">
               <div className="sticky top-24">
-                <div className="bg-white p-8 rounded-2xl shadow-lg border border-amber-100">
+                <div className="bg-white p-2 lg:p-0 md:p-0 -mx-[20px] lg:mx-0 md:mx-0 ">
                   <h3 className="text-2xl font-semibold mb-8 text-center text-amber-700 heading-underline">
                     Monitoring Process Timeline
                   </h3>
@@ -312,17 +310,17 @@ const TechnicalBidComponent = () => {
               </div>
             </div>
           </div>
-          
+
           <AnimateOnScroll as="h2" animation="animate-itemVariants" delay="0.1s" className="text-4xl font-bold text-amber-900 mb-2">
             Benefits of <span className="text-amber-700 heading-underline">Environmental Monitoring</span>
           </AnimateOnScroll>
-          <AnimateOnScroll animation="animate-underlineVariant" delay="0.3s" className="w-[80px] h-[4px] bg-amber-400 rounded-full mx-auto mt-2" wrapperStyle={{ transformOrigin: 'center' }}/>
-          
+          <AnimateOnScroll animation="animate-underlineVariant" delay="0.3s" className="w-[80px] h-[4px] bg-amber-400 rounded-full mx-auto mt-2" wrapperStyle={{ transformOrigin: 'center' }} />
+
           <AnimateOnScroll as="p" animation="animate-contentParagraphVariant" delay="0.4s" className="text-xl text-amber-800 max-w-3xl mx-auto mt-4">
             Comprehensive monitoring solutions that deliver tangible benefits for organizations, communities, and ecosystems
           </AnimateOnScroll>
         </div>
-        
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 [perspective:1000px]">
           {[
             { icon: <Leaf className="w-6 h-6 md:w-8 md:h-8 text-amber-100" />, title: "Environmental Protection", description: "Identify and mitigate sources of pollution to protect ecosystems, natural resources, and public health" },
@@ -333,11 +331,11 @@ const TechnicalBidComponent = () => {
             { icon: <Users className="w-6 h-6 md:w-8 md:h-8 text-amber-100" />, title: "Community Engagement", description: "Engage stakeholders in monitoring efforts to raise awareness and promote environmental stewardship" }
           ].map((item, i) => (
             <AnimateOnScroll key={i} animation="animate-slideInUp" delay={`${(i * 0.1) + 0.5}s`}>
-                <InteractiveCard 
-                  icon={item.icon}
-                  title={item.title}
-                  description={item.description}
-                />
+              <InteractiveCard
+                icon={item.icon}
+                title={item.title}
+                description={item.description}
+              />
             </AnimateOnScroll>
           ))}
         </div>
@@ -346,15 +344,15 @@ const TechnicalBidComponent = () => {
       {/* Industry Applications - Parallax Section */}
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-800 to-amber-900 text-white p-12 my-20">
         <ParticleBackground count={30} color="amber" />
-        
+
         <div className="relative z-10">
           <AnimateOnScroll as="h2" animation="animate-itemVariants" delay="0.1s" className="text-4xl font-bold mb-2 text-center text-amber-100">
             <span className="text-amber-200 heading-underline">
               Industry Applications
             </span> of Environmental Monitoring
           </AnimateOnScroll>
-          <AnimateOnScroll animation="animate-underlineVariant" delay="0.3s" className="w-[80px] h-[4px] bg-amber-400 rounded-full mx-auto mt-2" wrapperStyle={{ transformOrigin: 'center' }}/>
-          
+          <AnimateOnScroll animation="animate-underlineVariant" delay="0.3s" className="w-[80px] h-[4px] bg-amber-400 rounded-full mx-auto mt-2" wrapperStyle={{ transformOrigin: 'center' }} />
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mt-12 [perspective:1000px]">
             {[
               { icon: "🏭", title: "Industrial", description: "Manufacturing, Processing", stats: "87% compliance rate" },

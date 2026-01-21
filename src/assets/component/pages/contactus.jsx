@@ -6,8 +6,8 @@ import BusinessQuoteForm from "./form";
 // Animation variants (same as before)
 const slideInRight = {
   hidden: { x: 80, opacity: 0 },
-  visible: { 
-    x: 0, 
+  visible: {
+    x: 0,
     opacity: 1,
     transition: {
       duration: 0.8,
@@ -18,8 +18,8 @@ const slideInRight = {
 
 const slideInLeft = {
   hidden: { x: -80, opacity: 0 },
-  visible: { 
-    x: 0, 
+  visible: {
+    x: 0,
     opacity: 1,
     transition: {
       duration: 0.8,
@@ -30,8 +30,8 @@ const slideInLeft = {
 
 const itemVariants = {
   hidden: { y: 40, opacity: 0 },
-  visible: { 
-    y: 0, 
+  visible: {
+    y: 0,
     opacity: 1,
     transition: {
       duration: 0.7,
@@ -42,7 +42,7 @@ const itemVariants = {
 
 const underlineVariant = {
   hidden: { scaleX: 0 },
-  visible: { 
+  visible: {
     scaleX: 1,
     transition: {
       delay: 0.3,
@@ -54,8 +54,8 @@ const underlineVariant = {
 
 const slideInUp = {
   hidden: { y: 60, opacity: 0 },
-  visible: { 
-    y: 0, 
+  visible: {
+    y: 0,
     opacity: 1,
     transition: {
       duration: 0.7,
@@ -66,8 +66,8 @@ const slideInUp = {
 
 const rotate3D = {
   hidden: { y: 30, rotateX: -10, opacity: 0 },
-  visible: { 
-    y: 0, 
+  visible: {
+    y: 0,
     rotateX: 0,
     opacity: 1,
     transition: {
@@ -79,8 +79,8 @@ const rotate3D = {
 
 const scaleUp = {
   hidden: { scale: 0.92, opacity: 0 },
-  visible: { 
-    scale: 1, 
+  visible: {
+    scale: 1,
     opacity: 1,
     transition: {
       duration: 0.7,
@@ -97,7 +97,7 @@ const ThreeDCard = ({ children, className = "", variants = slideInUp, custom = 0
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-50px" }}
-      whileHover={{ 
+      whileHover={{
         y: -8,
         rotateX: 2,
         rotateY: -1,
@@ -116,7 +116,7 @@ const ThreeDCard = ({ children, className = "", variants = slideInUp, custom = 0
 // Main App component
 export default function Contact() {
   const [isNavOpen, setIsNavOpen] = useState(false);
-  
+
   // Close mobile nav when window is resized to desktop size
   useEffect(() => {
     const handleResize = () => {
@@ -124,7 +124,7 @@ export default function Contact() {
         setIsNavOpen(false);
       }
     };
-    
+
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -132,8 +132,8 @@ export default function Contact() {
   return (
     <div className="relative overflow-hidden bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 min-h-screen" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
       {/* Mobile Navigation */}
-      
-     
+
+
       <style>{`
         @keyframes blob {
           0% { transform: translate(0px, 0px) scale(1); }
@@ -154,14 +154,14 @@ export default function Contact() {
 
       <div className="relative">
         {/* Enhanced Hero Section with CSS Parallax-like effect */}
-        <div 
-          className="bg-cover bg-fixed bg-center" 
-          style={{backgroundImage: "url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"}}
+        <div
+          className="bg-cover bg-fixed bg-center"
+          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')" }}
         >
           <div className="h-64 md:h-96 flex items-center justify-center bg-gradient-to-r from-amber-900/80 to-amber-800/70 px-4">
             <div className="text-center max-w-4xl mx-auto">
               <div className="mb-4 md:mb-6">
-                <motion.div 
+                <motion.div
                   className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-4 md:mb-6 rounded-full bg-amber-500/20 flex items-center justify-center"
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
@@ -169,14 +169,14 @@ export default function Contact() {
                 >
                   <Phone className="w-8 h-8 md:w-10 md:h-10 text-amber-300" />
                 </motion.div>
-                <motion.h1 
+                <motion.h1
                   className="text-3xl md:text-5xl lg:text-6xl font-bold text-amber-50 mb-3 md:mb-4 relative"
                   variants={slideInRight}
                   initial="hidden"
                   animate="visible"
                 >
                   Contact Us
-                  <motion.span 
+                  <motion.span
                     className="block w-1/3 md:w-1/4 h-1.5 bg-amber-400 rounded-full mx-auto mt-3 md:mt-4"
                     variants={underlineVariant}
                     initial="hidden"
@@ -184,7 +184,7 @@ export default function Contact() {
                   ></motion.span>
                 </motion.h1>
               </div>
-              <motion.p 
+              <motion.p
                 className="text-base md:text-xl text-amber-100 max-w-3xl mx-auto leading-relaxed"
                 variants={slideInLeft}
                 initial="hidden"
@@ -199,24 +199,24 @@ export default function Contact() {
         {/* Contact Information Section */}
         <div className="container mx-auto px-4 sm:px-6 py-12 md:py-24">
           <div className="max-w-6xl mx-auto">
-            <motion.div 
+            <motion.div
               className="text-center mb-8 md:mb-12"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
               transition={{ staggerChildren: 0.1 }}
             >
-              <motion.h2 
+              <motion.h2
                 className="text-2xl md:text-4xl font-bold text-amber-900 mb-3 md:mb-4 relative inline-block"
                 variants={itemVariants}
               >
                 Get In Touch
-                <motion.span 
+                <motion.span
                   className="absolute w-1/3 md:w-1/4 left-1/2 -translate-x-1/2 -bottom-2 md:-bottom-3 h-1.5 bg-amber-400 rounded-full"
                   variants={underlineVariant}
                 ></motion.span>
               </motion.h2>
-              <motion.p 
+              <motion.p
                 className="text-amber-700 max-w-2xl mx-auto text-base md:text-lg"
                 variants={itemVariants}
               >
@@ -227,7 +227,7 @@ export default function Contact() {
             <ThreeDCard className="p-6 md:p-10">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10">
                 {/* Contact Details */}
-                <motion.div 
+                <motion.div
                   className="space-y-6 md:space-y-8"
                   initial="hidden"
                   whileInView="visible"
@@ -235,7 +235,7 @@ export default function Contact() {
                   transition={{ staggerChildren: 0.1 }}
                 >
                   <div>
-                    <motion.h3 
+                    <motion.h3
                       className="text-xl md:text-2xl font-semibold text-amber-900 mb-4 md:mb-6 pb-2 border-b border-amber-200"
                       variants={itemVariants}
                     >
@@ -309,7 +309,7 @@ export default function Contact() {
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ staggerChildren: 0.1 }}
                 >
-                  <motion.h3 
+                  <motion.h3
                     className="text-xl md:text-2xl font-semibold text-amber-900 mb-4 md:mb-6 pb-2 border-b border-amber-200"
                     variants={itemVariants}
                   >
@@ -373,35 +373,35 @@ export default function Contact() {
         {/* Map Location */}
         <div className="container mx-auto px-4 sm:px-6 pb-12 md:pb-24">
           <div className="max-w-6xl mx-auto">
-            <motion.div 
+            <motion.div
               className="text-center mb-6 md:mb-10"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
               transition={{ staggerChildren: 0.1 }}
             >
-              <motion.h2 
+              <motion.h2
                 className="text-2xl md:text-4xl font-bold text-amber-900 mb-3 md:mb-4 relative inline-block"
                 variants={itemVariants}
               >
                 Find Us on the Map
-                <motion.span 
+                <motion.span
                   className="absolute w-1/3 md:w-1/4 left-1/2 -translate-x-1/2 -bottom-2 md:-bottom-3 h-1.5 bg-amber-400 rounded-full"
                   variants={underlineVariant}
                 ></motion.span>
               </motion.h2>
-              <motion.p 
+              <motion.p
                 className="text-amber-700 max-w-2xl mx-auto text-base md:text-lg"
                 variants={itemVariants}
               >
                 Visit our office at the location below
               </motion.p>
             </motion.div>
-            
+
             <ThreeDCard variants={scaleUp} className="w-full h-64 sm:h-72 md:h-96">
               <iframe
                 title="EIMCTA Location"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.647673399961!2d85.36863727607958!3d27.72157447568726!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1968cee7500d%3A0x260f11a4a2e7c416!2sEIMCTA!5e0!3m2!1sen!2snp!4v1693831942422!5m2!1sen!2snp"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d268.7042138108887!2d85.37052462416652!3d27.72154897449241!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1b94991c2f69%3A0xa6d7df8340d039b1!2sEverest%20International%20Management%20Consultancy%20%26Training%20Agency%20Pvt.%20Ltd.!5e1!3m2!1sen!2snp!4v1768971459329!5m2!1sen!2snp"
                 width="100%"
                 height="100%"
                 allowFullScreen=""
@@ -410,8 +410,8 @@ export default function Contact() {
                 className="border-0 w-full h-full"
               ></iframe>
             </ThreeDCard>
-            
-            <motion.div 
+
+            <motion.div
               className="mt-4 md:mt-6 text-center px-2"
               initial={{ y: 30, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}

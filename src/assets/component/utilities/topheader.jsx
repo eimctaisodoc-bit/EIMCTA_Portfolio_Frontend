@@ -59,9 +59,9 @@ const TopHeader = () => {
           Everest International Management Consultancy Training and Agency Pvt. Ltd.
         </p>
         <div className="flex items-center">
-          {socialLinks.map(({ href, label, icon: Icon }) => (
+          {socialLinks.map(({ href, label, icon: Icon },idx) => (
             <a
-              key={label}
+             key={`${label}-${idx}`}
               href={href}
               target="_blank"
               rel="noopener noreferrer"

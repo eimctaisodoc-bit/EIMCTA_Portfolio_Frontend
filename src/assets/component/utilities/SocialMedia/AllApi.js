@@ -3,17 +3,16 @@ import { useState } from "react";
 import emailjs from "@emailjs/browser";
 
 
-export const getFbUserPages =  () => {};
-
+export const getFbUserPages =  () => {}
 export const getPagePosts =  () => {};
 export const UploadFbPost = async () => {};
 
 const useEmailAPI = () => {
   const [status, setStatus] = useState("");
-
+// console.log('mail sending ,,,,,,,,,,',status)
   const sendEmail = async (formData) => {
     setStatus("Sending...");
-    console.log("Incoming formData:", formData);
+    // console.log("Incoming formData:", formData);
 
     // Normalize fields
     const name = formData.name || formData.Name || formData.clientName || "N/A";
@@ -29,7 +28,7 @@ const useEmailAPI = () => {
     const custom = `Services: ${formData.customServices || "N/A"} - Standards: ${formData.customStandards || " N/A"}`;
 
     const payload = { name, phone, organization, email, country, address, message, selectedStandards, selectedServices, custom, today: new Date().toDateString() };
-    console.log("Final Payload to EmailJS:", payload);
+    // console.log("Final Payload to EmailJS:", payload);
 
     try {
       const result = await emailjs.send(
@@ -40,7 +39,8 @@ const useEmailAPI = () => {
       );
 
       if (result.status === 200) {
-        setStatus("✅ Email sent successfully!");
+        // console.log('sending inside from result:-',result)
+        setStatus("✅ Email sent successfully!",result);
         setTimeout(() => setStatus(""), 5000);
         return { success: true, result };
       } else {
@@ -61,6 +61,13 @@ const useEmailAPI = () => {
 
 export default useEmailAPI;
 
+
+// fb api
+
+export const api = axios.create({
+  baseURL: 'http://localhost:5000',
+  withCredentials: true
+});
 
 
 

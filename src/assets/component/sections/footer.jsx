@@ -127,7 +127,7 @@ const Footer = () => {
             <ul className="space-y-3">
               {phoneNumbers.map((number, idx) => (
                 <motion.li
-                  key={idx}
+                  key={`${number}-${idx}`}
                   whileHover={{ y: -2 }}
                   className="flex justify-center md:justify-start text-sm"
                 >
@@ -147,7 +147,7 @@ const Footer = () => {
             <ul className="space-y-3">
               {emails.map((email, idx) => (
                 <motion.li
-                  key={idx}
+                  key={`${email}-${idx}`}
                   whileHover={{ y: -2 }}
                   className="flex justify-center md:justify-start items-start text-sm"
                 >
@@ -169,7 +169,7 @@ const Footer = () => {
             <ul className="space-y-3">
               {faqs.map((faq, idx) => (
                 <motion.li
-                  key={idx}
+                 key={`${faq}-${idx}`}
                   whileHover={{ scale: 1.02 }}
                   className="rounded-xl border border-amber-300 px-4 py-3 bg-amber-100 hover:bg-amber-200 transition"
                 >
@@ -200,21 +200,24 @@ const Footer = () => {
                 className="relative h-48 w-full max-w-full mx-auto overflow-hidden rounded-2xl border-2 border-amber-700 shadow-lg"
                 whileHover={{ scale: 1.02 }}
               >
+               
                 {playVideo ? (
+                  <>
                   <iframe
-                  key="1"
-                    className="w-full h-full"
-                    src={`https://www.youtube.com/embed/${ytVideoId}?autoplay=1&rel=0`}
-                    allow="autoplay; encrypted-media"
-                    allowFullScreen
+                  key="video"
+                  className="w-full h-full"
+                  src={`https://www.youtube.com/embed/${ytVideoId}?autoplay=1&rel=0`}
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
                   />
+                   </>
                 ) : (
                   <>
                     <img
                       src={ytThumbnail}
                       alt="YouTube Thumbnail"
                       className="w-full h-full object-cover"
-                    />
+                      />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/40">
                       <div className="w-14 h-14 rounded-full bg-red-600 flex items-center justify-center">
                         <svg viewBox="0 0 24 24" className="w-7 h-7 fill-white ml-1">
@@ -224,6 +227,8 @@ const Footer = () => {
                     </div>
                   </>
                 )}
+               
+
               </motion.div>
             </div>
 

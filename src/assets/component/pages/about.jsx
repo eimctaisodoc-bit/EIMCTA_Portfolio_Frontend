@@ -168,8 +168,8 @@ export default function About() {
               { id: "mission", label: "About Us" }, { id: "services", label: "Services" },
               { id: "policies", label: "Policies" }, { id: "expertise", label: "Expertise" },
               { id: "contact", label: "Contact" }
-            ].map((item) => (
-              <button key={item.id} onClick={() => scrollToSection(item.id)}
+            ].map((item,idx) => (
+              <button key={idx} onClick={() => scrollToSection(item.id)}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${activeSection === item.id ? "bg-amber-100 text-amber-800" : "text-gray-600 hover:text-amber-700 hover:bg-amber-50"}`}
               >
                 {item.label}

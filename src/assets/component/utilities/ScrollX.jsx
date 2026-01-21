@@ -21,6 +21,7 @@ const Scroll_x = () => {
       {marqueeItems.map((item, index) => (
         <React.Fragment key={index}>
           <span
+          key={index}
             className="text-gray-700 text-nowrap font-medium text-xs md:text-sm mx-2 md:mx-4"
             style={{ fontFamily: "Arial Narrow" }}
           >

@@ -100,11 +100,7 @@ const Navbar = () => {
     };
   }, []);
 
-  // Update measured heights for expanded items whenever expansion state changes
-  // (was measuring heights here) — removed to avoid timing issues on mobile
-
-  // Recompute heights on window resize since scrollHeight values can change
-  // no-op: removed dynamic height recomputation to keep mobile dropdowns stable
+  
 
   const toggleItemExpansion = (path) => {
     setExpandedItems((prev) => ({
@@ -153,13 +149,13 @@ const Navbar = () => {
       const hasChildren = item.children && item.children.length > 0;
 
       return (
-        <div key={key} className="w-full">
+        <div key={key} className="w-full px-2">
           <div className="flex items-center justify-center w-full">
             <NavLink
               to={item.path}
               className={({ isActive }) =>
                 `flex items-center flex-grow px-4 py-2 text-sm rounded-md transition-all duration-500 ${isActive && !hasChildren
-                  ? "bg-amber-700 text-white"
+                  ? "bg-orange-400 text-white"
                   : "text-gray-700 hover:bg-amber-50 hover:text-amber-700"
                 }`
               }
@@ -170,7 +166,7 @@ const Navbar = () => {
             {hasChildren && (
               <button
                 onClick={() => toggleItemExpansion(key)}
-                className="p-1 rounded-md hover:bg-amber-100 mr-2 transition-colors duration-200"
+                className="p-1 rounded-md hover:bg-amber-100 mr-2 transition-colors duration-500"
                 aria-expanded={!!expandedItems[key]}
               >
                 {expandedItems[key] ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
@@ -210,7 +206,7 @@ const Navbar = () => {
                 }
               }}
               className={({ isActive }) =>
-                `flex items-center flex-grow px-4 py-2 text-sm rounded-md transition-all duration-200 ${isActive && !hasChildren
+                `flex items-center flex-grow px-4 py-2 text-sm rounded-md transition-all duration-500 ${isActive && !hasChildren
                   ? "bg-amber-400 text-white"
                   : "text-gray-700 hover:bg-amber-50 hover:text-amber-700"
                 }`
@@ -223,7 +219,7 @@ const Navbar = () => {
             {hasChildren && (
               <button
                 onClick={() => toggleItemExpansion(key)}
-                className="p-1 rounded-md hover:bg-amber-100 mr-2 transition-all  ease-in-out duration-200"
+                className="p-1 rounded-md hover:bg-amber-100 mr-2 transition-all  ease-in-out duration-500"
               >
                 {expandedItems[key] ? <ChevronUp size={16} /> : <ChevronRight size={16} />}
               </button>
@@ -231,9 +227,9 @@ const Navbar = () => {
           </div>
 
           {hasChildren && (
-            <div className={`overflow-hidden ${level > 0 ? "ml-4 pl-2  border-l-2 border-amber-200" : ""} transition-all duration-200 ease-in-out`} style={{ maxHeight: expandedItems[key] ? "2000px" : "0px" }}>
+            <div className={`overflow-hidden ${level > 0 ? "ml-4 pl-2  border-l-2 border-amber-200" : ""} transition-all duration-500 ease-in-out`} style={{ maxHeight: expandedItems[key] ? "2000px" : "0px" }}>
               <div
-                className={` ${level > 0 ? "mt-1" : "mt-0"} transform origin-top transition-all duration-200 ease-in-out ${expandedItems[key] ? 'scale-y-100 opacity-100 pointer-events-auto' : 'scale-y-0 opacity-0 pointer-events-none'}`}
+                className={` ${level > 0 ? "mt-1" : "mt-0"} transform origin-top transition-all duration-500 ease-in-out ${expandedItems[key] ? 'scale-y-100 opacity-100 pointer-events-auto' : 'scale-y-0 opacity-0 pointer-events-none'}`}
                 style={{ willChange: 'transform, opacity' }}
               >
                 {renderMobileDropdownItems(item.children, level + 1, key)}
@@ -248,7 +244,7 @@ const Navbar = () => {
   return (
     <nav
       className={`sticky top-0 z-50 transition-all 
-         duration-200 font-['Arial_Narrow'] md:bg-amber-600 bg-white font-bold  ${scrolled ? "bg-amber-600 shadow-lg py-0" : "bg-amber-600 shadow-md py-2"
+         duration-500 font-['Arial_Narrow'] md:bg-amber-600 bg-white font-bold  ${scrolled ? "bg-amber-600 shadow-lg py-0" : "bg-amber-600 shadow-md py-2"
         }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -270,21 +266,21 @@ const Navbar = () => {
                 <NavLink
                   to={item.path}
                   className={({ isActive }) =>
-                    `flex items-center px-4 py-2 rounded-md text-lg transition-all duration-200 ease-in-out ${isActive ? "text-orange-700 bg-white" : "text-white hover:text-amber-100"
+                    `flex items-center px-4 py-2 rounded-md text-lg transition-all duration-500 ease-in-out ${isActive ? "text-orange-700 bg-white" : "text-white hover:text-amber-100"
                     }`
                   }
                 >
                   {getIcon(item)}
                   {item.title}
                   {item.children && (
-                    <ChevronDown size={16} className="ml-1 group-hover:rotate-180 transition-transform duration-200" />
+                    <ChevronDown size={16} className="ml-1 group-hover:rotate-180 transition-transform duration-500" />
                   )}
                 </NavLink>
 
                 {item.children && (
-                  <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1 mt-1 w-80 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 
+                  <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1 mt-1 w-80 rounded-md shadow-lg bg-white 
                   opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto 
-                   group-hover:translate-y-0 transition-all duration-200 ease-in-out origin-top z-50">
+                   group-hover:translate-y-0 transition-all duration-00 ease-in-out origin-top z-50">
                     <div className="py-1">
                       {renderDesktopDropdownItems(item.children, 1, `d-${idx}`)}
                     </div>
@@ -312,7 +308,7 @@ const Navbar = () => {
       {/* Mobile Drawer - full height */}
       <div
         className={`fixed inset-y-0 right-0 w-64 bg-white shadow-xl z-50 transform  
-          transition-transform duration-200 ease-in-out ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+          transition-transform duration-500 ease-in-out ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"
           } md:hidden`}
       >
         <div className="flex items-center justify-between px-4 pt-4 pb-2 border-b border-gray-200">
@@ -343,7 +339,7 @@ const Navbar = () => {
                       }
                     }}
                     className={({ isActive }) =>
-                      `flex items-center flex-grow px-3 py-2 rounded-md text-base transition-all duration-200 ${isActive && !hasChildren
+                      `flex items-center flex-grow px-3 py-2 rounded-md text-base transition-all duration-500 ${isActive && !hasChildren
                         ? "bg-amber-50 text-amber-700"
                         : "text-gray-700 hover:bg-amber-50 hover:text-amber-700"
                       }`
@@ -356,7 +352,7 @@ const Navbar = () => {
                   {hasChildren && (
                     <button
                       onClick={() => toggleItemExpansion(key)}
-                      className="p-1 rounded-md hover:bg-amber-100 mr-2 transition-colors duration-200"
+                      className="p-1 rounded-md hover:bg-amber-100 mr-2 transition-colors duration-500"
                     >
                       {expandedItems[key] ? <ChevronUp size={20} /> : <ChevronRight size={20} />}
                     </button>
@@ -365,7 +361,7 @@ const Navbar = () => {
 
                 {hasChildren && (
                   <div
-                    className="overflow-hidden transition-[max-height] duration-200 ease-in-out"
+                    className="overflow-hidden transition-[max-height] duration-500 ease-in-out"
                     style={{ maxHeight: expandedItems[key] ? "2000px" : "0px" }}
                   >
                     <div className="mt-1 ml-4 pl-2 space-y-1 border-l-2 border-amber-200">
