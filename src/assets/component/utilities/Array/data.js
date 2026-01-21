@@ -317,7 +317,8 @@ export const menuitems = [
     children: [
       {
         title: 'Offers/Contents/Latest Boosting',
-        path: '/Blog-Offers/Offers-Contents-Latest-Boosting',
+        // path: '/Blog-Offers/Offers-Contents-Latest-Boosting',
+        path: null,
         icon: icon
       },
       {
@@ -326,7 +327,8 @@ export const menuitems = [
         icon: icon
       }, {
         title: 'FB,Titktok,Linkedin,youtube',
-        path: '/Blog-Offers/FB-Titktok-Linkedin-youtube',
+        // path: '/Blog-Offers/FB-Titktok-Linkedin-youtube',
+        path: null,
         icon: icon
       }, {
         title: 'Admin Section',
