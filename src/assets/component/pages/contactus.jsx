@@ -242,27 +242,47 @@ export default function Contact() {
                       Contact Information
                     </motion.h3>
                     <div className="space-y-4 md:space-y-6">
+                       <ThreeDCard variants={slideInUp} custom={0.1} className="p-3 md:p-4">
+                        <div className="flex items-start">
+                          <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-amber-100 flex items-center justify-center mr-3 md:mr-4 flex-shrink-0">
+                            <Phone className="w-5 h-5 md:w-6 md:h-6 text-amber-600" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-amber-900 font-medium text-base md:text-lg mb-1 md:mb-2">
+
+                              <span>
+                                Head office Kageswarimanohara-05,Kathmandu
+                              </span>
+                            </p>
+                            <a href="tel:+977015903211" className="block text-amber-700 hover:text-amber-900 transition-colors duration-200 py-1 hover:underline text-sm md:text-base truncate">
+                              +977-01-5903211
+                            </a>
+                            <a href="tel:+9779741766637" className="block text-amber-700 hover:text-amber-900 transition-colors duration-200 py-1 hover:underline text-sm md:text-base truncate">
+                              +977 9761754799
+                            </a>
+
+                            <p className="text-xs md:text-sm text-amber-600 mt-1 md:mt-2">Click to call directly</p>
+                          </div>
+                        </div>
+                      </ThreeDCard>
                       <ThreeDCard variants={slideInUp} custom={0.1} className="p-3 md:p-4">
                         <div className="flex items-start">
                           <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-amber-100 flex items-center justify-center mr-3 md:mr-4 flex-shrink-0">
                             <Phone className="w-5 h-5 md:w-6 md:h-6 text-amber-600" />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-amber-900 font-medium text-base md:text-lg mb-1 md:mb-2">Phone Numbers</p>
+                            <p className="text-amber-900 font-medium text-base md:text-lg mb-1 md:mb-2"><span>Branch Office Hospital Line , Ithari-09 Biratnagar </span></p>
                             <a href="tel:+977015903211" className="block text-amber-700 hover:text-amber-900 transition-colors duration-200 py-1 hover:underline text-sm md:text-base truncate">
-                              +977-01-5903211
+                              9725590259
                             </a>
                             <a href="tel:+9779741766637" className="block text-amber-700 hover:text-amber-900 transition-colors duration-200 py-1 hover:underline text-sm md:text-base truncate">
-                              +977 9741 766 637
+                              9764595999
                             </a>
-                            <a href="tel:+9779862731591" className="block text-amber-700 hover:text-amber-900 transition-colors duration-200 py-1 hover:underline text-sm md:text-base truncate">
-                              +977 9862 731 591
-                            </a>
+
                             <p className="text-xs md:text-sm text-amber-600 mt-1 md:mt-2">Click to call directly</p>
                           </div>
                         </div>
                       </ThreeDCard>
-
                       <ThreeDCard variants={slideInUp} custom={0.2} className="p-3 md:p-4">
                         <div className="flex items-start">
                           <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-amber-100 flex items-center justify-center mr-3 md:mr-4 flex-shrink-0">
