@@ -273,10 +273,10 @@ export default function Contact() {
                           <div className="flex-1 min-w-0">
                             <p className="text-amber-900 font-medium text-base md:text-lg mb-1 md:mb-2"><span>Branch Office Hospital Line , Ithari-09 Biratnagar </span></p>
                             <a href="tel:+977015903211" className="block text-amber-700 hover:text-amber-900 transition-colors duration-200 py-1 hover:underline text-sm md:text-base truncate">
-                              9725590259
+                             +977 9725590259
                             </a>
                             <a href="tel:+9779741766637" className="block text-amber-700 hover:text-amber-900 transition-colors duration-200 py-1 hover:underline text-sm md:text-base truncate">
-                              9764595999
+                             +977 9764595999
                             </a>
 
                             <p className="text-xs md:text-sm text-amber-600 mt-1 md:mt-2">Click to call directly</p>
