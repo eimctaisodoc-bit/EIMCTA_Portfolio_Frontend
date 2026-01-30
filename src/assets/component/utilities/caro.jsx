@@ -2,14 +2,14 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Import images
-import img7 from '../../img/7.jpg';
-import img12 from '../../img/12.jpg';
-import img14 from '../../img/14.jpg';
+import img7 from '../../img/banner/1.jpg';
+import img12 from '../../img/banner/2.jpg';
+import img3 from '../../img/banner/3.jpg';
 import img26 from '../../img/26.jpg'
 
 const ImageCarousel = () => {
   const slides = [
-    { url: img26 },
+    { url: img3 },
     { url: img12 },
     { url: img7 },
   

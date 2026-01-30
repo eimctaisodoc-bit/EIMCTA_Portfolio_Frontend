@@ -60,6 +60,61 @@ const testimonials = [
 ];
 
 export const Testimonials = () => {
+
+const BeamUnderline = ({ 
+  children, 
+  thickness = 8, 
+  className = "" 
+}) => {
+  const gradientId = "formalBeamGradient";
+
+  return (
+    <span className={`relative inline-block group ${className}`}>
+      {children}
+      <span 
+        className="absolute left-0 right-0 -bottom-2 block overflow-visible pointer-events-none"
+        style={{ height: `${thickness * 1.5}px` }}
+      >
+        <svg 
+          width="100%" 
+          height="100%" 
+          viewBox="0 0 100 20" 
+          preserveAspectRatio="none"
+          className="block"
+        >
+          <defs>
+            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#f59e0b" />
+              <stop offset="48%" stopColor="#b45309" />
+              <stop offset="50%" stopColor="#fde68a" />
+              <stop offset="52%" stopColor="#b45309" />
+              <stop offset="100%" stopColor="#f59e0b" />
+            </linearGradient>
+          </defs>
+          
+          {/* The Formal Beam Path */}
+          <path 
+            d="
+              M 0 10 
+              Q 25 10, 50 4
+              Q 75 10, 100 10
+              Q 75 10, 50 16
+              Q 25 10, 0 10
+              Z
+            " 
+            fill={`url(#${gradientId})`}
+          />
+          
+          {/* Minimalist Central Pivot Point */}
+          <circle cx="50" cy="10" r="0.6" fill="#fef3c7" opacity="0.8" />
+        </svg>
+      </span>
+    </span>
+  );
+};
+
+
+
   const controls = useAnimation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
@@ -138,9 +193,14 @@ export const Testimonials = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4" style={{ fontFamily: "'Arial Narrow', Arial, sans-serif" }}>
-            Trusted by <span className="text-amber-600">Leading Organizations</span>
+          <BeamUnderline thickness={10}>
+          <h2 className="text-2xl sm:text-3xl 
+          md:text-4xl font-bold text-gray-900  
+          text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-500
+          " style={{ fontFamily: "'Arial Narrow', Arial, sans-serif" }}>
+            Trusted by Leading Organizations
           </h2>
+            </BeamUnderline>
           <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base md:text-lg" style={{ fontFamily: "'Arial Narrow', Arial, sans-serif" }}>
             Don't just take our word for it - hear what our clients say
           </p>

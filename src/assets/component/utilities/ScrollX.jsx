@@ -8,8 +8,12 @@ const Scroll_x = () => {
   const marqueeItems = [
     { content: "| https://everestconsultrain.com |" },
     { content: "| info@everestconsultrain.com |" },
-    { content: "  | +977 1 5903211 | 974-1766637 |" },
-    { content: "| Bouddha, Kathmandu |" },
+    { content: "  | +977 1 5903 211 | +977 9761 754 799 |" },
+    { content: "| Kageswarimanohara-05, Kathmandu|" },
+    { content: "| https://everestconsultrain.com |" },
+    { content: "| eimcta.care@gmail.com|" },
+    { content: "  | +977 9764 595 999 | 974-1766637 |" },
+    { content: "| Hospital Line, Itahari-9 (Biratnagar Line)|" },
   ];
 
   // Effect to update the time every second

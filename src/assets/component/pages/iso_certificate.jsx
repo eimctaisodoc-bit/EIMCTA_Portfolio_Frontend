@@ -6,6 +6,59 @@ import ISOCertificationForm from '../utilities/gloabal';
 import certificateProcess from '../../img/2.jpg'
 import ISOShowcase from './Glob_rec';
 
+// Beam Underline Component
+const BeamUnderline = ({ 
+  children, 
+  thickness = 8, 
+  className = "" 
+}) => {
+  const gradientId = "formalBeamGradient";
+
+  return (
+    <span className={`relative inline-block group ${className}`}>
+      {children}
+      <span 
+        className="absolute left-0 right-0 -bottom-2 block overflow-visible pointer-events-none"
+        style={{ height: `${thickness * 1.5}px` }}
+      >
+        <svg 
+          width="100%" 
+          height="100%" 
+          viewBox="0 0 100 20" 
+          preserveAspectRatio="none"
+          className="block"
+        >
+          <defs>
+            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#f59e0b" />
+              <stop offset="48%" stopColor="#b45309" />
+              <stop offset="50%" stopColor="#fde68a" />
+              <stop offset="52%" stopColor="#b45309" />
+              <stop offset="100%" stopColor="#f59e0b" />
+            </linearGradient>
+          </defs>
+          
+          {/* The Formal Beam Path */}
+          <path 
+            d="
+              M 0 10 
+              Q 25 10, 50 4
+              Q 75 10, 100 10
+              Q 75 10, 50 16
+              Q 25 10, 0 10
+              Z
+            " 
+            fill={`url(#${gradientId})`}
+          />
+          
+          {/* Minimalist Central Pivot Point */}
+          <circle cx="50" cy="10" r="0.6" fill="#fef3c7" opacity="0.8" />
+        </svg>
+      </span>
+    </span>
+  );
+};
+
 const ISO_certification = () => {
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -41,11 +94,6 @@ const ISO_certification = () => {
         duration: 0.8,
       }
     }
-  };
-
-  const centeredUnderlineVariants = {
-    hidden: { width: 0 },
-    show: { width: '90%', transition: { duration: 0.8, delay: 0.3 } }
   };
 
   const stepVariants = (i) => {
@@ -141,12 +189,16 @@ const ISO_certification = () => {
             whileInView="show"
             viewport={{ once: true, amount: 0.2 }}
           >
-            <motion.h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-amber-600 mb-4 relative inline-block">
-              About ISO Certification
-              <motion.span className="absolute left-1/2 -bottom-2 h-1 w-0 bg-orange-500 rounded-full" style={{ x: '-50%' }} variants={centeredUnderlineVariants}></motion.span>
+            <motion.h2 
+              className="text-xl sm:text-2xl md:text-3xl font-bold text-amber-600 mb-4 relative inline-block"
+              variants={sectionHeaderVariants}
+            >
+              <BeamUnderline thickness={6} className="pb-2">
+                About ISO Certification
+              </BeamUnderline>
             </motion.h2>
             <motion.p
-              className="text-gray-700 text-base sm:text-lg text-justify mt-4 leading-relaxed"
+              className="text-gray-700 text-base sm:text-lg text-justify mt-8 leading-relaxed"
               variants={textVariants}
             >
               ISO certification is a globally recognized standard that signifies a commitment to quality, safety, security, or environmental management. Certification validates that your processes align with best practices and meet customer or regulatory requirements.
@@ -160,9 +212,13 @@ const ISO_certification = () => {
             whileInView="show"
             viewport={{ once: true, amount: 0.2 }}
           >
-            <motion.h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-amber-600 mb-6 relative inline-block">
-              Benefits of ISO Certification
-              <motion.span className="absolute left-1/2 -bottom-2 h-1 w-0 bg-orange-500 rounded-full" style={{ x: '-50%' }} variants={centeredUnderlineVariants}></motion.span>
+            <motion.h2 
+              className="text-xl sm:text-2xl md:text-3xl font-bold text-amber-600 mb-8 relative inline-block"
+              variants={sectionHeaderVariants}
+            >
+              <BeamUnderline thickness={6} className="pb-2">
+                Benefits of ISO Certification
+              </BeamUnderline>
             </motion.h2>
             <ul className="space-y-4">
               {[
@@ -176,7 +232,7 @@ const ISO_certification = () => {
                   className="flex items-start text-gray-700 text-base sm:text-lg text-justify"
                   variants={index % 2 === 0 ? slideInLeftVariants : slideInRightVariants}
                 >
-                  <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-500 mt-1 mr-3 flex-shrink-0" />
+                  <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-500 mt-1 mr-3 shrink-0" />
                   <span><span className="font-semibold text-amber-700">{item.text.split(':')[0]}:</span> {item.text.split(':')[1]}</span>
                 </motion.li>
               ))}
@@ -190,12 +246,16 @@ const ISO_certification = () => {
             whileInView="show"
             viewport={{ once: true, amount: 0.2 }}
           >
-            <motion.h2 className="sm:text-3xl  md:text-3xl text-2xl font-bold text-amber-600 mb-4 relative inline-block">
-              Who Can Apply for ISO Certification?
-              <motion.span className="absolute left-1/2 -bottom-2 h-1 w-0 bg-orange-500 rounded-full" style={{ x: '-50%' }} variants={centeredUnderlineVariants}></motion.span>
+            <motion.h2 
+              className="sm:text-3xl md:text-3xl text-2xl font-bold text-amber-600 mb-4 relative inline-block"
+              variants={sectionHeaderVariants}
+            >
+              <BeamUnderline thickness={6} className="pb-2">
+                Who Can Apply for ISO Certification?
+              </BeamUnderline>
             </motion.h2>
             <motion.p
-              className="text-gray-700 text-lg text-justify mt-4"
+              className="text-gray-700 text-lg text-justify mt-8"
               variants={textVariants}
             >
               Any organization, regardless of industry or size, can pursue ISO certification. Standards like ISO 9001, ISO 27001, ISO 45001, and others are applicable across sectors, helping businesses enhance processes and ensure customer satisfaction.
@@ -209,9 +269,13 @@ const ISO_certification = () => {
             whileInView="show"
             viewport={{ once: true, amount: 0.1 }}
           >
-            <motion.h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-amber-600 mb-8 relative inline-block">
-              How Can You Apply for ISO Certification?
-              <motion.span className="absolute left-1/2 -bottom-2 h-1 w-0 bg-orange-500 rounded-full" style={{ x: '-50%' }} variants={centeredUnderlineVariants}></motion.span>
+            <motion.h2 
+              className="text-xl sm:text-2xl md:text-3xl font-bold text-amber-600 mb-8 relative inline-block"
+              variants={sectionHeaderVariants}
+            >
+              <BeamUnderline thickness={6} className="pb-2">
+                How Can You Apply for ISO Certification?
+              </BeamUnderline>
             </motion.h2>
             <div className="space-y-6">
               {[
@@ -292,6 +356,5 @@ const ISO_certification = () => {
     </div>
   );
 };
-
 
 export default ISO_certification;

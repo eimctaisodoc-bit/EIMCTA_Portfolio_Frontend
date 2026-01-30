@@ -30,11 +30,7 @@ const animationVariants = {
     hidden: { y: 40, opacity: 0 },
     visible: { y: 0, opacity: 1, transition: { duration: 0.7 } }
   },
-  // Refined: Changed width to 40% for a cleaner accent underline
-  underline: {
-    hidden: { width: '0%' },
-    visible: { width: '40%', transition: { duration: 0.8, delay: 0.3 } }
-  },
+  // Removed the old underline animation since we're using BeamUnderline
   paragraph: {
     hidden: { y: 30, opacity: 0 },
     visible: { y: 0, opacity: 1, transition: { duration: 0.7 } }
@@ -54,6 +50,59 @@ const cardHoverEffect = {
   y: -6,
   boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)',
   transition: { duration: 0.3 }
+};
+
+/* ---------------- Beam Underline Component ---------------- */
+const BeamUnderline = ({ 
+  children, 
+  thickness = 8, 
+  className = "" 
+}) => {
+  const gradientId = "formalBeamGradient";
+
+  return (
+    <span className={`relative inline-block group ${className}`}>
+      {children}
+      <span 
+        className="absolute left-0 right-0 -bottom-2 block overflow-visible pointer-events-none"
+        style={{ height: `${thickness * 1.5}px` }}
+      >
+        <svg 
+          width="100%" 
+          height="100%" 
+          viewBox="0 0 100 20" 
+          preserveAspectRatio="none"
+          className="block"
+        >
+          <defs>
+            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#f59e0b" />
+              <stop offset="48%" stopColor="#b45309" />
+              <stop offset="50%" stopColor="#fde68a" />
+              <stop offset="52%" stopColor="#b45309" />
+              <stop offset="100%" stopColor="#f59e0b" />
+            </linearGradient>
+          </defs>
+          
+          {/* The Formal Beam Path */}
+          <path 
+            d="
+              M 0 10 
+              Q 25 10, 50 4
+              Q 75 10, 100 10
+              Q 75 10, 50 16
+              Q 25 10, 0 10
+              Z
+            " 
+            fill={`url(#${gradientId})`}
+          />
+          
+          {/* Minimalist Central Pivot Point */}
+          <circle cx="50" cy="10" r="0.6" fill="#fef3c7" opacity="0.8" />
+        </svg>
+      </span>
+    </span>
+  );
 };
 
 /* ---------------- Content Data ---------------- */
@@ -128,11 +177,11 @@ const SectionHeader = ({ icon: Icon, title, subtitle }) => {
         </div>
       </motion.div>
 
-      {/* Added tracking-tight for cleaner heading typography */}
+      {/* Updated to use BeamUnderline instead of the simple underline */}
       <motion.h2 initial="hidden" animate={controls} variants={animationVariants.sectionHeader} className="text-3xl sm:text-4xl font-extrabold tracking-tight text-amber-900 mb-6 relative inline-block">
-        {title}
-        {/* Underline uses the refined 40% width variant */}
-        <motion.span initial="hidden" animate={controls} variants={animationVariants.underline} className="absolute -bottom-2 left-1/2 -translate-x-1/2 h-1 bg-amber-400 rounded-lg" />
+        <BeamUnderline thickness={6}>
+          {title}
+        </BeamUnderline>
       </motion.h2>
 
       <motion.p initial="hidden" animate={controls} variants={animationVariants.paragraph} className="text-lg sm:text-xl text-amber-800">
@@ -143,19 +192,16 @@ const SectionHeader = ({ icon: Icon, title, subtitle }) => {
 };
 
 const BenefitCard = ({ icon: Icon, title, desc }) => (
-  // Uses the refined cardHoverEffect
   <motion.div whileHover={cardHoverEffect} className="bg-amber-50 p-6 rounded-xl border border-amber-100 shadow-lg transition-transform duration-300">
     <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mb-4 shadow-inner">
       <Icon className="w-6 h-6 text-amber-700" />
     </div>
     <h3 className="text-xl font-bold text-amber-900 mb-2">{title}</h3>
-    {/* Explicitly using leading-relaxed for clear paragraph height */}
     <p className="text-amber-700 text-justify leading-relaxed">{desc}</p>
   </motion.div>
 );
 
 const AuditStep = ({ number, title, description }) => (
-  // Uses the refined cardHoverEffect
   <motion.div whileHover={cardHoverEffect} className="bg-white p-6 rounded-xl border border-amber-100 shadow-md transition-transform duration-300">
     <div className="flex items-start">
       <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0 shadow-inner">
@@ -163,7 +209,6 @@ const AuditStep = ({ number, title, description }) => (
       </div>
       <div>
         <h3 className="text-lg font-bold text-amber-900 mb-2">{title}</h3>
-        {/* Explicitly using leading-relaxed for clear paragraph height */}
         <p className="text-amber-700 text-justify leading-relaxed">{description}</p>
       </div>
     </div>
@@ -173,7 +218,6 @@ const AuditStep = ({ number, title, description }) => (
 /* ---------------- Main Page ---------------- */
 const HSEAudits = () => {
   return (
-    // Reverted font to Arial Narrow as requested by the user
     <div className="bg-transparent text-amber-900 font-['Arial_Narrow']">
      <header className="relative h-[480px] sm:h-[500px] flex items-center justify-center text-center text-white overflow-hidden">
 
@@ -191,29 +235,7 @@ const HSEAudits = () => {
   />
 
   {/* Dark Overlay for Readability */}
-  <div className="absolute inset-0 bg-black/40"></div>
-
-  {/* Content */}
-  <div className="relative z-10 px-4 sm:px-6">
-    
-    <motion.p
-      initial="hidden"
-      animate="visible"
-      variants={animationVariants.slideInLeft}
-      className="
-        max-w-3xl mx-auto
-        text-lg sm:text-xl
-        text-amber-200
-        leading-relaxed
-        text-justify
-        drop-shadow-[0_1px_8px_rgba(251,191,36,0.6)]
-      "
-    >
-      Health and safety audits play a critical role in ensuring workplace safety,
-      regulatory compliance, and continuous improvement of safety performance.
-    </motion.p>
-  </div>
-
+ 
 </header>
 
 
@@ -225,9 +247,8 @@ const HSEAudits = () => {
             title="About the Standard"
             subtitle="A structured approach to evaluating health and safety management systems."
           />
-          {/* Explicitly using leading-relaxed for clear paragraph height */}
           <p className="text-lg sm:text-xl text-amber-800 leading-relaxed text-justify max-w-4xl mx-auto">
-            A health and safety audit is a systematic examination of an organisation’s safety management systems, policies, and procedures. The objective is to evaluate their effectiveness in protecting employees and ensuring compliance with applicable laws and regulations. Audits also serve as a benchmark for measuring performance and identifying opportunities for improvement.
+            A health and safety audit is a systematic examination of an organisation's safety management systems, policies, and procedures. The objective is to evaluate their effectiveness in protecting employees and ensuring compliance with applicable laws and regulations. Audits also serve as a benchmark for measuring performance and identifying opportunities for improvement.
           </p>
         </section>
 
@@ -246,9 +267,8 @@ const HSEAudits = () => {
         {/* Who Can Apply */}
         <section className="py-12 text-center max-w-4xl mx-auto px-4 sm:px-0">
           <SectionHeader icon={Users} title="Who Can Apply?" subtitle="Applicable across all industries and organisation sizes" />
-          {/* Explicitly using leading-relaxed for clear paragraph height */}
           <p className="text-lg sm:text-xl text-amber-800 leading-relaxed text-justify">
-            Health and safety audits can be conducted by any organisation, regardless of size or industry. They are especially valuable in high-risk sectors such as construction, manufacturing, healthcare, and oil & gas. Regular audits demonstrate an organisation’s commitment to workplace safety and regulatory compliance.
+            Health and safety audits can be conducted by any organisation, regardless of size or industry. They are especially valuable in high-risk sectors such as construction, manufacturing, healthcare, and oil & gas. Regular audits demonstrate an organisation's commitment to workplace safety and regulatory compliance.
           </p>
         </section>
 
@@ -257,7 +277,6 @@ const HSEAudits = () => {
           <SectionHeader icon={Factory} title="Key Industries" subtitle="High-impact sectors for HSE audits" />
           <div className="flex flex-wrap justify-center gap-4">
             {industriesData.map((ind, i) => (
-              // Uses the refined cardHoverEffect
               <motion.div key={i} whileHover={cardHoverEffect} className="flex items-center bg-amber-100 px-5 py-3 rounded-lg transition-transform duration-300 shadow-md">
                 <ind.icon className="w-5 h-5 text-amber-700 mr-3 flex-shrink-0" />
                 <span className="font-medium text-amber-800">{ind.name}</span>
@@ -288,7 +307,6 @@ const HSEAudits = () => {
                 'Publish and communicate audit results.'
               ].map((item, i) => (
                 <li key={i} className="flex items-start">
-                  {/* Added flex-shrink-0 to the icon to prevent text wrapping under it */}
                   <CheckCircle className="w-5 h-5 text-green-600 mr-3 mt-1 flex-shrink-0" />
                   <span className="leading-relaxed">{item}</span>
                 </li>

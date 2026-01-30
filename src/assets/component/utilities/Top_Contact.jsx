@@ -179,7 +179,7 @@ const TopContactBar = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <Link to="/">
-            <img src={logo} alt="Logo" className="w-[10rem] object-contain" />
+            <img src={logo} alt="Logo" className="w-40 object-contain" />
           </Link>
         </motion.div>
 
@@ -214,6 +214,18 @@ const TopContactBar = () => {
             hideIconOnMobile={true}
             index={2}
           />
+          <div>
+            <div className="bg-white p-2 flex flex-col  justify-center items-center align-middle rounded  ">
+              <img
+                src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://docs.google.com/forms/d/e/1FAIpQLScx_B-qvhNtZgOqOZEoZKZtZrWMSv1ThgU0mak5xtoGaiinsw/viewform?pli=1"
+                alt="QR Code for Form"
+                className="w-20 h-20"
+              />
+              <span className="text-sm text-red-500"> 
+               Scan to Get Your Quote</span>
+            </div>
+
+          </div>
         </div>
       </nav>
     </motion.header>

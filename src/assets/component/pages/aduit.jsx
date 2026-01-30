@@ -2,6 +2,59 @@ import React, { useRef } from 'react';
 import { motion, useInView } from "framer-motion";
 import image from '../../img/1.jpg';
 
+// --- BeamUnderline Component ---
+const BeamUnderline = ({ 
+  children, 
+  thickness = 8, 
+  className = "" 
+}) => {
+  const gradientId = "formalBeamGradient";
+
+  return (
+    <span className={`relative inline-block group ${className}`}>
+      {children}
+      <span 
+        className="absolute left-0 right-0 -bottom-2 block overflow-visible pointer-events-none"
+        style={{ height: `${thickness * 1.5}px` }}
+      >
+        <svg 
+          width="100%" 
+          height="100%" 
+          viewBox="0 0 100 20" 
+          preserveAspectRatio="none"
+          className="block"
+        >
+          <defs>
+            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#f59e0b" />
+              <stop offset="48%" stopColor="#b45309" />
+              <stop offset="50%" stopColor="#fde68a" />
+              <stop offset="52%" stopColor="#b45309" />
+              <stop offset="100%" stopColor="#f59e0b" />
+            </linearGradient>
+          </defs>
+          
+          {/* The Formal Beam Path */}
+          <path 
+            d="
+              M 0 10 
+              Q 25 10, 50 4
+              Q 75 10, 100 10
+              Q 75 10, 50 16
+              Q 25 10, 0 10
+              Z
+            " 
+            fill={`url(#${gradientId})`}
+          />
+          
+          {/* Minimalist Central Pivot Point */}
+          <circle cx="50" cy="10" r="0.6" fill="#fef3c7" opacity="0.8" />
+        </svg>
+      </span>
+    </span>
+  );
+};
+
 // --- Self-Contained Lucide Icon Components ---
 const IconWrapper = ({ children }) => <div className="w-6 h-6">{children}</div>;
 const ClipboardList = () => <IconWrapper><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1" /><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /><path d="M12 11h4" /><path d="M12 16h4" /><path d="M8 11h.01" /><path d="M8 16h.01" /></svg></IconWrapper>;
@@ -46,10 +99,8 @@ const AnimatedWrapper = ({ children, variants, transition }) => {
     );
 };
 
-
 // --- Main Component ---
 const ISOAuditGuide = () => {
-
     const easeCurve = [0.25, 0.46, 0.45, 0.94];
 
     // --- Animation Variants ---
@@ -107,15 +158,13 @@ const ISOAuditGuide = () => {
                                     <div className="bg-yellow-100 p-3 rounded-full shadow-lg mr-4">
                                         <FileText className="text-yellow-500 w-6 h-6" />
                                     </div>
-                                    <h2 className="text-3xl font-bold text-amber-900">Understanding ISO Audits</h2>
+                                    <h2 className="text-3xl font-bold text-amber-900">
+                                        <BeamUnderline thickness={6} className="mr-2">
+                                            Understanding ISO Audits
+                                        </BeamUnderline>
+                                    </h2>
                                 </div>
                             </AnimatedWrapper>
-                            <motion.div
-                                className="h-1 bg-yellow-400 rounded-full absolute"
-                                style={{ left: '50%', translateX: '-50%', bottom: '-0.5rem', originX: 0.5, width: '25%' }}
-                                variants={underlineVariant}
-                                transition={{ duration: 0.8, delay: 0.3, ease: easeCurve }}
-                            />
 
                             <AnimatedWrapper variants={paragraphVariant} transition={{ duration: 0.8, delay: 0.3, ease: easeCurve }}>
                                 <p className="text-amber-800 mb-8 text-lg text-justify leading-relaxed font-medium">
@@ -183,13 +232,11 @@ const ISOAuditGuide = () => {
                                 Systematic Approach
                             </div>
                             <div className="relative inline-block">
-                                <h2 className="text-3xl md:text-4xl font-bold text-amber-900 mb-2">The ISO Audit Process</h2>
-                                <motion.div
-                                    className="h-1 bg-yellow-400 rounded-full absolute"
-                                    style={{ left: '50%', translateX: '-50%', bottom: '-0.5rem', originX: 0.5, width: '90%' }}
-                                    variants={underlineVariant}
-                                    transition={{ duration: 0.8, delay: 0.3, ease: easeCurve }}
-                                />
+                                <h2 className="text-3xl md:text-4xl font-bold text-amber-900 mb-2">
+                                    <BeamUnderline thickness={8} className="mr-2">
+                                        The ISO Audit Process
+                                    </BeamUnderline>
+                                </h2>
                             </div>
                         </AnimatedWrapper>
                         <AnimatedWrapper variants={paragraphVariant} transition={{ duration: 0.8, delay: 0.3, ease: easeCurve }}>
@@ -235,13 +282,11 @@ const ISOAuditGuide = () => {
                                 Audit Variations
                             </div>
                             <div className="relative inline-block">
-                                <h2 className="text-3xl md:text-4xl font-bold text-amber-900 mb-2">Types of ISO Audits</h2>
-                                <motion.div
-                                    className="h-1 bg-yellow-400 rounded-full absolute"
-                                    style={{ left: '50%', translateX: '-50%', bottom: '-0.5rem', originX: 0.5, width: '90%' }}
-                                    variants={underlineVariant}
-                                    transition={{ duration: 0.8, delay: 0.3, ease: easeCurve }}
-                                />
+                                <h2 className="text-3xl md:text-4xl font-bold text-amber-900 mb-2">
+                                    <BeamUnderline thickness={8} className="mr-2">
+                                        Types of ISO Audits
+                                    </BeamUnderline>
+                                </h2>
                             </div>
                         </AnimatedWrapper>
                         <AnimatedWrapper variants={paragraphVariant} transition={{ duration: 0.8, delay: 0.3, ease: easeCurve }}>
@@ -287,13 +332,10 @@ const ISOAuditGuide = () => {
                                 Industry Standards
                             </div>
                             <div className="relative inline-block">
-                                <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">Audit Frequency by Industry</h2>
-                                <motion.div
-                                    className="h-1 bg-yellow-400 rounded-full absolute"
-                                    style={{ left: '50%', translateX: '-50%', bottom: '-0.5rem', originX: 0.5, width: '90%' }}
-                                    variants={underlineVariant}
-                                    transition={{ duration: 0.8, delay: 0.3, ease: easeCurve }}
-                                />
+                                <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
+                                  
+                                        Audit Frequency by Industry
+                                </h2>
                             </div>
                         </AnimatedWrapper>
                         <AnimatedWrapper variants={paragraphVariant} transition={{ duration: 0.8, delay: 0.3, ease: easeCurve }}>
@@ -351,5 +393,3 @@ const ISOAuditGuide = () => {
 };
 
 export default ISOAuditGuide;
-
-

@@ -8,13 +8,16 @@ import {
   Mail,
   Phone,
   MapPin,
-  Globe,
   MessageSquare,
   Send,
   ChevronDown,
   X,
   CheckCircle,
   AlertTriangle,
+  Users,
+  FileText,
+  CreditCard,
+  Briefcase,
 } from "lucide-react";
 
 // --- Utility Components ---
@@ -48,24 +51,79 @@ const ConfettiEffect = () => {
   );
 };
 
-// 2. InputField Component
-const InputField = ({ label, icon, error, ...props }) => (
-  <div className="group">
-    <label className="block text-sm font-bold text-amber-900 mb-1">{label}</label>
+// 2. Beam Underline Component
+const BeamUnderline = ({ 
+  children, 
+  thickness = 8, 
+  className = "" 
+}) => {
+  const gradientId = "formalBeamGradient";
+
+  return (
+    <span className={`relative inline-block group ${className}`}>
+      {children}
+      <span 
+        className="absolute left-0 right-0 -bottom-2 block overflow-visible pointer-events-none"
+        style={{ height: `${thickness * 1.5}px` }}
+      >
+        <svg 
+          width="100%" 
+          height="100%" 
+          viewBox="0 0 100 20" 
+          preserveAspectRatio="none"
+          className="block"
+        >
+          <defs>
+            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#f59e0b" />
+              <stop offset="48%" stopColor="#b45309" />
+              <stop offset="50%" stopColor="#fde68a" />
+              <stop offset="52%" stopColor="#b45309" />
+              <stop offset="100%" stopColor="#f59e0b" />
+            </linearGradient>
+          </defs>
+          
+          {/* The Formal Beam Path */}
+          <path 
+            d="
+              M 0 10 
+              Q 25 10, 50 4
+              Q 75 10, 100 10
+              Q 75 10, 50 16
+              Q 25 10, 0 10
+              Z
+            " 
+            fill={`url(#${gradientId})`}
+          />
+          
+          {/* Minimalist Central Pivot Point */}
+          <circle cx="50" cy="10" r="0.6" fill="#fef3c7" opacity="0.8" />
+        </svg>
+      </span>
+    </span>
+  );
+};
+
+// 3. InputField Component
+const InputField = ({ label, icon, error, fullWidth, ...props }) => (
+  <div className={`group ${fullWidth ? 'col-span-1 md:col-span-2' : ''}`}>
+    <label className="block text-sm font-semibold text-slate-700 mb-2 required-field">
+      {label}
+    </label>
     <div className="relative">
-      <div className="absolute left-3 top-1/2 -translate-y-1/2 bg-amber-100 p-1.5 rounded-full">
+      <div className="absolute left-3 top-1/2 -translate-y-1/2 bg-slate-50 p-1.5 rounded-full">
         {icon}
       </div>
       <input
         {...props}
-        className={`pl-12 w-full border ${error ? "border-red-400" : "border-amber-300"} rounded-xl px-4 py-3 text-gray-800 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition duration-200 shadow-sm hover:shadow-md`}
+        className={`pl-12 w-full border ${error ? "border-red-300" : "border-slate-300"} rounded-lg px-4 py-3 text-slate-800 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition duration-200 shadow-sm hover:shadow hover:border-amber-400`}
       />
     </div>
     {error && <p className="mt-1 text-xs font-medium text-red-600 flex items-center"><AlertTriangle className="w-3 h-3 mr-1" />{error}</p>}
   </div>
 );
 
-// 3. ServicesDropdown Component
+// 4. ServicesDropdown Component
 const ServicesDropdown = ({
   servicesInterested,
   formData,
@@ -79,21 +137,21 @@ const ServicesDropdown = ({
   handleChange,
   addCustomService,
 }) => (
-  <div className="services-dropdown-container group">
-    <label className="block text-sm font-bold text-amber-900 mb-1">
-      Services Interested *
+  <div className="services-dropdown-container group col-span-1 md:col-span-2">
+    <label className="block text-sm font-semibold text-slate-700 mb-2 required-field">
+      Services You Are Looking For
     </label>
     <div
-      className={`flex flex-wrap gap-2 p-3 border rounded-xl min-h-[50px] transition duration-200 ${errors.selectedServices
-        ? "border-red-400 bg-red-50"
-        : "border-amber-300 bg-amber-50 hover:border-amber-400"
+      className={`flex flex-wrap gap-2 p-3 border rounded-lg min-h-12 transition duration-200 ${errors.selectedServices
+        ? "border-red-300 bg-red-50"
+        : "border-slate-300 bg-slate-50 hover:border-amber-400"
         } shadow-inner`}
     >
       {(formData.selectedServices.concat(formData.customServices).length > 0) ? (
         formData.selectedServices.concat(formData.customServices).map((service,idx) => (
           <div
             key={idx}
-            className="flex items-center bg-amber-700 text-white text-xs font-medium px-3 py-1.5 rounded-full shadow-md transition-colors hover:bg-amber-800 cursor-default"
+            className="flex items-center bg-amber-600 text-white text-xs font-medium px-3 py-1.5 rounded-full shadow transition-colors hover:bg-amber-700 cursor-default"
           >
             <span>{service}</span>
             <button
@@ -112,7 +170,7 @@ const ServicesDropdown = ({
           </div>
         ))
       ) : (
-        <p className="text-amber-500 self-center px-1 text-sm italic">Select services below...</p>
+        <p className="text-slate-500 self-center px-1 text-sm italic">Select services below...</p>
       )}
     </div>
 
@@ -123,14 +181,14 @@ const ServicesDropdown = ({
     <div className="relative mt-3">
       <button
         type="button"
-        className="w-full border border-amber-300 rounded-xl p-3 cursor-pointer flex justify-between items-center text-left bg-white hover:bg-amber-100 transition-colors shadow-sm"
+        className="w-full border border-slate-300 rounded-lg p-3 cursor-pointer flex justify-between items-center text-left bg-white hover:bg-slate-50 transition-colors shadow-sm hover:border-amber-400"
         onClick={() => setShowDropdown(!showDropdown)}
       >
-        <span className="text-amber-800 font-semibold">
+        <span className="text-slate-800 font-semibold">
           {showDropdown ? "Hide Services List" : "View and Select Services"}
         </span>
         <ChevronDown 
-          className={`h-5 w-5 text-amber-600 transition-transform duration-300 ${showDropdown ? "rotate-180" : "rotate-0"}`} 
+          className={`h-5 w-5 text-slate-600 transition-transform duration-300 ${showDropdown ? "rotate-180" : "rotate-0"}`} 
         />
       </button>
       {showDropdown && (
@@ -139,7 +197,7 @@ const ServicesDropdown = ({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="absolute z-10 w-full mt-1 max-h-72 overflow-y-auto border border-amber-400 bg-white rounded-xl shadow-xl p-3"
+            className="absolute z-10 w-full mt-1 max-h-72 overflow-y-auto border border-amber-300 bg-white rounded-lg shadow-lg p-3"
         >
           {servicesInterested.map((service, idx) => (
             <label
@@ -150,12 +208,12 @@ const ServicesDropdown = ({
                 type="checkbox"
                 checked={formData.selectedServices.includes(service)}
                 onChange={() => toggleService(service)}
-                className="h-5 w-5 rounded border-amber-300 text-amber-600 focus:ring-amber-500 mr-3 shadow-inner"
+                className="h-5 w-5 rounded border-slate-300 text-amber-600 focus:ring-amber-500 mr-3"
               />
-              <span className="text-sm text-gray-700 font-medium">{service}</span>
+              <span className="text-sm text-slate-700">{service}</span>
             </label>
           ))}
-          <div className="p-2 mt-3 border-t border-amber-200">
+          <div className="p-2 mt-3 border-t border-slate-200">
             {showCustomInput ? (
               <div className="flex items-center">
                 <input
@@ -163,14 +221,14 @@ const ServicesDropdown = ({
                   value={formData.customService}
                   onChange={handleChange}
                   name="customService"
-                  className="flex-1 border border-amber-300 rounded-lg px-3 py-2 mr-2 focus:ring-1 focus:ring-amber-500 focus:border-amber-500 outline-none"
+                  className="flex-1 border border-slate-300 rounded-lg px-3 py-2 mr-2 focus:ring-1 focus:ring-amber-500 focus:border-amber-500 outline-none hover:border-amber-400"
                   placeholder="Enter custom service"
                   onKeyDown={(e) => e.key === 'Enter' && addCustomService()}
                 />
                 <button
                   type="button"
                   onClick={addCustomService}
-                  className="text-white bg-amber-600 px-4 py-2 rounded-lg hover:bg-amber-700 transition-colors text-sm font-semibold shadow-md"
+                  className="text-white bg-amber-600 px-4 py-2 rounded-lg hover:bg-amber-700 transition-colors text-sm font-semibold shadow"
                 >
                   Add
                 </button>
@@ -201,36 +259,82 @@ const PlusCircle = (props) => (
 export default function BusinessQuoteForm() {
   const form = useRef();
 
-  const servicesInterested = [
-    "ISO 9001:2015 QMS (Quality Management System)",
-    "ISO 45001:2018 OHSMS (Occupational Health & Safety Management System)",
-    "ISO 14001:2015 EMS (Environmental Management System)",
-    "ISO 27001:2022 ISMS (Information Security Management System)",
-    "ISO 22000:2018 FSMS (Food Safety Management System)",
-    "ISO 39001:2012 RTSMS (Road Traffic Safety Management System)",
-    "ISO 21001:2018 EOMS (Educational Organizations Management System)",
-    "ISO 50001:2018 EnMS (Energy Management System)",
-    "Training Programs",
-    "OHS Consultancy",
-    "Environmental Services",
-    "Safety Equipment",
-    "Third Party Audits",
-    "CE Marking (Conformité Européenne)",
-    "HACCP Certification (Hazard Analysis & Critical Control Points)",
-    "Emergency Planning",
+ const servicesInterested = [
+  "ISO 9001:2015 QMS (Quality Management System)",
+  "ISO 45001:2018 OHSMS (Occupational Health & Safety Management System)",
+  "ISO 14001:2015 EMS (Environmental Management System)",
+  "ISO 27001:2022 ISMS (Information Security Management System)",
+  "ISO 22000:2018 FSMS (Food Safety Management System)",
+  "ISO 21001:2025 EOMS (Educational Organizations Management System)", // updated
+  "ISO 50001:2018 EnMS (Energy Management System)",
+  "ISO 15189:2022 Medical Laboratory QMS",
+  "ISO 26000:2010 Social Responsibility Guidance",
+  "ISO 55001:2024 Asset Management System", // updated
+  "ISO 41001:2018 Facility Management System",
+  "ISO 28001:2007 Security Management System for Supply Chains",
+  "IATF 16949:2016 Automotive QMS",
+  "SMETA Sedex Audits",
+  "RBA (Responsible Business Alliance) Compliance",
+  "CoC (SVAP / SeQ) Audits",
+  "HACCP Certification (Hazard Analysis & Critical Control Points)",
+  "HALAL Certification",
+  "CE Marking (Conformité Européenne)",
+  "GMP (Good Manufacturing Practices)",
+  "ISO 39001:2012 RTSMS (Road Traffic Safety Management System)",
+  "Training Programs",
+  "OHS Consultancy",
+  "Environmental Services",
+  "Safety Equipment",
+  "Third Party Audits",
+  "Emergency Planning"
+];
+
+
+  const employeeOptions = [
+    "1-10",
+    "11-50",
+    "51-200",
+    "201-500",
+    "501-1000",
+    "1000+"
   ];
 
   const initialFormData = {
-    name: "",
+    // 1. Organization Name
     organization: "",
-    email: "",
-    phone: "",
+    
+    // 2. Address(location)
     address: "",
-    country: "",
-    message: "",
+    
+    // 3. No of Employees
+    employees: "",
+    
+    // 4. company registration number
+    registrationNumber: "",
+    
+    // 5. VAT/PAN Number
+    vatPanNumber: "",
+    
+    // 6. Service you are looking for
     selectedServices: [],
     customServices: [],
     customService: "",
+    
+    // 7. Your Name
+    name: "",
+    
+    // 8. your Role in an organizational
+    role: "",
+    
+    // 9. Your Contact Number
+    phone: "",
+    
+    // 10. Your Email
+    email: "",
+    
+    // 11. Write more about you and service description
+    message: "",
+    
     CurrentDate: new Date().toDateString(),
   };
 
@@ -265,7 +369,6 @@ export default function BusinessQuoteForm() {
       setFormData((prev) => ({
         ...prev,
         address: address,
-        country: data.countryName || prev.country,
       }));
     } catch (err) {
       console.error("Failed to fetch location:", err);
@@ -281,8 +384,14 @@ export default function BusinessQuoteForm() {
     }
   }, []);
 
-  const headerVariant = { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } };
-  const underlineVariant = { initial: { scaleX: 0 }, animate: { scaleX: 1 }, transition: { duration: 0.8, delay: 0.25, ease: [0.25, 0.46, 0.45, 0.94] } };
+  const headerVariant = { 
+    initial: { opacity: 0, y: 20 }, 
+    animate: { opacity: 1, y: 0 }, 
+    transition: { 
+      duration: 0.6, 
+      ease: [0.25, 0.46, 0.45, 0.94] 
+    } 
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -313,15 +422,100 @@ export default function BusinessQuoteForm() {
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = "Your full name is required.";
-    if (!formData.organization.trim()) newErrors.organization = "Organization name is required.";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = "A valid email address is required.";
-    if (!/^\+?(\d[\s-]?){7,15}$/.test(formData.phone.trim())) newErrors.phone = "A valid phone number is required (7-15 digits, optionally starting with +).";
-    if (!formData.address.trim()) newErrors.address = "Address is required.";
-    if (!formData.country.trim()) newErrors.country = "Country is required.";
-    if (formData.selectedServices.length + formData.customServices.length === 0)
-      newErrors.selectedServices = "Please select at least one service.";
+    
+    // 1. Organization Name - Compulsory
+    if (!formData.organization.trim()) {
+      newErrors.organization = "Organization name is required.";
+    } else if (formData.organization.length < 2) {
+      newErrors.organization = "Please enter a valid organization name.";
+    }
+    
+    // 2. Address - Compulsory
+    if (!formData.address.trim()) {
+      newErrors.address = "Address is required.";
+    } else if (formData.address.length < 5) {
+      newErrors.address = "Please enter a valid address.";
+    }
+    
+    // 3. No of Employees - Compulsory
+    if (!formData.employees) {
+      newErrors.employees = "Please select number of employees.";
+    }
+    
+    // 4. Company registration number - Compulsory
+    if (!formData.registrationNumber.trim()) {
+      newErrors.registrationNumber = "Company registration number is required.";
+    } else if (formData.registrationNumber.length < 3) {
+      newErrors.registrationNumber = "Please enter a valid registration number.";
+    }
+    
+    // 5. VAT/PAN Number - Compulsory
+    if (!formData.vatPanNumber.trim()) {
+      newErrors.vatPanNumber = "VAT/PAN number is required.";
+    } else if (formData.vatPanNumber.length < 5) {
+      newErrors.vatPanNumber = "Please enter a valid VAT/PAN number.";
+    }
+    
+    // 6. Service you are looking for - At least one required
+    if (formData.selectedServices.length + formData.customServices.length === 0) {
+      newErrors.selectedServices = "Please select at least one service you are interested in.";
+    }
+    
+    // 7. Your Name - Compulsory
+    if (!formData.name.trim()) {
+      newErrors.name = "Your full name is required.";
+    } else if (formData.name.length < 2) {
+      newErrors.name = "Please enter a valid name.";
+    }
+    
+    // 8. Your Role in organization - Compulsory
+    if (!formData.role.trim()) {
+      newErrors.role = "Your role in organization is required.";
+    } else if (formData.role.length < 2) {
+      newErrors.role = "Please enter a valid role.";
+    }
+    
+    // 9. Your Contact Number - Compulsory with validation
+    const phone = formData.phone.trim();
+    if (!phone) {
+      newErrors.phone = "Contact number is required.";
+    } else if (!/^\+?(\d[\s-]?){7,15}$/.test(phone)) {
+      newErrors.phone = "Please enter a valid phone number (7-15 digits, optionally starting with +).";
+    }
+    
+    // 10. Your Email - Compulsory with validation
+    if (!formData.email.trim()) {
+      newErrors.email = "Email address is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address.";
+    }
+    
+    // 11. Message - Compulsory with minimum word requirement
+    const message = formData.message.trim();
+    const wordCount = message.split(/\s+/).filter(word => word.length > 0).length;
+    
+    if (!message) {
+      newErrors.message = "Please provide details about your requirements.";
+    } else if (wordCount < 10) {
+      newErrors.message = "Please provide more details (minimum 10 words required).";
+    } else if (wordCount > 250) {
+      newErrors.message = "Please keep your message under 250 words.";
+    } else if (message.length > 1500) {
+      newErrors.message = "Message is too long. Maximum 1500 characters allowed.";
+    }
+    
     return newErrors;
+  };
+
+  const resetForm = () => {
+    setFormData({
+      ...initialFormData,
+      // Preserve the auto-detected location if available
+      address: formData.address || ""
+    });
+    setErrors({});
+    setShowDropdown(false);
+    setShowCustomInput(false);
   };
 
   const { sendEmail } = useEmailAPI();
@@ -335,7 +529,19 @@ export default function BusinessQuoteForm() {
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       setIsSubmitting(false);
-      if(validationErrors.selectedServices) setShowDropdown(true); 
+      
+      // Scroll to first error if exists
+      const firstErrorKey = Object.keys(validationErrors)[0];
+      if (firstErrorKey) {
+        setTimeout(() => {
+          const element = document.querySelector(`[name="${firstErrorKey}"]`);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            element.focus();
+          }
+        }, 100);
+      }
+      
       return;
     }
 
@@ -349,10 +555,13 @@ export default function BusinessQuoteForm() {
     setIsSubmitting(false);
 
     if (result?.success) {
-      setSubmitStatus({ success: true, message: result.message || "Thank you for contacting us we will contact you as soon as possible. Thank you" });
-      setFormData(initialFormData);
+      setSubmitStatus({ 
+        success: true, 
+        message: result.message || "Thank you for contacting us! We will get back to you as soon as possible." 
+      });
+      resetForm();
     } else {
-      let errorMsg = "Failed to submit inquiry.";
+      let errorMsg = "Failed to submit inquiry. Please try again.";
       if (result?.error) {
         if (typeof result.error === "string") errorMsg = result.error;
         else if (Array.isArray(result.error)) errorMsg = result.error.join(", ");
@@ -362,55 +571,125 @@ export default function BusinessQuoteForm() {
     }
   };
 
+  // Calculate word count for message
+  const messageWordCount = formData.message.trim().split(/\s+/).filter(word => word.length > 0).length;
+
   return (
-    <main className="min-h-screen p-4 sm:p-6 md:p-10 bg-gray-50 font-['Inter',sans-serif]">
-      <div className="max-w-4xl mx-auto p-6 sm:p-8 bg-white rounded-3xl shadow-2xl border border-amber-200">
+    <main className="min-h-screen p-4 sm:p-6 md:p-8 bg-slate-50 font-['Arial Narrow', Arial, sans-serif]">
+      <style>{`
+        .required-field::after {
+          content: " *";
+          color: #dc2626;
+        }
+      `}</style>
+      <div className="max-w-6xl mx-auto p-6 sm:p-8 bg-white rounded-xl shadow-lg border border-slate-200">
         <motion.h2
-          className=" text-lg sm:text-xs  md:text-3xl lg:text-4xl font-extrabold text-amber-900 mb-6 text-center relative"
+          className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-800 mb-4 text-center relative"
           initial="initial"
           whileInView="animate"
           variants={headerVariant}
           viewport={{ once: true }}
         >
-          <span className="inline-block relative">
-            Business Service Inquiry
-            <motion.div 
-                className="absolute left-0 right-0 -bottom-2 h-1.5 bg-yellow-400 rounded-lg origin-center" 
-                variants={underlineVariant} 
-                initial="initial" 
-                whileInView="animate" 
-                viewport={{ once: true }} 
-            />
-          </span>
+          <BeamUnderline thickness={8}>
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-orange-600 to-amber-500">
+              
+            Get Your Service Proposal Right Here!
+            </span>
+          </BeamUnderline>
         </motion.h2>
-        <p className="text-amber-700 text-center mb-10 text-lg">
-          Tell us about your organization and the services you are interested in.
+        <p className="text-slate-600 text-center mb-6 text-base">
+          Tell Us About Your Organization And The Services You Are Interested In.
         </p>
+        
+        {/* Compulsory Fields Notice */}
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-6">
+          <p className="text-sm text-amber-800 font-medium text-center flex items-center justify-center">
+            <AlertTriangle className="inline-block w-4 h-4 mr-2" />
+            All fields marked with * are compulsory. Please fill in all details accurately.
+          </p>
+        </div>
 
-        <form ref={form} onSubmit={handleSubmit} className="grid grid-cols-1 gap-8">
-          {/* Name & Organization */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <InputField label="Contact Name *" name="name" value={formData.name} onChange={handleChange} error={errors.name} icon={<User className="h-4 w-4 text-amber-600" />} placeholder="Your full name" />
-            <InputField label="Organization Name *" name="organization" value={formData.organization} onChange={handleChange} error={errors.organization} icon={<Building className="h-4 w-4 text-amber-600" />} placeholder="Your organization name" />
+        <form ref={form} onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          {/* 1. Organization Name */}
+          <InputField 
+            label="Organization Name" 
+            name="organization" 
+            value={formData.organization} 
+            onChange={handleChange} 
+            error={errors.organization} 
+            icon={<Building className="h-4 w-4 text-slate-600" />} 
+            placeholder="Your organization name" 
+            required
+          />
+
+          {/* 2. Address(location) */}
+          <InputField 
+            label="Address/Location" 
+            name="address" 
+            value={formData.address} 
+            onChange={handleChange} 
+            error={errors.address} 
+            icon={<MapPin className="h-4 w-4 text-slate-600" />} 
+            placeholder="Street, City, District, Province" 
+            required
+          />
+
+          {/* 3. No of Employees */}
+          <div className="group">
+            <label className="block text-sm font-semibold text-slate-700 mb-2 required-field">
+              No. of Employees
+            </label>
+            <div className="relative">
+              <div className="absolute left-3 top-1/2 -translate-y-1/2 bg-slate-50 p-1.5 rounded-full">
+                <Users className="h-4 w-4 text-slate-600" />
+              </div>
+              <select
+                name="employees"
+                value={formData.employees}
+                onChange={handleChange}
+                className={`pl-12 w-full border ${errors.employees ? "border-red-300" : "border-slate-300"} rounded-lg px-4 py-3 text-slate-800 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition duration-200 shadow-sm hover:shadow hover:border-amber-400 appearance-none`}
+                required
+              >
+                <option value="">Select employee range</option>
+                {employeeOptions.map((option, idx) => (
+                  <option key={idx} value={option}>{option} employees</option>
+                ))}
+              </select>
+            </div>
+            {errors.employees && <p className="mt-1 text-xs font-medium text-red-600 flex items-center"><AlertTriangle className="w-3 h-3 mr-1" />{errors.employees}</p>}
           </div>
 
-          {/* Email & Phone */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <InputField label="Email *" type="email" name="email" value={formData.email} onChange={handleChange} error={errors.email} icon={<Mail className="h-4 w-4 text-amber-600" />} placeholder="your.email@example.com" />
-            <InputField label="Phone/Mobile *" type="tel" name="phone" value={formData.phone} onChange={handleChange} error={errors.phone} icon={<Phone className="h-4 w-4 text-amber-600" />} placeholder="+977 1234567890" />
-          </div>
+          {/* 4. company registration number */}
+          <InputField 
+            label="Company Registration Number" 
+            name="registrationNumber" 
+            value={formData.registrationNumber} 
+            onChange={handleChange} 
+            error={errors.registrationNumber} 
+            icon={<FileText className="h-4 w-4 text-slate-600" />} 
+            placeholder="Registration number" 
+            required
+          />
 
-          {/* Address & Country */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <InputField label="Address *" name="address" value={formData.address} onChange={handleChange} error={errors.address} icon={<MapPin className="h-4 w-4 text-amber-600" />} placeholder="Street, City, District, Province" />
-            <InputField label="Country *" name="country" value={formData.country} onChange={handleChange} error={errors.country} icon={<Globe className="h-4 w-4 text-amber-600" />} placeholder="e.g., Nepal" />
-          </div>
+          {/* 5. VAT/PAN Number */}
+          <InputField 
+            label="VAT/PAN Number" 
+            name="vatPanNumber" 
+            value={formData.vatPanNumber} 
+            onChange={handleChange} 
+            error={errors.vatPanNumber} 
+            icon={<CreditCard className="h-4 w-4 text-slate-600" />} 
+            placeholder="VAT or PAN number" 
+            required
+          />
 
-          {/* Services */}
+          {/* 6. Service you are looking for (Full width) */}
           <ServicesDropdown
             servicesInterested={servicesInterested}
             formData={formData}
             toggleService={toggleService}
+            setFormData={setFormData}
             errors={errors}
             showDropdown={showDropdown}
             setShowDropdown={setShowDropdown}
@@ -420,55 +699,120 @@ export default function BusinessQuoteForm() {
             addCustomService={addCustomService}
           />
 
-          {/* Message */}
-          <div className="group">
-            <label className="block text-sm font-bold text-amber-900 mb-1">Project/Requirement Details (Optional)</label>
+          {/* 7. Your Name */}
+          <InputField 
+            label="Your Name" 
+            name="name" 
+            value={formData.name} 
+            onChange={handleChange} 
+            error={errors.name} 
+            icon={<User className="h-4 w-4 text-slate-600" />} 
+            placeholder="Your full name" 
+            required
+          />
+
+          {/* 8. your Role in an organizational */}
+          <InputField 
+            label="Your Role in Organization" 
+            name="role" 
+            value={formData.role} 
+            onChange={handleChange} 
+            error={errors.role} 
+            icon={<Briefcase className="h-4 w-4 text-slate-600" />} 
+            placeholder="e.g., CEO, Manager, Director" 
+            required
+          />
+
+          {/* 9. Your Contact Number */}
+          <InputField 
+            label="Phone/Mobile" 
+            type="tel" 
+            name="phone" 
+            value={formData.phone} 
+            onChange={handleChange} 
+            error={errors.phone} 
+            icon={<Phone className="h-4 w-4 text-slate-600" />} 
+            placeholder="+977 1234567890" 
+            required
+          />
+
+          {/* 10. Your Email */}
+          <InputField 
+            label="Email" 
+            type="email" 
+            name="email" 
+            value={formData.email} 
+            onChange={handleChange} 
+            error={errors.email} 
+            icon={<Mail className="h-4 w-4 text-slate-600" />} 
+            placeholder="your.email@example.com" 
+            required
+          />
+
+          {/* 11. Write more about you and service description (Full width) */}
+          <div className="group col-span-1 md:col-span-2">
+            <label className="block text-sm font-semibold text-slate-700 mb-2 required-field">
+              Write more about you and service description (minimum 10 words, maximum 250 words)
+            </label>
             <div className="relative">
-              <div className="absolute left-3 top-4 bg-amber-100 p-1.5 rounded-full">
-                <MessageSquare className="h-4 w-4 text-amber-600" />
+              <div className="absolute left-3 top-4 bg-slate-50 p-1.5 rounded-full">
+                <MessageSquare className="h-4 w-4 text-slate-600" />
               </div>
               <textarea
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
                 rows="5"
-                className="pl-12 w-full border border-amber-300 rounded-xl px-4 py-3 text-gray-800 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition duration-200 shadow-sm hover:shadow-md"
-                placeholder="E.g., We require ISO 9001 certification for our manufacturing plant in Q3 2025. Tell us about your organization, size, and specific needs."
+                className={`pl-12 w-full border ${errors.message ? "border-red-300" : "border-slate-300"} rounded-lg px-4 py-3 text-slate-800 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition duration-200 shadow-sm hover:shadow hover:border-amber-400`}
+                placeholder="Tell us more about your organization, specific needs, timeline, budget considerations, and any other relevant details..."
+                required
               />
+            </div>
+            <div className="flex justify-between mt-1">
+              {errors.message ? (
+                <p className="text-xs font-medium text-red-600 flex items-center">
+                  <AlertTriangle className="w-3 h-3 mr-1" />
+                  {errors.message}
+                </p>
+              ) : (
+                <p className="text-xs text-slate-500">
+                  {messageWordCount}/250 words (minimum 10 words required)
+                </p>
+              )}
             </div>
           </div>
 
-          {/* Submit Button */}
-          <div className="text-center mt-4">
+          {/* Submit Button (Full width) */}
+          <div className="text-center mt-4 col-span-1 md:col-span-2">
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-amber-600 hover:bg-amber-700 text-white font-extrabold px-12 py-4 rounded-full transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl flex items-center justify-center mx-auto"
+              className="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-10 py-3 rounded-lg transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed shadow hover:shadow-lg flex items-center justify-center mx-auto"
             >
               {isSubmitting ? (
-                <div className="flex items-center">
+                <div className="flex items-center text-base">
                     <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                     Processing...
                 </div>
               ) : (
-                <span className="flex items-center text-lg">
+                <span className="flex items-center text-base">
                   <Send className="mr-2 h-5 w-5" /> Submit Inquiry
                 </span>
               )}
             </button>
           </div>
 
-          {/* Status Message */}
+          {/* Status Message (Full width) */}
           {submitStatus && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
               transition={{ duration: 0.3 }}
-              className={`mt-4 p-5 rounded-xl text-center font-medium shadow-md flex items-center justify-center transition-all ${submitStatus.success ? "bg-amber-100 border border-orange-400 text-amber-800" : "bg-red-100 border border-red-400 text-red-800"}`}
+              className={`mt-4 p-4 rounded-lg text-center font-medium shadow flex items-center justify-center transition-all col-span-1 md:col-span-2 ${submitStatus.success ? "bg-amber-50 border border-amber-200 text-amber-700" : "bg-red-50 border border-red-200 text-red-700"}`}
             >
-              {submitStatus.success ? <CheckCircle className="h-5 w-5 mr-3" /> : <AlertTriangle className="h-5 w-5 mr-3" />}
-              {submitStatus.message}
+              {submitStatus.success ? <CheckCircle className="h-5 w-5 mr-3 text-amber-600" /> : <AlertTriangle className="h-5 w-5 mr-3 text-red-600" />}
+              <span className="text-sm">{submitStatus.message}</span>
             </motion.div>
           )}
         </form>

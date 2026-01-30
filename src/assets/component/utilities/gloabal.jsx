@@ -2,7 +2,7 @@ import useEmailAPI from "../utilities/SocialMedia/AllApi.js";
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import React from "react";
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, Briefcase, Mail, Phone, Home, Globe, MessageSquare, Check, X, ChevronDown, AlertCircle, Navigation, Plus, Building, Factory, HeartHandshake, Stethoscope, Utensils, GraduationCap, PiggyBank, Bell, Truck, Package, Server, Trash2 } from 'lucide-react';
+import { User, Briefcase, Mail, Phone, Home, Globe, MessageSquare, Check, X, ChevronDown, AlertCircle, Navigation, Plus, Building, Factory, HeartHandshake, Stethoscope, Utensils, GraduationCap, PiggyBank, Bell, Truck, Package, Server, Trash2, Layers, Users, FileText, CreditCard, UserCog } from 'lucide-react';
 
 // Mock Confetti Effect component
 const ConfettiEffect = ({ isActive }) => {
@@ -68,7 +68,7 @@ const CATEGORIES = [
     { id: 'healthcare', name: "HOSPITAL / CLINIC / LAB", icon: <Stethoscope className="text-amber-500" size={20} />, description: "Healthcare providers, medical laboratories, and clinics.", standards: [{ id: 'med-13485', code: 'ISO 13485:2016', description: 'Quality management for medical devices' }, { id: 'med-15189', code: 'ISO 15189:2012', description: 'Medical laboratory quality standards' }] },
     { id: 'hospitality', name: "HOTEL / FOOD INDUSTRY", icon: <Utensils className="text-amber-500" size={20} />, description: "Hotels, restaurants, and food service businesses.", standards: [{ id: 'hot-22000', code: 'ISO 22000:2018', description: 'Food safety management system' }, { id: 'hot-haccp', code: 'HACCP', description: 'Critical control points for food safety' }] },
     { id: 'finance', name: "BANK / FINANCE / INSURANCE", icon: <PiggyBank className="text-amber-500" size={20} />, description: "Financial institutions requiring data security.", standards: [{ id: 'fin-9001', code: 'ISO 9001:2015', description: 'Financial service quality standards' }, { id: 'fin-27001', code: 'ISO 27001:2022', description: 'Data protection and security management' }] },
-    { id: 'education', name: "SCHOOL/COLLEGE EDU", icon: <GraduationCap className="text-amber-500" size={20} />, description: "Educational institutions for academic quality.", standards: [{ id: 'edu-21001', code: 'ISO 21001:2018', description: 'Quality management in education' }] },
+    { id: 'education', name: "SCHOOL/COLLEGE EDU", icon: <GraduationCap className="text-amber-500" size={20} />, description: "Educational institutions for academic quality.", standards: [{ id: 'edu-21001', code: 'ISO 21001:2025', description: 'Quality management in education' }] },
     { id: 'service', name: "SERVICE INDUSTRIES", icon: <Bell className="text-amber-500" size={20} />, description: "Service providers requiring quality delivery.", standards: [{ id: 'ser-9001', code: 'ISO 9001:2015', description: 'Service quality standards' }, { id: 'ser-45001', code: 'ISO 45001:2018', description: 'Service worker safety management' }] },
     { id: 'transport', name: "TRANSPORT / LOGISTIC", icon: <Truck className="text-amber-500" size={20} />, description: "Transportation and logistics companies.", standards: [{ id: 'log-9001', code: 'ISO 9001:2015', description: 'Logistics quality standards' }, { id: 'log-28000', code: 'ISO 28000:2007', description: 'Security in logistics operations' }] },
     { id: 'warehousing', name: "EXIM/WAREHOUSING", icon: <Package className="text-amber-500" size={20} />, description: "Warehousing and import/export businesses.", standards: [{ id: 'war-9001', code: 'ISO 9001:2015', description: 'Warehousing quality standards' }, { id: 'war-45001', code: 'ISO 45001:2018', description: 'Warehouse worker safety procedures' }] },
@@ -86,18 +86,81 @@ const BENEFITS_BILINGUAL = [
     { np: "दिर्गकालमा व्यापार सम्ममा पनि वृद्धि हुन्छ।", en: "In the long term, business credibility also increases." }
 ];
 
-// Added new 'message' field and configured it for textarea
 const FORM_FIELDS = [
-    { name: 'name', label: 'Name*', icon: <User size={20} />, placeholder: 'Your Name....' },
-    { name: 'organization', label: 'Organization*', icon: <Briefcase size={20} />, placeholder: 'Your Company....' },
-    { name: 'email', label: 'Email*', icon: <Mail size={20} />, type: 'email', placeholder: 'Your E-mail....' },
-    { name: 'phone', label: 'Phone*', icon: <Phone size={20} />, type: 'tel', placeholder: 'Your Phone....' },
-    { name: 'address', label: 'Address*', icon: <Home size={20} />, placeholder: 'Your Full Address....' },
-    { name: 'country', label: 'Country*', icon: <Globe size={20} />, placeholder: 'Your Country....' },
-    // NEW REQUIRED FIELD - moved to end of form render logic
-    { name: 'message', label: 'Comment or Additional Information*', icon: <MessageSquare size={20} />, type: 'textarea', placeholder: 'Please provide any specific requirements or details...', rows: 4 },
+  {
+    name: 'organizationName',
+    label: 'Organization Name*',
+    icon: <Briefcase size={20} />,
+    placeholder: 'Your Organization Name...',
+  },
+  {
+    name: 'address',
+    label: 'Address / Location*',
+    icon: <Home size={20} />,
+    placeholder: 'Office Address / Location...',
+  },
+  {
+    name: 'country',
+    label: 'Country*',
+    icon: <Globe size={20} />,
+    placeholder: 'Country...',
+    defaultValue: 'Nepal'
+  },
+  {
+    name: 'employees',
+    label: 'No. of Employees*',
+    icon: <Users size={20} />,
+    type: 'number',
+    placeholder: 'Total Employees...',
+  },
+  {
+    name: 'companyRegNo',
+    label: 'Company Registration Number*',
+    icon: <FileText size={20} />,
+    placeholder: 'Registration Number...',
+  },
+  {
+    name: 'vatPan',
+    label: 'VAT / PAN Number*',
+    icon: <CreditCard size={20} />,
+    placeholder: 'VAT or PAN Number...',
+  },
+  {
+    name: 'contactName',
+    label: 'Your Name*',
+    icon: <User size={20} />,
+    placeholder: 'Your Full Name...',
+  },
+  {
+    name: 'role',
+    label: 'Your Role in the Organization*',
+    icon: <UserCog size={20} />,
+    placeholder: 'Your Designation / Role...',
+  },
+  {
+    name: 'phone',
+    label: 'Your Contact Number*',
+    icon: <Phone size={20} />,
+    type: 'tel',
+    placeholder: 'Your Contact Number...',
+  },
+  {
+    name: 'email',
+    label: 'Your Email*',
+    icon: <Mail size={20} />,
+    type: 'email',
+    placeholder: 'Your Email Address...',
+  },
+  {
+    name: 'description',
+    label: 'About You & Service Requirement (Max 250 words)*',
+    icon: <MessageSquare size={20} />,
+    type: 'textarea',
+    placeholder: 'Write briefly about your organization, your role, and the service you are looking for (max 250 words)...',
+    rows: 5,
+    maxWords: 250,
+  },
 ];
-
 
 // =================================================================
 // 3. REUSABLE COMPONENTS
@@ -126,6 +189,12 @@ const AnimatedHeader = ({ children, className, icon }) => (
         </span>
     </motion.h2>
 );
+
+// Helper function to count words
+const countWords = (text) => {
+  if (!text || text.trim() === '') return 0;
+  return text.trim().split(/\s+/).filter(word => word.length > 0).length;
+};
 
 // Multi-select/Manual Input Component
 const SelectInput = ({ label, items, selectedItems, onSelect, onRemove, onAddManual, placeholder, error }) => {
@@ -173,7 +242,7 @@ const SelectInput = ({ label, items, selectedItems, onSelect, onRemove, onAddMan
             <label className="block text-sm font-semibold text-amber-700 mb-2">{label}</label>
 
             {/* Selected Items Display */}
-            <div className={`p-3 min-h-[44px] rounded-lg border ${error ? 'border-red-500 bg-red-50' : 'border-gray-300 bg-white'} shadow-sm flex flex-wrap gap-2 cursor-pointer transition duration-150 ease-in-out`} onClick={() => setIsOpen(!isOpen)}>
+            <div className={`p-3 min-h-11 rounded-lg border ${error ? 'border-red-500 bg-red-50' : 'border-gray-300 bg-white'} flex flex-wrap gap-2 cursor-pointer transition duration-150 ease-in-out`} onClick={() => setIsOpen(!isOpen)}>
                 {selectedItems.length > 0 ? (
                     selectedItems.map((item) => (
                         <span key={item.id} className="inline-flex items-center text-xs font-medium bg-amber-100 text-amber-800 rounded-full py-1 px-3 shadow-md hover:bg-amber-200 transition duration-150">
@@ -186,9 +255,9 @@ const SelectInput = ({ label, items, selectedItems, onSelect, onRemove, onAddMan
                         </span>
                     ))
                 ) : (
-                    <span className="text-amber-400">{placeholder}</span>
+                    <span className="text-slate-400">{placeholder}</span>
                 )}
-                <ChevronDown size={18} className={`absolute right-3 top-[38px] transition-transform ${isOpen ? 'rotate-180' : 'rotate-0'} text-amber-500`} />
+                <ChevronDown size={18} className={`absolute right-3 top-9.5 transition-transform ${isOpen ? 'rotate-180' : 'rotate-0'} text-amber-500`} />
             </div>
 
             {/* Error Message */}
@@ -224,7 +293,7 @@ const SelectInput = ({ label, items, selectedItems, onSelect, onRemove, onAddMan
                                         <span className="font-medium text-amber-700">{item.code || item.name}</span>
                                         {item.description && <span className="text-xs text-amber-600 italic">{item.description}</span>}
                                     </div>
-                                    <Plus size={16} className="text-amber-500 flex-shrink-0" />
+                                    <Plus size={16} className="text-amber-500 shrink-0" />
                                 </div>
                             </div>
                         ))}
@@ -243,7 +312,7 @@ const SelectInput = ({ label, items, selectedItems, onSelect, onRemove, onAddMan
                                         if (e.key === 'Enter') handleAddManual(e);
                                     }}
                                     placeholder="Or add manually (e.g., 'Other')"
-                                    className="flex-grow p-2 text-sm border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-amber-500 text-amber-700"
+                                    className="grow p-2 text-sm border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-amber-500 text-amber-700"
                                 />
                                 <button
                                     type="button" 
@@ -266,12 +335,15 @@ const SelectInput = ({ label, items, selectedItems, onSelect, onRemove, onAddMan
 // 4. MAIN APPLICATION COMPONENT
 // =================================================================
 
-const  ISOCertificationForm = () => {
+const ISOCertificationForm = () => {
     const { sendEmail } = useEmailAPI();
     
     // State for form data
     const [formData, setFormData] = useState(
-        FORM_FIELDS.reduce((acc, field) => ({ ...acc, [field.name]: '' }), {})
+        FORM_FIELDS.reduce((acc, field) => ({ 
+            ...acc, 
+            [field.name]: field.defaultValue || '' 
+        }), {})
     );
     
     // State for custom selections
@@ -306,7 +378,7 @@ const  ISOCertificationForm = () => {
             timer = setTimeout(() => {
                 setSuccess(false);
                 setErrorMsg(null);
-            }, 5000); 
+            }, 5000);
 
             return () => clearTimeout(timer); 
         }
@@ -316,6 +388,17 @@ const  ISOCertificationForm = () => {
     // Handlers for Form Fields
     const handleChange = useCallback((e) => {
         const { name, value } = e.target;
+        
+        // Special handling for description field to limit words
+        if (name === 'description') {
+            const currentWordCount = countWords(value);
+            
+            // If word count exceeds 250, don't update
+            if (currentWordCount > 250) {
+                return;
+            }
+        }
+        
         setFormData(prev => ({ ...prev, [name]: value }));
         setErrors(prev => ({ ...prev, [name]: null })); 
     }, []);
@@ -337,7 +420,11 @@ const  ISOCertificationForm = () => {
     }, []);
 
     const handleCategoryAddManual = useCallback((name) => {
-        const manualCategory = { id: `manual-cat-${Date.now()}`, name: name, standards: [] };
+        const manualCategory = { 
+            id: `manual-cat-${Date.now()}`, 
+            name: name, 
+            standards: [] 
+        };
         setSelectedCategories(prev => [...prev, manualCategory]);
     }, []);
 
@@ -351,10 +438,14 @@ const  ISOCertificationForm = () => {
     }, []);
 
     const handleStandardAddManual = useCallback((code) => {
-        const manualStandard = { id: `manual-std-${Date.now()}`, name: code, code: code, description: 'Manual entry' };
+        const manualStandard = { 
+            id: `manual-std-${Date.now()}`, 
+            name: code, 
+            code: code, 
+            description: 'Manual entry' 
+        };
         setSelectedStandards(prev => [...prev, manualStandard]);
     }, []);
-
 
     // Validation Logic - ALL FIELDS ARE COMPULSORY
     const validateForm = useCallback(() => {
@@ -379,6 +470,20 @@ const  ISOCertificationForm = () => {
             isValid = false;
         }
 
+        if (formData.employees && (isNaN(formData.employees) || formData.employees <= 0)) {
+            newErrors.employees = 'Number of employees must be a positive number.';
+            isValid = false;
+        }
+
+        // Validate word count for description field
+        if (formData.description) {
+            const wordCount = countWords(formData.description);
+            if (wordCount > 250) {
+                newErrors.description = 'Description must not exceed 250 words.';
+                isValid = false;
+            }
+        }
+
         // 2. Validate Category Selection (Compulsory)
         if (selectedCategories.length === 0) {
             newErrors.categories = 'Please select at least one industry category (compulsory).';
@@ -394,7 +499,6 @@ const  ISOCertificationForm = () => {
         setErrors(newErrors);
         return isValid;
     }, [formData, selectedCategories, selectedStandards]);
-
 
     // Form Submission
     const handleSubmit = async (e) => {
@@ -424,19 +528,25 @@ const  ISOCertificationForm = () => {
 
         // Construct the payload with all required keys
         const payload = {
-            name: formData.name,
-            organization: formData.organization,
+            name: formData.contactName,
+            organization: formData.organizationName,
             email: formData.email,
             phone: formData.phone,
             address: formData.address,
             country: formData.country,
-            message: formData.message, 
+            message: formData.description,
             
-            // Mapping categories to user-requested keys
+            // Additional business information
+            employees: formData.employees,
+            companyRegNo: formData.companyRegNo,
+            vatPan: formData.vatPan,
+            role: formData.role,
+            
+            // Categories mapping (Services)
             selectedServices: predefinedCategories.map(c => c.name).join('; '),
             customServices: customCategories.length > 0 ? customCategories.map(c => c.name).join('; ') : 'N/A',
             
-            // Separated standards data as requested
+            // Standards mapping
             selectedStandards: predefinedStandards,
             customStandards: customStandards,
 
@@ -447,8 +557,11 @@ const  ISOCertificationForm = () => {
             const result = await sendEmail(payload);
             if (result.success) {
                 setSuccess(true);
-                // Optionally reset form after success
-                setFormData(FORM_FIELDS.reduce((acc, field) => ({ ...acc, [field.name]: '' }), {}));
+                // Reset form after success
+                setFormData(FORM_FIELDS.reduce((acc, field) => ({ 
+                    ...acc, 
+                    [field.name]: field.defaultValue || '' 
+                }), {}));
                 setSelectedCategories([]);
                 setSelectedStandards([]);
             } else {
@@ -461,7 +574,6 @@ const  ISOCertificationForm = () => {
             setLoading(false);
         }
     };
-
 
     // Helper for rendering form fields (updated to handle textarea)
     const renderFormField = (field) => (
@@ -476,7 +588,7 @@ const  ISOCertificationForm = () => {
                 {field.label}
             </label>
             <div className={`flex items-start p-3 rounded-lg border ${errors[field.name] ? 'border-red-500 bg-red-50' : 'border-gray-300 bg-white'} shadow-sm focus-within:ring-2 focus-within:ring-amber-500 transition duration-150 ease-in-out`}>
-                <div className="text-amber-500 mr-3 mt-1">{field.icon}</div>
+                <div className="text-slate-500 mr-3 mt-1">{field.icon}</div>
                 
                 {field.type === 'textarea' ? (
                     <textarea
@@ -487,7 +599,7 @@ const  ISOCertificationForm = () => {
                         placeholder={field.placeholder}
                         required={true}
                         rows={field.rows || 3}
-                        className="flex-grow bg-transparent focus:outline-none text-amber-700 placeholder-amber-400 resize-y"
+                        className="grow bg-transparent focus:outline-none text-amber-700 placeholder-slate-400 resize-y"
                     />
                 ) : (
                     <input
@@ -498,10 +610,20 @@ const  ISOCertificationForm = () => {
                         onChange={handleChange}
                         placeholder={field.placeholder}
                         required={true}
-                        className="flex-grow bg-transparent focus:outline-none text-amber-700 placeholder-amber-400"
+                        className="grow bg-transparent focus:outline-none text-amber-700 placeholder-slate-400"
                     />
                 )}
             </div>
+            
+            {/* Word counter for textarea fields */}
+            {field.type === 'textarea' && (
+                <div className="p-3 w-full flex justify-end">
+                    <p className="text-xs text-slate-400 mt-1">
+                        {countWords(formData[field.name])}/{field.maxWords || 250} words
+                    </p>
+                </div>
+            )}
+            
             {errors[field.name] && (
                 <motion.p 
                     className="text-red-500 text-xs mt-1 flex items-center"
@@ -515,8 +637,8 @@ const  ISOCertificationForm = () => {
     );
 
     // Filter fields for rendering
-    const contactFields = FORM_FIELDS.filter(f => f.name !== 'message');
-    const messageField = FORM_FIELDS.find(f => f.name === 'message');
+    const contactFields = FORM_FIELDS.filter(f => f.name !== 'description');
+    const messageField = FORM_FIELDS.find(f => f.name === 'description');
 
     // Apply custom font simulation globally via style tag
     const customStyles = `
@@ -533,7 +655,7 @@ const  ISOCertificationForm = () => {
                 <ConfettiEffect isActive={success} />
                 
                 {/* Main Content Card */}
-                <div className="max-w-7xl mx-auto bg-white rounded-b-xl rounded-t-3xl shadow  p-6 sm:p-10 border-t-8 border-amber-500">
+                <div className="max-w-7xl mx-auto bg-white rounded-b-xl rounded-t-3xl shadow p-6 sm:p-10 border-t-8 border-amber-500">
                     <motion.header 
                         className="text-center mb-10"
                         initial={{ opacity: 0, y: -50 }}
@@ -561,15 +683,15 @@ const  ISOCertificationForm = () => {
                             </AnimatedHeader>
                             
                             <form onSubmit={handleSubmit}>
-                                {/* Basic Fields (excluding message field) */}
+                                {/* Basic Fields Grid Layout */}
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
-                                    {contactFields.slice(0, 4).map(renderFormField)}
-                                    {contactFields.slice(4, 6).map(renderFormField)}
-                                </div> 
+                                    {contactFields.slice(0, 6).map(renderFormField)}
+                                    {contactFields.slice(6, 8).map(renderFormField)}
+                                </div>
 
                                 {/* Category Selection */}
                                 <SelectInput
-                                    label="Select Categories*"
+                                    label="Select Industry Categories*"
                                     items={CATEGORIES}
                                     selectedItems={selectedCategories}
                                     onSelect={handleCategorySelect}
@@ -581,7 +703,7 @@ const  ISOCertificationForm = () => {
 
                                 {/* Standards Selection */}
                                 <SelectInput
-                                    label="Select Standards*"
+                                    label="Select ISO Standards*"
                                     items={allAvailableStandards}
                                     selectedItems={selectedStandards}
                                     onSelect={handleStandardSelect}
@@ -591,11 +713,11 @@ const  ISOCertificationForm = () => {
                                     error={errors.standards}
                                 />
                                 
-                                {/* Message Field (Now at the bottom of the form section) */}
+                                {/* Message Field (Description) */}
                                 {messageField && renderFormField(messageField)}
 
                                 {/* Submission Status Messages */}
-                                <div className="mt-4 min-h-[50px]">
+                                <div className="mt-4 min-h-12">
                                     <AnimatePresence mode="wait">
                                         {success ? (
                                             <motion.div
@@ -679,7 +801,7 @@ const  ISOCertificationForm = () => {
                                         transition={{ duration: 0.5, delay: index * 0.05 }}
                                     >
                                         <div className="flex items-start mb-1">
-                                            <Check size={18} className="text-amber-600 flex-shrink-0 mt-1 mr-2" />
+                                            <Check size={18} className="text-amber-600 shrink-0 mt-1 mr-2" />
                                             <span className="text-lg font-bold text-amber-700 leading-snug">{benefit.np}</span>
                                         </div>
                                         <p className="text-sm text-amber-600 italic border-t border-amber-100 pt-1 mt-1 pl-6">
@@ -699,6 +821,7 @@ const  ISOCertificationForm = () => {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5, delay: 1 }}
                 >
+                    <p>© {new Date().getFullYear()} ISO Certification Service. All rights reserved.</p>
                 </motion.footer>
 
             </div>

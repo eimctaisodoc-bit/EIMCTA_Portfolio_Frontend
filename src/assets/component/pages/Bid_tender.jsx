@@ -15,7 +15,20 @@ import {
   Eye,
   Heart,
   Users,
-  BookOpen
+  BookOpen,
+  Factory,
+  Droplets,
+  Building,
+  Sprout,
+  Landmark,
+  Gauge,
+  Zap,
+  Target as TargetIcon,
+  Globe,
+  Shield,
+  Cloud,
+  Thermometer,
+  Filter
 } from "lucide-react";
 
 // A wrapper component to handle scroll-triggered animations
@@ -59,6 +72,58 @@ const AnimateOnScroll = ({ children, animation, delay, threshold = 0.1, as = 'di
   );
 };
 
+// Beam Underline Component
+const BeamUnderline = ({ 
+  children, 
+  thickness = 8, 
+  className = "" 
+}) => {
+  const gradientId = "formalBeamGradient";
+
+  return (
+    <span className={`relative inline-block group ${className}`}>
+      {children}
+      <span 
+        className="absolute left-0 right-0 -bottom-2 block overflow-visible pointer-events-none"
+        style={{ height: `${thickness * 1.5}px` }}
+      >
+        <svg 
+          width="100%" 
+          height="100%" 
+          viewBox="0 0 100 20" 
+          preserveAspectRatio="none"
+          className="block"
+        >
+          <defs>
+            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#f59e0b" />
+              <stop offset="48%" stopColor="#b45309" />
+              <stop offset="50%" stopColor="#fde68a" />
+              <stop offset="52%" stopColor="#b45309" />
+              <stop offset="100%" stopColor="#f59e0b" />
+            </linearGradient>
+          </defs>
+          
+          {/* The Formal Beam Path */}
+          <path 
+            d="
+              M 0 10 
+              Q 25 10, 50 4
+              Q 75 10, 100 10
+              Q 75 10, 50 16
+              Q 25 10, 0 10
+              Z
+            " 
+            fill={`url(#${gradientId})`}
+          />
+          
+          {/* Minimalist Central Pivot Point */}
+          <circle cx="50" cy="10" r="0.6" fill="#fef3c7" opacity="0.8" />
+        </svg>
+      </span>
+    </span>
+  );
+};
 
 // Particle Background Component (static version)
 const ParticleBackground = ({ count = 30, color = "amber" }) => {
@@ -201,19 +266,18 @@ const TechnicalBidComponent = () => {
       </style>
 
       {/* Cinematic Hero Section */}
-      <div className="relative text-center py-20 lg:py-32 rounded-3xl overflow-hidden mb-20 bg-gradient-to-br from-amber-50 to-amber-100">
+      <div className="relative text-center py-20 lg:py-32 rounded-3xl overflow-hidden mb-20 bg-linear-to-br from-amber-50 to-amber-100">
         <ParticleBackground count={40} />
         <div className="relative z-10 max-w-4xl mx-auto">
           <div className="inline-block bg-white/80 backdrop-blur-sm text-amber-700 px-6 py-2 rounded-full mb-6 text-sm font-semibold shadow-sm">
             EXCELLENCE IN ENVIRONMENTAL MONITORING
           </div>
           <AnimateOnScroll as="h1" animation="animate-slideInRight" delay="0.1s" className="text-3xl md:text-7xl font-bold text-amber-900 mb-6 leading-tight text-center">
-            Transforming <span className="text-amber-700 heading-underline">Environmental Data</span> into Actionable Insights
+            Transforming <BeamUnderline className="text-amber-700">Environmental Data</BeamUnderline> into Actionable Insights
           </AnimateOnScroll>
           <AnimateOnScroll as="p" animation="animate-slideInLeft" delay="0.2s" className="text-xl text-amber-800 text-justify px-2 max-w-2xl mx-auto mb-10">
             We provide comprehensive environmental monitoring solutions that ensure regulatory compliance, protect public health, and support sustainable resource management.
           </AnimateOnScroll>
-
         </div>
       </div>
 
@@ -225,12 +289,12 @@ const TechnicalBidComponent = () => {
             <ClipboardCheck className="mr-3 w-4 h-4 sm:w-6 sm:h-6 text-amber-600" />
             <span className="font-medium">Monitoring Principles</span>
           </div>
-          <div className="grid lg:grid-cols-2 gap-12 items-center -mx-[28px]" >
+          <div className="grid lg:grid-cols-2 gap-12 items-center -mx-7" >
             <div>
               <AnimateOnScroll as="h2" animation="animate-itemVariants" delay="0.1s" className="text-4xl font-bold text-amber-900 mb-2">
-                Our <span className="text-amber-700 heading-underline">Methodological Approach</span> to Environmental Monitoring
+                Our  Methodological Approach to Environmental Monitoring 
               </AnimateOnScroll>
-              <AnimateOnScroll animation="animate-underlineVariant" delay="0.3s" className="w-[80px] h-[4px] bg-amber-400 rounded-full my-4" wrapperStyle={{ transformOrigin: 'right' }} />
+              <AnimateOnScroll animation="animate-underlineVariant" delay="0.3s" className="w-20 h-1 bg-amber-400 rounded-full my-4" wrapperStyle={{ transformOrigin: 'right' }} />
 
               <AnimateOnScroll as="p" animation="animate-contentParagraphVariant" delay="0.4s" className="text-lg  text-amber-800 mb-8 text-justify leading-relaxed">
                 Our environmental monitoring follows rigorous scientific principles to ensure accurate, reliable data collection and analysis for informed decision-making and regulatory compliance.
@@ -259,12 +323,12 @@ const TechnicalBidComponent = () => {
 
             <AnimateOnScroll animation="animate-grow" delay="0.4s" className="relative h-full">
               <div className="sticky top-24">
-                <div className="bg-white p-2 lg:p-0 md:p-0 -mx-[20px] lg:mx-0 md:mx-0 ">
+                <div className="bg-white p-2 lg:p-0 md:p-0 -mx-5 lg:mx-0 md:mx-0 ">
                   <h3 className="text-2xl font-semibold mb-8 text-center text-amber-700 heading-underline">
                     Monitoring Process Timeline
                   </h3>
                   <div className="relative">
-                    <div className="hidden md:block absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-300 to-amber-400" />
+                    <div className="hidden md:block absolute left-8 top-0 bottom-0 w-1 bg-linear-to-b from-amber-300 to-amber-400" />
                     {[
                       { step: "1", title: "Project Planning", icon: <Target className="w-6 h-6 sm:w-5 sm:h-5 text-amber-600" />, duration: "1-3 days" },
                       { step: "2", title: "Site Assessment", icon: <Eye className="w-6 h-6 sm:w-5 sm:h-5 text-amber-600" />, duration: "2-5 days" },
@@ -302,7 +366,7 @@ const TechnicalBidComponent = () => {
       <div className="mb-20">
         <div className="text-center mb-16">
           <div className="inline-block mb-8">
-            <div className="bg-gradient-to-r from-amber-400 to-amber-500 p-1 rounded-full">
+            <div className="bg-linear-to-r from-amber-400 to-amber-500 p-1 rounded-full">
               <div className="bg-white px-8 py-2 rounded-full">
                 <p className="text-lg font-medium text-amber-700">
                   Strategic Value Proposition
@@ -312,7 +376,7 @@ const TechnicalBidComponent = () => {
           </div>
 
           <AnimateOnScroll as="h2" animation="animate-itemVariants" delay="0.1s" className="text-4xl font-bold text-amber-900 mb-2">
-            Benefits of <span className="text-amber-700 heading-underline">Environmental Monitoring</span>
+             <BeamUnderline className="text-amber-700">Benefits of Environmental Monitoring</BeamUnderline>
           </AnimateOnScroll>
           <AnimateOnScroll animation="animate-underlineVariant" delay="0.3s" className="w-[80px] h-[4px] bg-amber-400 rounded-full mx-auto mt-2" wrapperStyle={{ transformOrigin: 'center' }} />
 
@@ -347,19 +411,19 @@ const TechnicalBidComponent = () => {
 
         <div className="relative z-10">
           <AnimateOnScroll as="h2" animation="animate-itemVariants" delay="0.1s" className="text-4xl font-bold mb-2 text-center text-amber-100">
-            <span className="text-amber-200 heading-underline">
-              Industry Applications
-            </span> of Environmental Monitoring
+            <BeamUnderline className="text-amber-200">
+              Industry Applications of Environmental Monitoring
+            </BeamUnderline> 
           </AnimateOnScroll>
           <AnimateOnScroll animation="animate-underlineVariant" delay="0.3s" className="w-[80px] h-[4px] bg-amber-400 rounded-full mx-auto mt-2" wrapperStyle={{ transformOrigin: 'center' }} />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mt-12 [perspective:1000px]">
             {[
-              { icon: "🏭", title: "Industrial", description: "Manufacturing, Processing", stats: "87% compliance rate" },
-              { icon: "💧", title: "Water Resources", description: "Drinking Water, Wastewater", stats: "92% accuracy" },
-              { icon: "🏗️", title: "Construction", description: "Site Assessment, Remediation", stats: "85% success" },
-              { icon: "🌾", title: "Agriculture", description: "Soil Health, Runoff", stats: "94% approval" },
-              { icon: "🏢", title: "Municipal", description: "Urban Planning, Public Health", stats: "89% impact" }
+              { icon: <Factory className="w-12 h-12 text-amber-300" />, title: "Industrial", description: "Manufacturing, Processing", stats: "87% compliance rate" },
+              { icon: <Droplets className="w-12 h-12 text-amber-300" />, title: "Water Resources", description: "Drinking Water, Wastewater", stats: "92% accuracy" },
+              { icon: <Building className="w-12 h-12 text-amber-300" />, title: "Construction", description: "Site Assessment, Remediation", stats: "85% success" },
+              { icon: <Sprout className="w-12 h-12 text-amber-300" />, title: "Agriculture", description: "Soil Health, Runoff", stats: "94% approval" },
+              { icon: <Landmark className="w-12 h-12 text-amber-300" />, title: "Municipal", description: "Urban Planning, Public Health", stats: "89% impact" }
             ].map((item, i) => (
               <AnimateOnScroll
                 key={i}
@@ -367,12 +431,14 @@ const TechnicalBidComponent = () => {
                 delay={`${(i * 0.1) + 0.4}s`}
                 className="bg-amber-700 bg-opacity-50 p-8 rounded-xl backdrop-blur-sm border border-amber-500 border-opacity-30 hover:border-opacity-60 transition-all duration-300 hover:-translate-y-2 hover:[transform:rotateX(2deg)_rotateY(1deg)] relative overflow-hidden group"
               >
-                <div className="text-5xl mb-6 group-hover:text-6xl transition-all duration-300">
-                  {item.icon}
+                <div className="flex justify-center mb-6 group-hover:scale-110 transition-all duration-300">
+                  <div className="p-4 rounded-full bg-amber-800/30">
+                    {item.icon}
+                  </div>
                 </div>
-                <h3 className="text-xl font-bold mb-2 text-amber-100 heading-underline">{item.title}</h3>
-                <p className="text-sm opacity-80 mb-4">{item.description}</p>
-                <div className="text-xs font-mono opacity-60 group-hover:opacity-100 transition-opacity duration-300">
+                <h3 className="text-xl font-bold mb-2 text-amber-100 heading-underline text-center">{item.title}</h3>
+                <p className="text-sm opacity-80 mb-4 text-center">{item.description}</p>
+                <div className="text-xs font-mono opacity-60 group-hover:opacity-100 transition-opacity duration-300 text-center">
                   {item.stats}
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-amber-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

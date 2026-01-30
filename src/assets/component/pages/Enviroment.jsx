@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "../utilities/image";
-import img1 from  "../../img/eia.png"
-import img2 from  "../../img/eia.png"
+import img1 from "../../img/eia.png";
+import img2 from "../../img/eia.png";
 
 // --- SVG Icon Components ---
 const FaLeaf = (props) => (
@@ -45,9 +45,9 @@ const FaCertificate = (props) => (
   </svg>
 );
 const FaPlayCircle = (props) => (
-    <svg {...props} stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-        <path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm115.7 272l-176 101c-15.8 8.8-35.7-2.5-35.7-21V152c0-18.4 19.8-29.8 35.7-21l176 107c16.4 9.2 16.4 32.9 0 42z"></path>
-    </svg>
+  <svg {...props} stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+    <path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm115.7 272l-176 101c-15.8 8.8-35.7-2.5-35.7-21V152c0-18.4 19.8-29.8 35.7-21l176 107c16.4 9.2 16.4 32.9 0 42z"></path>
+  </svg>
 );
 
 // Pattern background component
@@ -60,11 +60,66 @@ const PatternBackground = () => (
   ></div>
 );
 
+// BeamUnderline Component
+const BeamUnderline = ({ 
+  children, 
+  thickness = 8, 
+  className = "" 
+}) => {
+  const gradientId = React.useMemo(() => `beamGradient${Math.random().toString(36).substr(2, 9)}`, []);
+
+  return (
+    <span className={`relative inline-block group ${className}`}>
+      {children}
+      <span 
+        className="absolute left-0 right-0 -bottom-2 block overflow-visible pointer-events-none"
+        style={{ height: `${thickness * 1.5}px` }}
+      >
+        <svg 
+          width="100%" 
+          height="100%" 
+          viewBox="0 0 100 20" 
+          preserveAspectRatio="none"
+          className="block"
+        >
+          <defs>
+            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#f59e0b" />
+              <stop offset="48%" stopColor="#b45309" />
+              <stop offset="50%" stopColor="#fde68a" />
+              <stop offset="52%" stopColor="#b45309" />
+              <stop offset="100%" stopColor="#f59e0b" />
+            </linearGradient>
+          </defs>
+          
+          {/* The Formal Beam Path */}
+          <path 
+            d="
+              M 0 10 
+              Q 25 10, 50 4
+              Q 75 10, 100 10
+              Q 75 10, 50 16
+              Q 25 10, 0 10
+              Z
+            " 
+            fill={`url(#${gradientId})`}
+          />
+          
+          {/* Minimalist Central Pivot Point */}
+          <circle cx="50" cy="10" r="0.6" fill="#fef3c7" opacity="0.8" />
+        </svg>
+      </span>
+    </span>
+  );
+};
+
 // Helper Component: Video Player with placeholder
 const VideoPlayer = ({ title, src, link }) => (
   <section className="mt-16 animate-on-scroll">
-    <h2 className="text-2xl md:text-3xl font-semibold text-amber-900 mb-8 text-center relative heading-underline pb-4 animate-itemVariants">
-      {title}
+    <h2 className="text-2xl md:text-3xl font-semibold text-amber-900 mb-8 text-center relative pb-4 animate-itemVariants">
+      <BeamUnderline thickness={6}>
+        {title}
+      </BeamUnderline>
     </h2>
     <div className="relative bg-black rounded-xl shadow-lg overflow-hidden group border-4 border-amber-200 animate-scaleUp">
       <video
@@ -96,7 +151,10 @@ const EnvironmentalServices = () => {
       @keyframes paragraph-anim { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
       @keyframes rotate3D { from { opacity: 0; transform: perspective(800px) translateY(30px) rotateX(-10deg); } to { opacity: 1; transform: perspective(800px) translateY(0) rotateX(0deg); } }
       @keyframes scaleUp { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
-      @keyframes underline-grow { from { width: 0%; } to { width: 25%; } }
+      @keyframes beamAppear { 
+        0% { opacity: 0; transform: scaleX(0.3); } 
+        100% { opacity: 1; transform: scaleX(1); } 
+      }
 
       .animate-on-scroll { 
         opacity: 0; 
@@ -114,11 +172,14 @@ const EnvironmentalServices = () => {
       .is-visible .animate-rotate3D { animation: rotate3D 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
       .is-visible .animate-scaleUp { animation: scaleUp 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
 
+      /* Beam underline animation */
+      .is-visible .beam-underline svg {
+        animation: beamAppear 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards;
+        transform-origin: center center;
+      }
+
       .card-hover { transition: transform 0.3s ease-out; }
       .card-hover:hover { transform: translateY(-8px) perspective(800px) rotateX(2deg) rotateY(-1deg); }
-
-      .heading-underline::after { content: ''; position: absolute; left: 50%; transform: translateX(-50%); bottom: -0.5rem; height: 4px; background-color: #f59e0b; border-radius: 9999px; width: 0%; }
-      .is-visible .heading-underline::after { animation: underline-grow 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards; }
     `;
     document.head.appendChild(style);
 
@@ -160,9 +221,11 @@ const EnvironmentalServices = () => {
         <PatternBackground />
         <div className="relative z-10">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 animate-slideInRight">
-             <span className="text-white drop-shadow-md">
-               ISO-Certified Environmental Impact Assessment & Monitoring Services
-             </span>
+            
+              <span className="text-white drop-shadow-md">
+                ISO-Certified Environmental Impact Assessment & Monitoring Services
+              </span>
+           
           </h1>
           <p className="text-lg md:text-xl text-amber-100 text-justify max-w-4xl mx-auto leading-relaxed animate-slideInLeft">
             EIMCTA provides comprehensive, impartial environmental services grounded in ISO standards. Our expert team delivers reliable Environmental Impact Assessments (EIA) and precise environmental monitoring using calibrated equipment to ensure regulatory compliance and sustainable development.
@@ -185,8 +248,10 @@ const EnvironmentalServices = () => {
             <div className="bg-amber-100 p-3 rounded-full mr-4 border-2 border-amber-200">
               <FaLeaf className="text-amber-500 text-xl" />
             </div>
-            <h2 className="text-2xl md:text-3xl font-semibold text-amber-900 heading-underline relative pb-4 animate-itemVariants">
-              Environmental Impact Assessment (EIA) Services
+            <h2 className="text-2xl md:text-3xl font-semibold text-amber-900 relative pb-4 animate-itemVariants">
+              <BeamUnderline thickness={8} className="beam-underline">
+                Environmental Impact Assessment (EIA) Services
+              </BeamUnderline>
             </h2>
           </div>
           <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -227,8 +292,10 @@ const EnvironmentalServices = () => {
       {/* Enhanced Core Principles Section */}
       <section className="mb-16 relative overflow-hidden rounded-xl bg-transparent p-8 animate-on-scroll">
         <div className="relative z-10">
-          <h2 className="text-2xl md:text-3xl font-semibold text-amber-900 mb-8 text-center relative heading-underline pb-4 animate-itemVariants">
-            Our <span className="text-amber-800">Environmental Monitoring</span> Core Principles
+          <h2 className="text-2xl md:text-3xl font-semibold text-amber-900 mb-8 text-center relative pb-4 animate-itemVariants">
+            <BeamUnderline thickness={8} className="beam-underline">
+              Our <span className="text-amber-800">Environmental Monitoring</span> Core Principles
+            </BeamUnderline>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
@@ -273,8 +340,10 @@ const EnvironmentalServices = () => {
       <section className="mb-16 bg-white rounded-xl p-8 relative overflow-hidden border border-amber-200 hover:shadow-xl transition-shadow duration-300 animate-on-scroll">
         <PatternBackground />
         <div className="relative z-10">
-          <h2 className="text-2xl md:text-3xl font-semibold text-amber-900 mb-8 text-center relative heading-underline pb-4 animate-itemVariants">
-            Comprehensive Benefits of Our Environmental Services
+          <h2 className="text-2xl md:text-3xl font-semibold text-amber-900 mb-8 text-center relative pb-4 animate-itemVariants">
+            <BeamUnderline thickness={8} className="beam-underline">
+              Comprehensive Benefits of Our Environmental Services
+            </BeamUnderline>
           </h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 animate-paragraph">

@@ -14,7 +14,7 @@ import {
   Lock,
   UserCheck,
   FileCheck2,
-   Clock, CreditCard  ,
+  Clock, CreditCard,
 } from "lucide-react";
 
 
@@ -261,11 +261,8 @@ export const menuitems = [
         title: 'ISO Audit',
         path: '/services/iso-audit',
         icon: icon
-      }, {
-        title: 'ISO certification',
-        path: '/services/iso-certification',
-        icon: icon
-      }, {
+      },
+      {
         title: ' Training | OHS | HRD  ',
         path: '/services/iso-training',
         icon: icon,
@@ -296,6 +293,13 @@ export const menuitems = [
         }],
       },
       {
+        title: 'ISO certification',
+        path: '/services/iso-certification',
+        icon: icon
+      },
+
+
+      {
         title: 'Tender/Technical/Bid Preparation',
         path: '/services/tender-technical-bid-preparation',
         icon: icon
@@ -317,15 +321,11 @@ export const menuitems = [
     children: [
       {
         title: 'Offers/Contents/Latest Boosting',
-        // path: '/Blog-Offers/Offers-Contents-Latest-Boosting',
-        path: null,
+        path: '/Blog-Offers/Offers-Contents-Latest-Boosting',
+        // path: null,
         icon: icon
       },
       {
-        title: 'FAQ',
-        path: '/Blog-Offers/FAQ',
-        icon: icon
-      }, {
         title: 'FB,Titktok,Linkedin,youtube',
         // path: '/Blog-Offers/FB-Titktok-Linkedin-youtube',
         path: null,

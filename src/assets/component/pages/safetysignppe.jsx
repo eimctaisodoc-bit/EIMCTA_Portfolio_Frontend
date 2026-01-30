@@ -1,332 +1,996 @@
-import React from "react";
-import { HardHat, Glasses, Shield, Footprints, UserRoundCog, Ear, Hand, FlaskConical, Factory, Hospital, Zap, Shirt, Mountain, Building, Hammer, Droplets, TriangleAlert, FireExtinguisher, Radiation, Biohazard, Syringe, Ban, TrafficCone, Plus, Recycle } from "lucide-react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
+import { 
+  Search, Filter, AlertTriangle, Flame, Shield, Eye, Ear, Hand, 
+  HardHat, Zap, Thermometer, Magnet, AlertCircle, ChevronDown,
+  ShieldCheck, Ban, ArrowRight, CheckCircle, Info, X, AlertOctagon,
+  Maximize2, Ruler, MapPin, BookOpen
+} from "lucide-react";
 
+// Custom Scrollbar Styles
+const customScrollbarStyles = `
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(251, 191, 36, 0.1);
+    border-radius: 10px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    border-radius: 10px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #d97706, #b45309);
+  }
+  
+  /* Modal Animation */
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .modal-animate {
+    animation: modalIn 0.2s ease-out forwards;
+  }
+`;
 
-// --- CUSTOM STYLE FOR 3D HOVER EFFECTS ---
-const CustomStyles = () => (
-    <style>{`
-        .perspective-parent {
-            perspective: 1000px;
+// --- Dynamic Image Imports (Kept exactly as requested) ---
+const importFireSafetyImages = () => {
+  const modules = import.meta.glob('../../img/FIRESAFETYSIGNS/*.{png,jpg,jpeg,svg,gif}', { eager: true });
+  const images = {};
+  for (const path in modules) {
+    const fileName = path.split('/').pop();
+    const cleanName = fileName.replace(/\s+/g, ' ').trim();
+    images[cleanName] = modules[path].default;
+  }
+  return images;
+};
+
+const importWarningImages = () => {
+  const modules = import.meta.glob('../../img/WARNING SIGNS/*.{png,jpg,jpeg,svg,gif}', { eager: true });
+  const images = {};
+  for (const path in modules) {
+    const fileName = path.split('/').pop();
+    const cleanName = fileName.replace(/\s+/g, ' ').trim();
+    images[cleanName] = modules[path].default;
+  }
+  return images;
+};
+
+const importProhibitionImages = () => {
+  const modules = import.meta.glob('../../img/PROHIBITION SIGNS/*.{png,jpg,jpeg,svg,gif}', { eager: true });
+  const images = {};
+  for (const path in modules) {
+    const fileName = path.split('/').pop();
+    const cleanName = fileName.replace(/\s+/g, ' ').trim();
+    images[cleanName] = modules[path].default;
+  }
+  return images;
+};
+
+const importMandatoryImages = () => {
+  const modules = import.meta.glob('../../img/MANDATORY SIGNS/*.{png,jpg,jpeg,svg,gif}', { eager: true });
+  const images = {};
+  for (const path in modules) {
+    const fileName = path.split('/').pop();
+    const cleanName = fileName.replace(/\s+/g, ' ').trim();
+    images[cleanName] = modules[path].default;
+  }
+  return images;
+};
+
+const importSafeConditionImages = () => {
+  const modules = import.meta.glob('../../img/SAFECONDITIONEMERGENCYSIGNS/*.{png,jpg,jpeg,svg,gif}', { eager: true });
+  const images = {};
+  for (const path in modules) {
+    const fileName = path.split('/').pop();
+    const cleanName = fileName.replace(/\s+/g, ' ').trim();
+    images[cleanName] = modules[path].default;
+  }
+  return images;
+};
+
+// --- Animation Component ---
+const AnimateOnScroll = ({ children, delay = 0, className = "" }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => setIsVisible(true), delay * 1000);
+          observer.unobserve(entry.target);
         }
-        .card-hover-effect {
-            transition: transform 0.3s ease-out;
-            transform-style: preserve-3d;
-        }
-        .card-hover-effect:hover {
-            transform: translateY(-8px) rotateX(2deg) rotateY(-1deg) scale(1.03);
-        }
+      },
+      { threshold: 0.1, rootMargin: "50px" }
+    );
+
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [delay]);
+
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-700 ease-out ${
+        isVisible
+          ? "opacity-100 translate-y-0"
+          : "opacity-0 translate-y-10"
+      } ${className}`}
+    >
+      {children}
+    </div>
+  );
+};
+
+// --- Metadata Configuration ---
+const categoryMeta = {
+  "Fire Safety": {
+    icon: <Flame className="w-5 h-5" />,
+    gradient: "from-red-500 to-orange-500",
+    lightGradient: "from-red-50 to-orange-50",
+    border: "border-red-200",
+    bgHover: "hover:shadow-red-100",
+    badgeColor: "bg-red-100 text-red-700 border-red-200",
+    color: "text-red-700",
+  },
+  "Warning": {
+    icon: <AlertTriangle className="w-5 h-5" />,
+    gradient: "from-amber-500 to-yellow-500",
+    lightGradient: "from-amber-50 to-yellow-50",
+    border: "border-amber-200",
+    bgHover: "hover:shadow-amber-100",
+    badgeColor: "bg-amber-100 text-amber-700 border-amber-200",
+    color: "text-amber-700",
+  },
+  "Prohibition": {
+    icon: <Ban className="w-5 h-5" />,
+    gradient: "from-rose-500 to-pink-500",
+    lightGradient: "from-rose-50 to-pink-50",
+    border: "border-rose-200",
+    bgHover: "hover:shadow-rose-100",
+    badgeColor: "bg-rose-100 text-rose-700 border-rose-200",
+    color: "text-rose-700",
+  },
+  "Mandatory": {
+    icon: <ShieldCheck className="w-5 h-5" />,
+    gradient: "from-blue-500 to-cyan-500",
+    lightGradient: "from-blue-50 to-cyan-50",
+    border: "border-blue-200",
+    bgHover: "hover:shadow-blue-100",
+    badgeColor: "bg-blue-100 text-blue-700 border-blue-200",
+    color: "text-blue-700",
+  },
+  "Safe Condition": {
+    icon: <CheckCircle className="w-5 h-5" />,
+    gradient: "from-emerald-500 to-green-500",
+    lightGradient: "from-emerald-50 to-green-50",
+    border: "border-emerald-200",
+    bgHover: "hover:shadow-emerald-100",
+    badgeColor: "bg-emerald-100 text-emerald-700 border-emerald-200",
+    color: "text-emerald-700",
+  },
+};
+
+const safetyStandards = [
+  "ISO 7010:2011",
+  "ANSI Z535",
+  "OSHA 1910.145",
+  "BS 5499"
+];
+
+// --- Modal Component ---
+const SignDetailModal = ({ sign, onClose, meta }) => {
+  if (!sign) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      {/* Backdrop */}
+      <div 
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+        onClick={onClose}
+      />
+      
+      {/* Modal Content */}
+      <div className="relative w-full max-w-3xl bg-white rounded-2xl shadow-2xl modal-animate flex flex-col max-h-[90vh] overflow-hidden border border-gray-100">
         
-        /* Mobile-specific adjustments */
-        @media (max-width: 640px) {
-            .industry-chip {
-                flex-basis: calc(50% - 0.5rem);
-                font-size: 0.875rem;
-                padding: 0.5rem;
-            }
-            
-            .industry-chip-icon {
-                margin-right: 0.5rem;
-            }
-        }
-    `}</style>
-);
-
-
-// --- HELPER & ANIMATION COMPONENTS ---
-
-/**
- * A flexible component to animate children when they scroll into view.
- * Uses the Intersection Observer API and configurable Tailwind CSS classes.
- */
-const AnimateOnScroll = ({ children, delay = 0, initial = "opacity-0 translate-y-10", className = "" }) => {
-    const [isVisible, setIsVisible] = React.useState(false);
-    const ref = React.useRef(null);
-
-    React.useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    // Delay is in seconds, convert to ms for setTimeout
-                    const timer = setTimeout(() => setIsVisible(true), delay * 1000);
-                    observer.unobserve(entry.target); // Clean up observer
-                    return () => clearTimeout(timer);
-                }
-            },
-            { threshold: 0.1 }
-        );
-
-        const currentRef = ref.current;
-        if (currentRef) {
-            observer.observe(currentRef);
-        }
-
-        return () => {
-            if (currentRef) {
-                observer.unobserve(currentRef);
-            }
-        };
-    }, [delay]);
-
-    return (
-        <div
-            ref={ref}
-            className={`${className} transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
-                isVisible ? "opacity-100 translate-x-0 translate-y-0 scale-100" : initial
-            }`}
-        >
-            {children}
-        </div>
-    );
-};
-
-/**
- * A dedicated component for section headers that includes an animated underline.
- */
-const SectionHeader = ({ title }) => {
-    const [isVisible, setIsVisible] = React.useState(false);
-    const ref = React.useRef(null);
-
-    React.useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                    observer.unobserve(entry.target);
-                }
-            },
-            { threshold: 0.1 }
-        );
-
-        const currentRef = ref.current;
-        if (currentRef) observer.observe(currentRef);
-        return () => { if (currentRef) observer.unobserve(currentRef) };
-    }, []);
-
-    return (
-        <div ref={ref} className="text-center mb-8 md:mb-12">
-            <h2 className={`relative inline-block text-2xl md:text-3xl font-bold text-amber-900 transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                {title}
-                <span 
-                    className={`absolute bottom-[-0.5rem] left-1/2 -translate-x-1/2 h-1 bg-amber-400 origin-center transition-transform duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${isVisible ? 'scale-x-100' : 'scale-x-0'}`} 
-                    style={{ transitionDelay: '500ms', width: '25%' }} 
-                />
-            </h2>
-        </div>
-    );
-};
-
-
-/**
- * A placeholder for a video player component.
- */
-const VideoPlayer = () => (
-  <AnimateOnScroll delay={0.2} initial="opacity-0 scale-95">
-    <div className="mt-12 md:mt-20 text-center">
-      <SectionHeader title="Learn More About Workplace Safety" />
-      <div className="relative aspect-video max-w-4xl mx-auto rounded-lg md:rounded-xl shadow-lg md:shadow-2xl overflow-hidden bg-gray-900 border-2 md:border-4 border-amber-200">
-        <img 
-          src="https://placehold.co/1280x720/0a0a0a/f59e0b?text=Safety+Training+Video" 
-          alt="Safety Training Video Placeholder" 
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-          <button
-            aria-label="Play Video"
-            className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white bg-opacity-20 backdrop-blur-sm text-white hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center"
+        {/* Header */}
+        <div className={`px-6 py-4 border-b flex items-center justify-between bg-gradient-to-r ${meta.lightGradient}`}>
+          <div className="flex items-center gap-3">
+            <div className={`p-2 rounded-lg bg-white/60 backdrop-blur-sm shadow-sm ${meta.color}`}>
+              {meta.icon}
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-gray-900">{sign.name}</h2>
+              <p className={`text-sm font-medium ${meta.color}`}>{sign.category} • {sign.code}</p>
+            </div>
+          </div>
+          <button 
+            onClick={onClose}
+            className="p-2 rounded-full hover:bg-black/5 transition-colors text-gray-500"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 md:w-10 md:h-10 ml-1" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M4.555 15.055a.75.75 0 01.09-1.055l8.5-6.5a.75.75 0 011.056.91l-8.5 6.5a.75.75 0 01-1.146.145z" clipRule="evenodd" transform="translate(1, -0.5)" />
-            </svg>
+            <X className="w-6 h-6" />
+          </button>
+        </div>
+
+        {/* Scrollable Body */}
+        <div className="overflow-y-auto p-6 custom-scrollbar">
+          <div className="flex flex-col md:flex-row gap-8">
+            
+            {/* Left: Image & Specs */}
+            <div className="md:w-1/3 flex flex-col gap-4">
+              <div className="aspect-square rounded-2xl bg-gray-50 border-2 border-dashed border-gray-200 flex items-center justify-center p-6 relative overflow-hidden group">
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity bg-gradient-to-br ${meta.gradient}`} />
+                {sign.img ? (
+                  <img
+                    src={sign.img}
+                    alt={sign.name}
+                    className="w-full h-full object-contain drop-shadow-sm transition-transform duration-500 group-hover:scale-110"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = `https://via.placeholder.com/300x300/f3f4f6/9ca3af?text=${encodeURIComponent(sign.name)}`;
+                    }}
+                  />
+                ) : (
+                   <span className="text-gray-400 font-medium">No Image</span>
+                )}
+              </div>
+
+              <div className="space-y-3">
+                <div className="bg-gray-50 rounded-xl p-3 border border-gray-100">
+                  <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Shape</div>
+                  <div className="font-medium text-gray-900">{sign.shape}</div>
+                </div>
+                <div className="bg-gray-50 rounded-xl p-3 border border-gray-100">
+                   <div className="flex items-center gap-2 mb-2">
+                      <Ruler className="w-4 h-4 text-gray-400" />
+                      <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Available Sizes</span>
+                   </div>
+                   <div className="flex flex-wrap gap-2">
+                      {sign.size_mm.map((size, idx) => (
+                        <span key={idx} className="px-2 py-1 bg-white rounded border border-gray-200 text-xs text-gray-600 shadow-sm">
+                          {size}mm
+                        </span>
+                      ))}
+                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Details */}
+            <div className="md:w-2/3 space-y-6">
+              
+              {/* Meaning Section */}
+              <div className="space-y-2">
+                <h3 className="flex items-center gap-2 text-lg font-bold text-gray-900">
+                  <BookOpen className="w-5 h-5 text-amber-500" />
+                  Meaning & Application
+                </h3>
+                <p className="text-gray-600 leading-relaxed bg-amber-50/50 p-4 rounded-xl border border-amber-100">
+                  {sign.meaning}
+                </p>
+              </div>
+
+              {/* Usage & Position Grid */}
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                   <h4 className="flex items-center gap-2 font-semibold text-gray-900 text-sm">
+                      <Zap className="w-4 h-4 text-amber-500" />
+                      Usage Guidelines
+                   </h4>
+                   <p className="text-sm text-gray-600">{sign.usage}</p>
+                </div>
+                <div className="space-y-2">
+                   <h4 className="flex items-center gap-2 font-semibold text-gray-900 text-sm">
+                      <MapPin className="w-4 h-4 text-amber-500" />
+                      Placement
+                   </h4>
+                   <p className="text-sm text-gray-600">{sign.position}</p>
+                </div>
+              </div>
+
+              {/* Important Notes */}
+              <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 flex gap-3">
+                 <Info className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                 <div>
+                    <h4 className="font-semibold text-blue-900 text-sm mb-1">Technical Note</h4>
+                    <p className="text-sm text-blue-800">{sign.notes}</p>
+                 </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="px-6 py-4 bg-gray-50 border-t flex justify-end">
+          <button 
+            onClick={onClose}
+            className="px-6 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors shadow-sm"
+          >
+            Close
           </button>
         </div>
       </div>
     </div>
-  </AnimateOnScroll>
-);
+  );
+};
 
+// --- Main Component ---
+const SafetySignPPE = () => {
+  const [query, setQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [images, setImages] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedSign, setSelectedSign] = useState(null);
 
-// --- DATA CONFIGURATION ---
-const industrySectors = [
-  { icon: <Factory className="w-5 h-5 md:w-6 md:h-6" />, name: "Manufacturing" },
-  { icon: <Hospital className="w-5 h-5 md:w-6 md:h-6" />, name: "Healthcare" },
-  { icon: <Zap className="w-5 h-5 md:w-6 md:h-6" />, name: "Energy" },
-  { icon: <Shirt className="w-5 h-5 md:w-6 md:h-6" />, name: "Textile" },
-  { icon: <Mountain className="w-5 h-5 md:w-6 md:h-6" />, name: "Mining" },
-  { icon: <Building className="w-5 h-5 md:w-6 md:h-6" />, name: "Corporate Offices" },
-  { icon: <Hammer className="w-5 h-5 md:w-6 md:h-6" />, name: "Construction" },
-  { icon: <Droplets className="w-5 h-5 md:w-6 md:h-6" />, name: "Oil & Gas" },
-];
+  useEffect(() => {
+    const loadImages = async () => {
+      try {
+        const [
+          fireSafety,
+          warning,
+          prohibition,
+          mandatory,
+          safeCondition
+        ] = await Promise.all([
+          importFireSafetyImages(),
+          importWarningImages(),
+          importProhibitionImages(),
+          importMandatoryImages(),
+          importSafeConditionImages()
+        ]);
+        
+        setImages({ fireSafety, warning, prohibition, mandatory, safeCondition });
+      } catch (error) {
+        console.error('Error loading images:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    loadImages();
+  }, []);
 
-const signCategories = [
-  { id: 1, icon: <TriangleAlert className="w-10 h-10 md:w-12 md:h-12" />, title: "Danger Signs", description: "Indicates immediate danger that will cause death or serious injury if not avoided.", iso: "ISO 7010 W001", examples: ["High voltage", "Radiation area", "Toxic material"], gradient: "bg-gradient-to-br from-red-600 to-red-800", sectors: ["Construction", "Manufacturing", "Energy"] },
-  { id: 2, icon: <Ban className="w-10 h-10 md:w-12 md:h-12" />, title: "Prohibition Signs", description: "Indicates behavior or actions that are not permitted in the area.", iso: "ISO 7010 P001", examples: ["No smoking", "No entry", "No mobile phones"], gradient: "bg-gradient-to-br from-red-500 to-red-700", sectors: ["Healthcare", "Food Processing", "Chemical"] },
-  { id: 3, icon: <TrafficCone className="w-10 h-10 md:w-12 md:h-12" />, title: "Mandatory Signs", description: "Indicates actions that must be carried out to comply with safety regulations.", iso: "ISO 7010 M001", examples: ["Wear PPE", "Wash hands", "Safety harness required"], gradient: "bg-gradient-to-br from-blue-600 to-blue-800", sectors: ["Construction", "Laboratories", "Manufacturing"] },
-  { id: 4, icon: <Plus className="w-10 h-10 md:w-12 md:h-12" />, title: "Emergency Signs", description: "Indicates location of safety equipment or emergency exits.", iso: "ISO 7010 E001", examples: ["First aid kit", "Emergency exit", "Eyewash station"], gradient: "bg-gradient-to-br from-green-600 to-green-800", sectors: ["All industries"] },
-  { id: 5, icon: <FireExtinguisher className="w-10 h-10 md:w-12 md:h-12" />, title: "Fire Safety Signs", description: "Indicates location of fire fighting equipment and fire alarm activation points.", iso: "ISO 7010 F001", examples: ["Fire extinguisher", "Fire hose", "Fire alarm call point"], gradient: "bg-gradient-to-br from-orange-600 to-orange-800", sectors: ["All industries"] },
-  { id: 6, icon: <Radiation className="w-10 h-10 md:w-12 md:h-12" />, title: "Warning Signs", description: "Indicates potentially hazardous situations that may cause minor or moderate injury.", iso: "ISO 7010 W001", examples: ["Slippery surface", "Hot surface", "Forklift traffic"], gradient: "bg-gradient-to-br from-yellow-500 to-yellow-700", sectors: ["Warehousing", "Manufacturing", "Healthcare"] },
-  { id: 7, icon: <Biohazard className="w-10 h-10 md:w-12 md:h-12" />, title: "Biological Hazard Signs", description: "Indicates presence of biological substances that pose a threat to health.", iso: "ISO 7010 W021", examples: ["Biohazard area", "Contaminated waste", "Infectious materials"], gradient: "bg-gradient-to-br from-purple-600 to-purple-800", sectors: ["Healthcare", "Laboratories", "Waste Management"] },
-  { id: 8, icon: <Plus className="w-10 h-10 md:w-12 md:h-12" />, title: "Safe Condition Signs", description: "Indicates safe conditions or locations of safety-related facilities.", iso: "ISO 7010 E002", examples: ["Assembly point", "Safe route", "Emergency shower"], gradient: "bg-gradient-to-br from-green-500 to-green-700", sectors: ["All industries"] },
-  { id: 9, icon: <Recycle className="w-10 h-10 md:w-12 md:h-12" />, title: "Environmental Signs", description: "Provides information about environmental protection and waste management.", iso: "ISO 7010 E003", examples: ["Recycling station", "Waste segregation", "Water conservation"], gradient: "bg-gradient-to-br from-teal-600 to-teal-800", sectors: ["All industries"] }
-];
+  const safetySigns = useMemo(() => {
+    if (!images.fireSafety) return [];
 
-const ppeCategories = [
-  { id: 1, icon: <HardHat className="w-10 h-10 md:w-12 md:h-12" />, title: "Head Protection", description: "Industrial helmets compliant with ANSI Z89.1/CSA Z94.1 standards for impact and electrical hazards.", standards: "EN 397, ANSI Z89.1", types: ["Hard Hats", "Bump Caps", "Welding Helmets"], gradient: "bg-gradient-to-br from-amber-500 to-amber-700", industries: ["Construction", "Mining", "Utilities"] },
-  { id: 2, icon: <Glasses className="w-10 h-10 md:w-12 md:h-12" />, title: "Eye Protection", description: "Safety glasses and goggles meeting ANSI Z87.1 for impact, chemical splash, and optical radiation protection.", standards: "ANSI Z87.1, EN 166", types: ["Safety Glasses", "Goggles", "Face Shields"], gradient: "bg-gradient-to-br from-blue-600 to-blue-800", industries: ["Laboratories", "Healthcare", "Woodworking"] },
-  { id: 3, icon: <Shield className="w-10 h-10 md:w-12 md:h-12" />, title: "Respiratory Protection", description: "NIOSH-approved respirators for particulate matter, gases, vapors, and oxygen-deficient environments.", standards: "NIOSH 42 CFR 84, EN 149", types: ["N95 Masks", "Half-face Respirators", "SCBA"], gradient: "bg-gradient-to-br from-gray-600 to-gray-800", industries: ["Healthcare", "Construction", "Mining"] },
-  { id: 4, icon: <Footprints className="w-10 h-10 md:w-12 md:h-12" />, title: "Foot Protection", description: "Steel-toe boots and slip-resistant footwear for protection against crush injuries and slips.", standards: "ASTM F2413, EN ISO 20345", types: ["Steel Toe Boots", "Metatarsal Guards", "Slip-Resistant Shoes"], gradient: "bg-gradient-to-br from-slate-600 to-slate-800", industries: ["Construction", "Warehousing", "Manufacturing"] },
-  { id: 5, icon: <UserRoundCog className="w-10 h-10 md:w-12 md:h-12" />, title: "Leg Protection", description: "Protective clothing including chaps and leg guards against cuts, abrasions, and chemicals.", standards: "EN 381, ANSI/ISEA 107", types: ["Leg Guards", "Chemical Pants", "Kevlar Chaps"], gradient: "bg-gradient-to-br from-indigo-600 to-indigo-800", industries: ["Forestry", "Chemical", "Construction"] },
-  { id: 6, icon: <Ear className="w-10 h-10 md:w-12 md:h-12" />, title: "Hearing Protection", description: "Earplugs and earmuffs rated for occupational noise exposure per NRR requirements.", standards: "ANSI S3.19, EN 352", types: ["Earplugs", "Earmuffs", "Electronic Hearing Protectors"], gradient: "bg-gradient-to-br from-pink-600 to-pink-800", industries: ["Aviation", "Construction", "Metalwork"] },
-  { id: 7, icon: <Hand className="w-10 h-10 md:w-12 md:h-12" />, title: "Hand Protection", description: "Gloves designed for protection against cuts, heat, chemicals, and electrical hazards.", standards: "EN 388, EN 374, ASTM D120", types: ["Cut-Resistant Gloves", "Chemical Gloves", "Heat-Resistant Gloves"], gradient: "bg-gradient-to-br from-red-600 to-red-800", industries: ["Glass Handling", "Chemical", "Welding"] },
-  { id: 8, icon: <FlaskConical className="w-10 h-10 md:w-12 md:h-12" />, title: "Chemical Protection", description: "Specialized suits and gloves for handling hazardous materials and chemicals safely.", standards: "EN 943, NFPA 1991", types: ["Chemical Suits", "Respirators", "Splash Goggles"], gradient: "bg-gradient-to-br from-green-600 to-green-800", industries: ["Pharmaceutical", "Laboratory", "Chemical"] },
-  { id: 9, icon: <Shirt className="w-10 h-10 md:w-12 md:h-12" />, title: "Body Protection", description: "Vests, jackets, and full-body suits to protect from visibility hazards and extreme conditions.", standards: "ANSI/ISEA 107, EN ISO 20471", types: ["Hi-Vis Vests", "Insulated Jackets", "Fire-Retardant Suits"], gradient: "bg-gradient-to-br from-cyan-600 to-cyan-800", industries: ["Traffic Control", "Utilities", "Emergency Services"] },
-  { id: 10, icon: <Shield className="w-10 h-10 md:w-12 md:h-12" />, title: "Face Protection", description: "Face shields and masks to prevent exposure to splashes, flying debris, and biological hazards.", standards: "EN 166, ANSI Z87.1", types: ["Face Shields", "Surgical Masks", "Welding Helmets"], gradient: "bg-gradient-to-br from-purple-600 to-purple-800", industries: ["Healthcare", "Metalwork", "Laboratory"] }
-];
+    return [
+      // =========================
+      // FIRE SAFETY SIGNS (2)
+      // =========================
+      {
+        category: "Fire Safety",
+        name: "Fire Extinguisher",
+        img: images.fireSafety?.["iso Fire Extinguisher.png"],
+        code: "F001",
+        color: ["#FF0000", "#FFFFFF"],
+        colorNames: "Red / White",
+        shape: "Square",
+        meaning: "Fire extinguisher (ISO 7010).",
+        usage: "To indicate the location of a fire extinguisher.",
+        size_mm: ["100x100", "150x150", "200x200", "300x300"],
+        position: "Place above/near the extinguisher so it is visible from approach routes and not obstructed.",
+        notes: "Use standard ISO safety colour/shape conventions; keep clean and clearly visible."
+      },
+      {
+        category: "Fire Safety",
+        name: "Fire Hose Reel",
+        img: images.fireSafety?.["iso Fire Hose Reel.png"],
+        code: "F002",
+        color: ["#FF0000", "#FFFFFF"],
+        colorNames: "Red / White",
+        shape: "Square",
+        meaning: "Fire hose reel (ISO 7010).",
+        usage: "To indicate the location of a fire hose reel / fire hose equipment.",
+        size_mm: ["150x150", "200x200", "300x300", "450x450"],
+        position: "Place above/near the hose reel cabinet so it is visible from approach routes and not obstructed.",
+        notes: "Maintain clear access; keep sign legible and well-lit where required."
+      },
 
+      // =========================
+      // MANDATORY SIGNS (5)
+      // =========================
+      {
+        category: "Mandatory",
+        name: "Wear Eye Protection",
+        img: images.mandatory?.["iso Wear Eye Protection.png"],
+        code: "M004",
+        color: ["#0055FF", "#FFFFFF"],
+        colorNames: "Blue / White",
+        shape: "Circle",
+        meaning: "Wear eye protection (ISO 7010).",
+        usage: "Used where eye protection is required due to hazards (particles, chemicals, radiation, etc.).",
+        size_mm: ["100x100", "150x150", "200x200"],
+        position: "Place at entrances to the hazard area and at points where the requirement starts.",
+        notes: "Ensure PPE requirement is enforceable; keep sign visible at decision points."
+      },
+      {
+        category: "Mandatory",
+        name: "Wear Hearing Protection",
+        img: images.mandatory?.["iso Wear Hearing Protection.png"],
+        code: "M003",
+        color: ["#0055FF", "#FFFFFF"],
+        colorNames: "Blue / White",
+        shape: "Circle",
+        meaning: "Wear hearing protection (ISO 7010).",
+        usage: "Used where hearing protection is required due to high noise levels.",
+        size_mm: ["150x150", "200x200", "250x250"],
+        position: "Place before entering noisy zones and near noisy equipment access points.",
+        notes: "Use with workplace noise controls; keep sign where people decide to enter."
+      },
+      {
+        category: "Mandatory",
+        name: "Wear Safety Gloves",
+        img: images.mandatory?.["iso Wear Safety Gloves.png"],
+        code: "M009",
+        color: ["#0055FF", "#FFFFFF"],
+        colorNames: "Blue / White",
+        shape: "Circle",
+        meaning: "Wear protective gloves (ISO 7010).",
+        usage: "Used where hands must be protected from cuts, chemicals, heat, abrasion, etc.",
+        size_mm: ["100x100", "150x150", "200x200"],
+        position: "Place at entrances to glove-required areas and near task stations.",
+        notes: "Specify glove type in SOPs where needed; keep sign at decision points."
+      },
+      {
+        category: "Mandatory",
+        name: "Wear Safety Harness",
+        img: images.mandatory?.["iso Wear Safety Harness.png"],
+        code: "M018",
+        color: ["#0055FF", "#FFFFFF"],
+        colorNames: "Blue / White",
+        shape: "Circle",
+        meaning: "Wear a safety harness (ISO 7010).",
+        usage: "Used where fall protection is mandatory (work at height, edges, platforms, etc.).",
+        size_mm: ["150x150", "200x200", "250x250"],
+        position: "Place at access points to elevated work areas and before fall-risk zones.",
+        notes: "Harness use must be supported by anchor points and rescue plan where required."
+      },
+      {
+        category: "Mandatory",
+        name: "Wear Safety Helmet",
+        img: images.mandatory?.["iso Wear Safety Helmet.png"],
+        code: "M014",
+        color: ["#0055FF", "#FFFFFF"],
+        colorNames: "Blue / White",
+        shape: "Circle",
+        meaning: "Wear a safety helmet (ISO 7010).",
+        usage: "Used where head protection is required due to falling objects or head-impact risk.",
+        size_mm: ["150x150", "200x200", "250x250"],
+        position: "Place at entrances to construction/industrial zones and overhead-risk areas.",
+        notes: "Keep sign visible before entry; helmet type depends on site hazards."
+      },
 
-// --- MAIN COMPONENT ---
-export default function SafetySignPPE() {
+      // =========================
+      // PROHIBITION SIGNS (9)
+      // =========================
+      {
+        category: "Prohibition",
+        name: "Do Not Touch",
+        img: images.prohibition?.["iso do not touch.png"],
+        code: "P010",
+        color: ["#FF0000", "#FFFFFF", "#000000"],
+        colorNames: "Red / White / Black",
+        shape: "Circle with diagonal bar",
+        meaning: "Do not touch (ISO 7010).",
+        usage: "Used where touching could cause injury, damage, contamination, or electrical hazard.",
+        size_mm: ["200x200", "300x300", "400x400"],
+        position: "Place directly on/near the object and before people can reach it.",
+        notes: "Use with guarding/interlocks where needed; keep sign unobstructed."
+      },
+      {
+        category: "Prohibition",
+        name: "No Eating or Drinking",
+        img: images.prohibition?.["iso No Eating or Drinking.png"],
+        code: "P022",
+        color: ["#FF0000", "#FFFFFF", "#000000"],
+        colorNames: "Red / White / Black",
+        shape: "Circle with diagonal bar",
+        meaning: "No eating or drinking (ISO 7010).",
+        usage: "Used in labs, chemical areas, clean zones, contamination-control areas.",
+        size_mm: ["200x200", "300x300", "400x400"],
+        position: "Place at entrances and inside areas where the restriction applies.",
+        notes: "Pair with hygiene/contamination procedures where relevant."
+      },
+      {
+        category: "Prohibition",
+        name: "No Parking",
+        img: images.prohibition?.["iso No Parking.png"],
+        code: "P001",
+        color: ["#FF0000", "#FFFFFF", "#000000"],
+        colorNames: "Red / White / Black",
+        shape: "Circle with diagonal bar",
+        meaning: "Prohibition (use with clear local instruction for 'No Parking').",
+        usage: "Used to prohibit parking in front of exits, equipment, fire points, access routes, etc.",
+        size_mm: ["200x200", "300x300", "400x400"],
+        position: "Place at boundaries/entrances to the restricted parking zone and near the no-parking area.",
+        notes: "If strict ISO 7010 code is required for 'No Parking', confirm the registered symbol; otherwise use clear supplementary text locally."
+      },
+      {
+        category: "Prohibition",
+        name: "No Unauthorized Entry",
+        img: images.prohibition?.["iso No Unauthorized Entry.png"],
+        code: "P080",
+        color: ["#FF0000", "#FFFFFF", "#000000"],
+        colorNames: "Red / White / Black",
+        shape: "Circle with diagonal bar",
+        meaning: "No access for unauthorized persons (ISO 7010).",
+        usage: "Used to restrict access to controlled/hazardous areas.",
+        size_mm: ["300x300", "400x400", "600x600"],
+        position: "Place on doors, gates, barriers, and boundary points of restricted zones.",
+        notes: "Often combined with access control and training requirements."
+      },
+      {
+        category: "Prohibition",
+        name: "Road Closed",
+        img: images.prohibition?.["iso Road Closed.png"],
+        code: "P004",
+        color: ["#FF0000", "#FFFFFF", "#000000"],
+        colorNames: "Red / White / Black",
+        shape: "Circle with diagonal bar",
+        meaning: "No thoroughfare / Do not pass (ISO 7010-style prohibition).",
+        usage: "Used to prevent passage into a closed route/area within workplaces or sites.",
+        size_mm: ["300x300", "400x400", "600x600"],
+        position: "Place at the start of the closed route and where alternate routes branch.",
+        notes: "For regulated public road traffic signage, use the applicable local traffic standards."
+      },
+      {
+        category: "Prohibition",
+        name: "No Entry",
+        img: images.prohibition?.["iso No Entry.png"],
+        code: "P080",
+        color: ["#FF0000", "#FFFFFF", "#000000"],
+        colorNames: "Red / White / Black",
+        shape: "Circle with diagonal bar",
+        meaning: "No access for unauthorized persons (ISO 7010).",
+        usage: "Used to prohibit entry to restricted areas.",
+        size_mm: ["300x300", "400x400", "600x600"],
+        position: "Place at doors/gates/boundaries so it is visible before entry.",
+        notes: "Combine with barrier/access control where needed."
+      },
+      {
+        category: "Prohibition",
+        name: "No Mobile Phone",
+        img: images.prohibition?.["iso_no mobile phone.png"],
+        code: "P013",
+        color: ["#FF0000", "#FFFFFF", "#000000"],
+        colorNames: "Red / White / Black",
+        shape: "Circle with diagonal bar",
+        meaning: "No activated mobile phone (ISO 7010).",
+        usage: "Used in explosive atmospheres, EMC-sensitive zones, or secure areas.",
+        size_mm: ["200x200", "300x300", "400x400"],
+        position: "Place at entrances to the restricted zone and near sensitive equipment rooms.",
+        notes: "Clarify whether phones must be off or prohibited completely as per site rules."
+      },
+      {
+        category: "Prohibition",
+        name: "No Open Flame",
+        img: images.prohibition?.["iso_no open Flame.png"],
+        code: "P003",
+        color: ["#FF0000", "#FFFFFF", "#000000"],
+        colorNames: "Red / White / Black",
+        shape: "Circle with diagonal bar",
+        meaning: "No open flame (ISO 7010).",
+        usage: "Used where ignition sources are prohibited (flammables, gases, vapours, etc.).",
+        size_mm: ["200x200", "300x300", "400x400"],
+        position: "Place at entrances and boundaries of flammable/explosive hazard zones.",
+        notes: "Use together with controls for hot work permits where applicable."
+      },
+      {
+        category: "Prohibition",
+        name: "No Smoking",
+        img: images.prohibition?.["ISOSmoking.png"],
+        code: "P002",
+        color: ["#FF0000", "#FFFFFF", "#000000"],
+        colorNames: "Red / White / Black",
+        shape: "Circle with diagonal bar",
+        meaning: "No smoking (ISO 7010).",
+        usage: "Used where smoking is prohibited for fire, health, hygiene, or process reasons.",
+        size_mm: ["200x200", "300x300", "400x400"],
+        position: "Place at entrances and inside zones where smoking is prohibited.",
+        notes: "Ensure designated smoking areas (if any) are clearly marked separately."
+      },
+
+      // =========================
+      // SAFE CONDITION / EMERGENCY SIGNS (5)
+      // =========================
+      {
+        category: "Safe Condition",
+        name: "Assembly Point",
+        img: images.safeCondition?.["iso Assembly Point.png"],
+        code: "E007",
+        color: ["#00AA00", "#FFFFFF"],
+        colorNames: "Green / White",
+        shape: "Square",
+        meaning: "Evacuation assembly point (ISO 7010).",
+        usage: "Indicates where people gather after evacuation for headcount and instructions.",
+        size_mm: ["150x150", "200x200", "300x300"],
+        position: "Place at the designated muster point and along approach routes if needed.",
+        notes: "Keep area unobstructed; ensure it matches the site emergency plan."
+      },
+      {
+        category: "Safe Condition",
+        name: "Emergency Exit",
+        img: images.safeCondition?.["iso Emergency Exit.png"],
+        code: "E001",
+        color: ["#00AA00", "#FFFFFF"],
+        colorNames: "Green / White",
+        shape: "Rectangle",
+        meaning: "Emergency exit (ISO 7010).",
+        usage: "Indicates an emergency exit / escape route direction (use arrows where required).",
+        size_mm: ["150x300", "200x400", "300x600"],
+        position: "Place above exit doors and at route decision points along escape paths.",
+        notes: "Ensure continuous wayfinding; keep visible during power loss (photoluminescent where required)."
+      },
+      {
+        category: "Safe Condition",
+        name: "Emergency Shower",
+        img: images.safeCondition?.["iso Emergency Shower.png"],
+        code: "E012",
+        color: ["#00AA00", "#FFFFFF"],
+        colorNames: "Green / White",
+        shape: "Square",
+        meaning: "Safety shower (ISO 7010).",
+        usage: "Indicates the location of an emergency/safety shower for chemical exposure response.",
+        size_mm: ["150x150", "200x200", "250x250"],
+        position: "Place directly above/near the shower and along approach routes in chemical areas.",
+        notes: "Keep access unobstructed; maintain equipment per safety procedures."
+      },
+      {
+        category: "Safe Condition",
+        name: "Eyewash Station",
+        img: images.safeCondition?.["iso Eyewash Station.png"],
+        code: "E011",
+        color: ["#00AA00", "#FFFFFF"],
+        colorNames: "Green / White",
+        shape: "Square",
+        meaning: "Eyewash station (ISO 7010).",
+        usage: "Indicates the location of an eyewash station for emergency eye irrigation.",
+        size_mm: ["150x150", "200x200", "250x250"],
+        position: "Place directly above/near the eyewash and along approach routes in chemical areas.",
+        notes: "Keep access unobstructed; test/flush as per safety procedures."
+      },
+      {
+        category: "Safe Condition",
+        name: "First Aid",
+        img: images.safeCondition?.["iso First Aid.png"],
+        code: "E003",
+        color: ["#00AA00", "#FFFFFF"],
+        colorNames: "Green / White",
+        shape: "Square",
+        meaning: "First aid (ISO 7010).",
+        usage: "Indicates location of first-aid equipment, room, or assistance.",
+        size_mm: ["150x150", "200x200", "250x250"],
+        position: "Place above first-aid kits/rooms and along approach routes if needed.",
+        notes: "Keep updated; ensure trained personnel and supplies per site requirements."
+      },
+
+      // =========================
+      // WARNING SIGNS (8)
+      // =========================
+      {
+        category: "Warning",
+        name: "Blind Corner",
+        img: images.warning?.["iso Blind Corner.png"],
+        code: "N/A",
+        color: ["#FFCC00", "#000000"],
+        colorNames: "Yellow / Black",
+        shape: "Equilateral triangle",
+        meaning: "Warning; Blind corner.",
+        usage: "Warns of collision risk at blind corners/intersections.",
+        size_mm: ["200x200", "300x300", "400x400"],
+        position: "Place before the blind corner so it is seen in time to slow down and take care.",
+        notes: "Use with mirrors/one-way systems where required; confirm ISO code if you need strict ISO 7010 registry."
+      },
+      {
+        category: "Warning",
+        name: "Electrical Room",
+        img: images.warning?.["iso Electrical Room.png"],
+        code: "W012",
+        color: ["#FFCC00", "#000000"],
+        colorNames: "Yellow / Black",
+        shape: "Equilateral triangle",
+        meaning: "Warning; Electricity / electrical hazard (ISO 7010-style).",
+        usage: "Warns of electrical hazards in electrical rooms/panels/substations.",
+        size_mm: ["200x200", "300x300", "400x400"],
+        position: "Place on electrical room doors and near electrical panels where shock risk exists.",
+        notes: "Combine with access restriction and PPE requirements where applicable."
+      },
+      {
+        category: "Warning",
+        name: "Explosive Material",
+        img: images.warning?.["iso Explosive Material.png"],
+        code: "W002",
+        color: ["#FFCC00", "#000000"],
+        colorNames: "Yellow / Black",
+        shape: "Equilateral triangle",
+        meaning: "Warning; Explosive material (ISO 7010).",
+        usage: "Warns of explosive materials or explosive atmosphere risks.",
+        size_mm: ["200x200", "300x300", "400x400"],
+        position: "Place at storage areas, process zones, and entry points to explosive hazard areas.",
+        notes: "Use with ignition source prohibitions and area classification controls."
+      },
+      {
+        category: "Warning",
+        name: "High Voltage",
+        img: images.warning?.["iso High Voltage.png"],
+        code: "W012",
+        color: ["#FFCC00", "#000000"],
+        colorNames: "Yellow / Black",
+        shape: "Equilateral triangle",
+        meaning: "Warning; Electricity / high voltage hazard (ISO 7010-style).",
+        usage: "Warns of dangerous electrical shock hazard/high voltage equipment.",
+        size_mm: ["200x200", "300x300", "400x400"],
+        position: "Place on/near electrical panels, switchgear, transformers, and HV rooms.",
+        notes: "Maintain clearances; apply lockout/tagout and arc-flash controls where needed."
+      },
+      {
+        category: "Warning",
+        name: "Hot Surface",
+        img: images.warning?.["iso Hot Surface.png"],
+        code: "N/A",
+        color: ["#FFCC00", "#000000"],
+        colorNames: "Yellow / Black",
+        shape: "Equilateral triangle",
+        meaning: "Warning; Hot surface.",
+        usage: "Warns of burn hazard from hot surfaces, pipes, heaters, ovens, etc.",
+        size_mm: ["200x200", "300x300", "400x400"],
+        position: "Place near hot equipment surfaces and before contact is possible.",
+        notes: "Use with guarding/insulation where required; confirm ISO code if you need strict ISO 7010 registry."
+      },
+      {
+        category: "Warning",
+        name: "Magnetic Field",
+        img: images.warning?.["iso Magnetic Field.png"],
+        code: "W006",
+        color: ["#FFCC00", "#000000"],
+        colorNames: "Yellow / Black",
+        shape: "Equilateral triangle",
+        meaning: "Warning; Magnetic field (ISO 7010).",
+        usage: "Warns of strong magnetic fields (MRI zones, magnets, magnetic hazards).",
+        size_mm: ["200x200", "300x300", "400x400"],
+        position: "Place at entrances to magnetic field areas and near magnetic equipment.",
+        notes: "Include access restrictions for pacemakers/implants per site rules."
+      },
+      {
+        category: "Warning",
+        name: "Moving Parts",
+        img: images.warning?.["iso Moving Parts.png"],
+        code: "N/A",
+        color: ["#FFCC00", "#000000"],
+        colorNames: "Yellow / Black",
+        shape: "Equilateral triangle",
+        meaning: "Warning; Moving parts.",
+        usage: "Warns of injury risk from moving machinery parts (entanglement/pinch points).",
+        size_mm: ["200x200", "300x300", "400x400"],
+        position: "Place on guards, near access points, and where moving parts may be exposed.",
+        notes: "Use with guarding/interlocks; confirm ISO code if you need strict ISO 7010 registry."
+      },
+      {
+        category: "Warning",
+        name: "Slippery Floor",
+        img: images.warning?.["iso Slippery Floor.png"],
+        code: "W011",
+        color: ["#FFCC00", "#000000"],
+        colorNames: "Yellow / Black",
+        shape: "Equilateral triangle",
+        meaning: "Warning; Slippery surface (ISO 7010).",
+        usage: "Warns of slip hazard from wet/oily/polished surfaces or cleaning operations.",
+        size_mm: ["200x200", "300x300", "400x400"],
+        position: "Place before entering slippery areas and around temporary wet zones.",
+        notes: "Remove when hazard ends if temporary; maintain housekeeping controls."
+      }
+    ];
+  }, [images]);
+
+  const categories = useMemo(() => {
+    const unique = Array.from(new Set(safetySigns.map((s) => s.category)));
+    return ["All", ...unique];
+  }, [safetySigns]);
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return safetySigns.filter((s) => {
+      const matchCategory = activeCategory === "All" || s.category === activeCategory;
+      const matchQuery =
+        !q ||
+        s.name.toLowerCase().includes(q) ||
+        s.code.toLowerCase().includes(q) ||
+        s.meaning.toLowerCase().includes(q) ||
+        s.usage.toLowerCase().includes(q);
+      return matchCategory && matchQuery;
+    });
+  }, [query, activeCategory, safetySigns]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-amber-300 border-t-amber-600 rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="text-amber-700 font-medium">Loading safety signs...</div>
+          <div className="text-sm text-amber-600 mt-2">Preparing comprehensive safety database</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
-      <CustomStyles />
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-16 lg:py-20 bg-gradient-to-br from-gray-50 to-gray-100 font-sans overflow-x-hidden">
-        
-        {/* Header Section */}
-        <header className="text-center space-y-4 md:space-y-6 mb-12 md:mb-16">
-            <AnimateOnScroll initial="opacity-0 scale-95">
-                <div className="flex justify-center mb-4 md:mb-6">
-                    <img
-                        src="https://placehold.co/300x80/fefce8/a16207?text=Safety+First+Inc.&font=inter"
-                        alt="Safety First Inc. Logo"
-                        className="rounded-lg w-64 md:w-80"
-                    />
+      <style>{customScrollbarStyles}</style>
+      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-amber-50 px-4 py-8 md:px-6 md:py-12 font-sans">
+        <div className="mx-auto w-full max-w-7xl custom-scrollbar">
+          
+          {/* Header Section */}
+          <AnimateOnScroll>
+            <div className="mb-10">
+              <div className="flex items-center text-center flex-col lg:flex-row md:flex-row  gap-3 mb-6">
+                <div className="w-12 h-12 bg-gradient-to-br from-amber-400
+                 to-orange-500 rounded-xl flex items-center justify-center shadow-lg
+                  shadow-amber-200">
+                  <Shield className="w-6 h-6 text-white" />
                 </div>
-            </AnimateOnScroll>
-            <AnimateOnScroll initial="opacity-0 translate-x-20" delay={0.1}>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-amber-900 tracking-tight">
-                    Workplace Safety Solutions
-                </h1>
-            </AnimateOnScroll>
-            <AnimateOnScroll initial="opacity-0 -translate-x-20" delay={0.2}>
-                <p className="text-base md:text-lg text-amber-800 max-w-3xl mx-auto leading-relaxed text-justify md:text-center px-2">
-                    Comprehensive safety solutions including ISO-compliant signage and certified personal protective equipment (PPE) for hazard prevention across all industries.
-                </p>
-            </AnimateOnScroll>
-        </header>
+                <div>
+                  <h1 className="lg:text-4xl md:text-3xl text-xl font-bold bg-gradient-to-r from-amber-800 to-orange-700 bg-clip-text text-transparent">
+                    Safety Signs Library
+                  </h1>
+                  <p className="text-amber-600 mt-1">Comprehensive ISO 7010 Compliant Signage</p>
+                </div>
+              </div>
 
-        {/* Industries Section */}
-        <AnimateOnScroll delay={0.2} initial="opacity-0 translate-y-[30px]">
-            <div className="text-center mb-12 md:mb-16">
-                <SectionHeader title="Trusted by Industries Worldwide" />
-                <div className="flex flex-wrap justify-center items-center gap-2 md:gap-4">
-                    {industrySectors.map((sector, i) => (
-                    <div
-                        key={i}
-                        className="industry-chip inline-flex items-center px-3 py-2 md:px-4 md:py-2 rounded-full bg-white shadow-sm border border-amber-200 text-amber-900 hover:bg-amber-50 hover:shadow-md transition-all duration-300 cursor-pointer"
-                    >
-                        <span className="industry-chip-icon p-1 md:p-2 rounded-full bg-amber-100 text-amber-600">
-                        {sector.icon}
-                        </span>
-                        <span className="font-medium ml-1 md:ml-2 md:mr-1">{sector.name}</span>
+              {/* Search and Filter Container */}
+              <div className="bg-white rounded-2xl p-6 shadow-lg border border-amber-200 mb-6">
+                <div className="flex flex-col lg:flex-row gap-4">
+                  <div className="flex-1">
+                    <div className="relative group">
+                      <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-amber-400 w-5 h-5 group-focus-within:text-amber-600 transition-colors" />
+                      <input
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        placeholder="Search by name, code, or meaning..."
+                        className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-amber-100 bg-amber-50/30 text-gray-800 placeholder-amber-400 focus:border-amber-400 focus:ring-4 focus:ring-amber-100 outline-none transition-all"
+                      />
                     </div>
-                    ))}
+                  </div>
+                  
+                  <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+                    {categories.map((category) => {
+                      const meta = categoryMeta[category] || { 
+                        icon: <Filter className="w-5 h-5" />,
+                        lightGradient: "from-gray-50 to-gray-50",
+                        border: "border-gray-200",
+                        color: "text-gray-700"
+                      };
+                      return (
+                        <button
+                          key={category}
+                          onClick={() => setActiveCategory(category)}
+                          className={`flex items-center gap-2 px-4 py-3 rounded-xl border-2 transition-all whitespace-nowrap ${
+                            activeCategory === category
+                              ? `bg-gradient-to-r ${meta.lightGradient} ${meta.border} ${meta.color} font-bold shadow-sm`
+                              : "bg-white border-transparent hover:border-amber-100 text-gray-600 hover:bg-amber-50"
+                          }`}
+                        >
+                          <span className="flex items-center gap-2">
+                            {meta.icon}
+                            {category}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
-            </div>
-        </AnimateOnScroll>
 
-        {/* Safety Signs Section */}
-        <div className="mb-16 md:mb-20">
-            <SectionHeader title="ISO-Compliant Safety Signs" />
-            <div className="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-3 perspective-parent">
-                {signCategories.map((card, i) => (
-                <AnimateOnScroll key={card.id} initial="opacity-0 translate-y-16" delay={0.1 * (i % 3)}>
-                    <article className="rounded-xl overflow-hidden bg-white border border-amber-200 shadow-lg flex flex-col h-full card-hover-effect">
-                        <div className={`${card.gradient} h-32 md:h-36 flex items-center justify-center relative p-4 text-white`}>
-                            <span className="p-3 md:p-4 rounded-full bg-white/20 backdrop-blur-sm border border-white/30">{card.icon}</span>
-                        </div>
-                        <div className="p-4 md:p-6 space-y-3 md:space-y-4 flex-grow flex flex-col">
-                            <h3 className="text-lg md:text-xl font-bold text-amber-900">{card.title}</h3>
-                            <p className="text-amber-800 leading-relaxed flex-grow text-justify">{card.description}</p>
-                            <div className="space-y-2 md:space-y-3 pt-2 md:pt-3 border-t border-amber-100">
-                                <div>
-                                    <h4 className="text-xs md:text-sm font-semibold text-amber-600 uppercase tracking-wider">Standard</h4>
-                                    <p className="text-xs md:text-sm text-amber-900 font-mono bg-amber-50 px-2 py-0.5 rounded inline-block mt-1">{card.iso}</p>
-                                </div>
-                                <div>
-                                    <h4 className="text-xs md:text-sm font-semibold text-amber-600 uppercase tracking-wider">Common Examples</h4>
-                                    <ul className="mt-1 space-y-1">
-                                        {card.examples.slice(0, 3).map((item, i) => (
-                                        <li key={i} className="flex items-center">
-                                            <span className="text-amber-500 mr-2 font-bold text-lg">•</span>
-                                            <span className="text-amber-900 text-sm md:text-base">{item}</span>
-                                        </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h4 className="text-xs md:text-sm font-semibold text-amber-600 uppercase tracking-wider">Key Sectors</h4>
-                                    <div className="mt-1 md:mt-2 flex flex-wrap gap-1 md:gap-2">
-                                        {card.sectors.slice(0, 3).map((sector, i) => (
-                                        <span key={i} className="text-xs px-2 py-1 bg-amber-100 text-amber-800 rounded-full font-medium">{sector}</span>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </AnimateOnScroll>
-                ))}
+                {/* Stats Bar */}
+                <div className="flex flex-wrap gap-4 mt-6 pt-6 border-t border-amber-100">
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                     <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+                     Total Signs: <strong>{safetySigns.length}</strong>
+                  </div>
+                   <div className="hidden md:block w-px h-4 bg-amber-200"></div>
+                  <div className="flex flex-wrap gap-2">
+                    {safetyStandards.map((std) => (
+                      <span key={std} className="px-2 py-0.5 bg-gray-100 text-gray-500 rounded text-xs font-medium border border-gray-200">
+                        {std}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
-        </div>
-        
-        {/* PPE Equipment Section */}
-        <div className="mb-10">
-            <SectionHeader title="Certified PPE Equipment" />
-            <div className="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-3 perspective-parent">
-                {ppeCategories.map((card, i) => (
-                <AnimateOnScroll key={card.id} initial="opacity-0 translate-y-16" delay={0.1 * (i % 3)}>
-                    <article className="rounded-xl overflow-hidden bg-white border border-amber-200 shadow-lg flex flex-col h-full card-hover-effect">
-                        <div className={`${card.gradient} h-32 md:h-36 flex items-center justify-center relative p-4 text-white`}>
-                            <span className="p-3 md:p-4 rounded-full bg-white/20 backdrop-blur-sm border border-white/30">{card.icon}</span>
-                        </div>
-                        <div className="p-4 md:p-6 space-y-3 md:space-y-4 flex-grow flex flex-col">
-                            <h3 className="text-lg md:text-xl font-bold text-amber-900">{card.title}</h3>
-                            <p className="text-amber-800 leading-relaxed flex-grow text-justify">{card.description}</p>
-                            <div className="space-y-2 md:space-y-3 pt-2 md:pt-3 border-t border-amber-100">
-                                <div>
-                                    <h4 className="text-xs md:text-sm font-semibold text-amber-600 uppercase tracking-wider">Standards</h4>
-                                    <p className="text-xs md:text-sm text-amber-900 font-mono bg-amber-50 px-2 py-0.5 rounded inline-block mt-1">{card.standards}</p>
-                                </div>
-                                <div>
-                                    <h4 className="text-xs md:text-sm font-semibold text-amber-600 uppercase tracking-wider">Types</h4>
-                                    <ul className="mt-1 space-y-1">
-                                        {card.types.slice(0, 3).map((item, i) => (
-                                        <li key={i} className="flex items-center">
-                                            <span className="text-amber-500 mr-2 font-bold text-lg">•</span>
-                                            <span className="text-amber-900 text-sm md:text-base">{item}</span>
-                                        </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h4 className="text-xs md:text-sm font-semibold text-amber-600 uppercase tracking-wider">Key Industries</h4>
-                                    <div className="mt-1 md:mt-2 flex flex-wrap gap-1 md:gap-2">
-                                        {card.industries.slice(0, 3).map((industry, i) => (
-                                        <span key={i} className="text-xs px-2 py-1 bg-amber-100 text-amber-800 rounded-full font-medium">{industry}</span>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </AnimateOnScroll>
-                ))}
-            </div>
-        </div>
-        
-        {/* Video Section */}
-        {/* <VideoPlayer /> */}
+          </AnimateOnScroll>
 
-      </section>
+          {/* Results Grid */}
+          {filtered.length === 0 ? (
+            <AnimateOnScroll>
+              <div className="bg-white rounded-2xl p-16 text-center border-2 border-dashed border-amber-200">
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-amber-50 flex items-center justify-center">
+                  <AlertCircle className="w-10 h-10 text-amber-400" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-2">No matching signs found</h3>
+                <p className="text-gray-500">Try adjusting your search terms</p>
+              </div>
+            </AnimateOnScroll>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {filtered.map((sign, i) => {
+                const meta = categoryMeta[sign.category];
+                
+                return (
+                  <AnimateOnScroll key={sign.code} delay={i * 0.05}>
+                    <div 
+                      onClick={() => setSelectedSign(sign)}
+                      className={`h-full bg-white rounded-2xl border ${meta.border} p-5 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer group flex flex-col`}
+                    >
+                      {/* Card Header */}
+                      <div className="flex items-start justify-between mb-4">
+                        <span className={`px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider ${meta.badgeColor}`}>
+                          {sign.code}
+                        </span>
+                        <div className={`p-1.5 rounded-lg bg-gray-50 text-gray-400 group-hover:text-amber-500 transition-colors`}>
+                           <Maximize2 className="w-4 h-4" />
+                        </div>
+                      </div>
+
+                      {/* Sign Image */}
+                      <div className="flex-1 flex items-center justify-center py-4 mb-4">
+                        <div className="relative w-32 h-32 md:w-40 md:h-40">
+                          {sign.img ? (
+                            <img
+                              src={sign.img}
+                              alt={sign.name}
+                              className="w-full h-full object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-300"
+                              onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = `https://via.placeholder.com/160x160/fff8e1/f59e0b?text=${encodeURIComponent(sign.name)}`;
+                              }}
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center rounded-xl bg-gray-50 border-2 border-dashed border-gray-200">
+                              <span className="text-xs text-gray-400 font-medium text-center px-2">Image N/A</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Card Content */}
+                      <div className="mt-auto text-center">
+                        <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 leading-tight group-hover:text-amber-700 transition-colors">
+                          {sign.name}
+                        </h3>
+                        <p className="text-xs text-gray-500 line-clamp-2 px-2">
+                           {sign.meaning}
+                        </p>
+                        
+                        <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-center">
+                           <button className="text-sm font-semibold text-amber-600 group-hover:text-amber-700 flex items-center gap-1">
+                              View Details <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                           </button>
+                        </div>
+                      </div>
+                    </div>
+                  </AnimateOnScroll>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Modal Overlay */}
+          {selectedSign && (
+             <SignDetailModal 
+               sign={selectedSign} 
+               onClose={() => setSelectedSign(null)} 
+               meta={categoryMeta[selectedSign.category]}
+             />
+          )}
+
+          {/* Footer */}
+        
+        </div>
+      </div>
     </>
   );
-}
+};
+
+export default SafetySignPPE;

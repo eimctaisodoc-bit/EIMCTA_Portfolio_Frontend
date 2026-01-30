@@ -11,15 +11,112 @@ import {
     Server,
     Truck,
     Warehouse,
-    Star
+    Star,
+    FactoryIcon,
+    ToolboxIcon,
+    Construction,
+    Drill,
+    Building2,
+    BuildingIcon
 } from 'lucide-react';
+import { FaBuilding } from 'react-icons/fa';
+
+// BeamUnderline Component - UPDATED
+const BeamUnderline = ({ 
+  children, 
+  thickness = 8, 
+  className = "" 
+}) => {
+  const gradientId = "formalBeamGradient";
+
+  return (
+    <span className={`relative inline-block group ${className}`}>
+      {children}
+      <span 
+        className="absolute left-0 right-0 -bottom-2 block overflow-visible pointer-events-none"
+        style={{ height: `${thickness * 1.5}px` }}
+      >
+        <svg 
+          width="100%" 
+          height="100%" 
+          viewBox="0 0 100 20" 
+          preserveAspectRatio="none"
+          className="block"
+        >
+          <defs>
+            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#f59e0b" />
+              <stop offset="48%" stopColor="#b45309" />
+              <stop offset="50%" stopColor="#fde68a" />
+              <stop offset="52%" stopColor="#b45309" />
+              <stop offset="100%" stopColor="#f59e0b" />
+            </linearGradient>
+          </defs>
+          
+          {/* The Formal Beam Path */}
+          <path 
+            d="
+              M 0 10 
+              Q 25 10, 50 4
+              Q 75 10, 100 10
+              Q 75 10, 50 16
+              Q 25 10, 0 10
+              Z
+            " 
+            fill={`url(#${gradientId})`}
+          />
+          
+          {/* Minimalist Central Pivot Point */}
+          <circle cx="50" cy="10" r="0.6" fill="#fef3c7" opacity="0.8" />
+        </svg>
+      </span>
+    </span>
+  );
+};
+
+ const CraneIcon = ({ size = 28, color = "currentColor" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {/* ground */}
+      <path d="M3 21h18" />
+
+      {/* tower */}
+      <path d="M6 21V4" />
+      <path d="M6 4h3" />
+
+      {/* boom */}
+      <path d="M9 4l12 4" />
+
+      {/* brace */}
+      <path d="M9 4v6" />
+      <path d="M6 9h5" />
+
+      {/* hook */}
+      <path d="M16 10v5" />
+      <path d="M15 15c0 1 1 2 2 2" />
+
+      {/* load */}
+      <rect x="14" y="17" width="4" height="3" rx="0.6" />
+    </svg>
+  );
+};
 
 const ISOShowcase = () => {
     const categories = [
         {
             id: 'construction',
             title: 'Construction',
-            icon: <Building size={28} />,
+            icon: <CraneIcon size={28} />,
             certifications: ['ISO 9001', 'ISO 14001', 'ISO 45001'],
             description: 'Quality, environmental and safety management for construction projects'
         },
@@ -116,46 +213,29 @@ const ISOShowcase = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 py-16 px-4 sm:px-6 lg:px-8 font-sans">
-            <div className="max-w-7xl mx-auto">
-                {/* Header */}
-                <motion.div
-                    initial="hidden"
-                    animate="visible"
-                    variants={{
-                        hidden: { opacity: 0 },
-                        visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
-                    }}
-                    className="text-center mb-20 relative"
-                >
-                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                        <Star className="text-amber-400 fill-amber-400" size={32} />
+        <div className="min-h-screen bg-gray-50 p-4 md:p-8 text-slate-900" style={{ fontFamily: 'Arial Narrow, Arial, sans-serif' }}>
+            <div className="max-w-6xl mx-auto">
+                {/* Header Section - UPDATED */}
+                <div className="text-center mb-16">
+                    <div className="relative inline-block mb-10">
+                        <div className="absolute -top-2 -left-2 z-10">
+                            <Star className="text-amber-400 fill-amber-400 w-8 h-8" />
+                        </div>
+                        <BeamUnderline>
+                          <h1 className="text-4xl md:text-5xl 
+                          font-extrabold text-transparent bg-clip-text
+                           bg-linear-to-r from-orange-600 to-amber-500 relative z-10 pb-4">
+                              OPERATE YOUR BUSINESS WITH GLOBAL RECOGNITION!
+                          </h1>
+                        </BeamUnderline>
                     </div>
-                    <div className="relative inline-block">
-                        <motion.h1
-                            variants={{
-                                hidden: { opacity: 0, y: -20 },
-                                visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 80, damping: 25 } },
-                            }}
-                            className="text-xl sm:text-xs  md:text-3xl lg:text-4xl font-bold text-amber-900"
-                        >
-                            OPERATE YOUR BUSINESS WITH GLOBAL RECOGNITION!
-                        </motion.h1>
-                         {/* Animated underline acting as a pseudo-element */}
-                    </div>
-                    <motion.p
-                        variants={{
-                            hidden: { opacity: 0, y: 20 },
-                            visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 80, damping: 25 } },
-                        }}
-                        className="text-lg text-amber-800 max-w-3xl mx-auto leading-relaxed mt-8"
-                    >
+                    <p className="text-gray-600 max-w-2xl mx-auto text-lg mt-12">
                         Achieve international standards and demonstrate your commitment to excellence with our ISO certification services.
-                    </motion.p>
-                </motion.div>
+                    </p>
+                </div>
 
                 {/* Categories Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {categories.map((category, index) => (
                         <motion.div
                             key={category.id}
@@ -164,22 +244,27 @@ const ISOShowcase = () => {
                             whileInView="visible"
                             viewport={{ once: true, amount: 0.3 }}
                             transition={{ delay: index * 0.1 }}
-                            className="bg-white rounded-2xl shadow-xl overflow-hidden border
-                             border-amber-200 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col"
+                            className="relative group bg-white border-2 rounded-2xl p-6 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-xl border-gray-100 hover:border-orange-400"
                         >
-                            <div className="p-6 flex-grow flex flex-col">
-                                <div className="flex items-center mb-5">
-                                    <div className="p-3 rounded-full bg-amber-100 text-amber-700 mr-4 shadow-inner">
+                            <div className="flex flex-col h-full">
+                                <div className="flex items-center mb-6">
+                                    <div className="w-14 h-14 rounded-xl flex items-center justify-center bg-orange-50 text-orange-600 mr-4 transition-colors duration-300 group-hover:bg-orange-600 group-hover:text-white">
                                         {category.icon}
                                     </div>
-                                    <h2 className="text-xl font-bold text-amber-900">{category.title}</h2>
+                                    <h3 className="text-xl font-bold group-hover:text-orange-600 transition-colors">
+                                        {category.title}
+                                    </h3>
                                 </div>
-                                <p className="text-amber-800 mb-5 leading-relaxed flex-grow">{category.description}</p>
-                                <div className="mt-auto pt-4 border-t border-amber-100 flex flex-wrap gap-2">
+                                
+                                <p className="text-gray-500 text-sm leading-relaxed mb-6 grow">
+                                    {category.description}
+                                </p>
+
+                                <div className="mt-auto pt-4 border-t border-gray-100 flex flex-wrap gap-2">
                                     {category.certifications.map((cert, i) => (
                                         <span
-                                           key={`${cert}-${i}`}
-                                            className="px-3 py-1 bg-amber-100 text-amber-800 text-sm font-medium rounded-full shadow-sm"
+                                            key={`${cert}-${i}`}
+                                            className="px-3 py-1 bg-amber-50 text-amber-800 text-sm font-medium rounded-full"
                                         >
                                             {cert}
                                         </span>
@@ -195,4 +280,3 @@ const ISOShowcase = () => {
 };
 
 export default ISOShowcase;
-

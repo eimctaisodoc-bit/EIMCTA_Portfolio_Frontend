@@ -11,7 +11,61 @@ import {
   CheckCircle,
 } from "lucide-react";
 
-import img from '../../img/HSE Implementation  Training  Workshop.png' 
+import img from '../../img/HSE Implementation  Training  Workshop.png';
+import isoIcon from "../../img/iso_.png";
+
+// ---------------- BEAM UNDERLINE COMPONENT ----------------
+const BeamUnderline = ({ 
+  children, 
+  thickness = 8, 
+  className = "" 
+}) => {
+  const gradientId = "formalBeamGradient";
+
+  return (
+    <span className={`relative inline-block group ${className}`}>
+      {children}
+      <span 
+        className="absolute left-0 right-0 -bottom-2 block overflow-visible pointer-events-none"
+        style={{ height: `${thickness * 1.5}px` }}
+      >
+        <svg 
+          width="100%" 
+          height="100%" 
+          viewBox="0 0 100 20" 
+          preserveAspectRatio="none"
+          className="block"
+        >
+          <defs>
+            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#f59e0b" />
+              <stop offset="48%" stopColor="#b45309" />
+              <stop offset="50%" stopColor="#fde68a" />
+              <stop offset="52%" stopColor="#b45309" />
+              <stop offset="100%" stopColor="#f59e0b" />
+            </linearGradient>
+          </defs>
+          
+          {/* The Formal Beam Path */}
+          <path 
+            d="
+              M 0 10 
+              Q 25 10, 50 4
+              Q 75 10, 100 10
+              Q 75 10, 50 16
+              Q 25 10, 0 10
+              Z
+            " 
+            fill={`url(#${gradientId})`}
+          />
+          
+          {/* Minimalist Central Pivot Point */}
+          <circle cx="50" cy="10" r="0.6" fill="#fef3c7" opacity="0.8" />
+        </svg>
+      </span>
+    </span>
+  );
+};
 
 // ---------------- ANIMATION VARIANTS ----------------
 const customEase = [0.25, 0.46, 0.45, 0.94];
@@ -34,14 +88,6 @@ const slideInUp = {
 const sectionHeaderVariant = {
   hidden: { y: 40, opacity: 0 },
   visible: { y: 0, opacity: 1, transition: { duration: 0.7, ease: customEase } },
-};
-
-const underlineVariant = {
-  hidden: { width: "0%" },
-  visible: {
-    width: "90%",
-    transition: { duration: 0.8, delay: 0.3, ease: customEase },
-  },
 };
 
 const cardHover = {
@@ -76,16 +122,31 @@ const HSEAwarenessTraining = () => {
           initial="hidden"
           animate="visible"
         >
-          <motion.h1
-            variants={slideInRight}
-            className="text-3xl md:text-5xl font-bold text-amber-900 mb-6"
-          >
-            HSE Awareness Training: Understanding ISO 14001:2015 & ISO 45001:2018
-          </motion.h1>
+          <div className="flex flex-col items-center mb-6">
+            <motion.div 
+              className="mb-4 md:mb-0 md:mr-6"
+              variants={slideInRight}
+            >
+              <img 
+                src={isoIcon} 
+                alt="ISO Certification Icon" 
+                className="w-24 h-18 sm:w-32 sm:h-24
+                 md:w-40 md:h-30 object-contain"
+              />
+            </motion.div>
+            <motion.div variants={slideInLeft}>
+              <h1 className="text-3xl md:text-5xl text-center font-bold text-amber-900">
+                HSE Awareness Training: 
+                <br />
+                  Understanding ISO 14001:2015 & ISO 45001:2018
+                
+              </h1>
+            </motion.div>
+          </div>
 
           <motion.p
             variants={slideInLeft}
-            className="text-lg text-gray-700 leading-relaxed text-justify"
+            className="text-lg text-gray-700 leading-relaxed text-justify mt-6"
           >
             Health, Safety, and Environment (HSE) management is a critical pillar
             of every responsible organization. With increasing focus on
@@ -107,19 +168,15 @@ const HSEAwarenessTraining = () => {
         {/* ================= ABOUT ISO ================= */}
         <section className="max-w-6xl mx-auto mb-20">
           <motion.h2
-            className="text-3xl font-bold text-amber-900 mb-12 text-center relative"
+            className="text-3xl font-bold text-amber-900 mb-12 text-center"
             variants={sectionHeaderVariant}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
           >
-            <span className="relative inline-block">
+            <BeamUnderline>
               About the ISO Standards
-              <motion.div
-                className="absolute -bottom-2 left-1/2 -translate-x-1/2 h-1 bg-yellow-400 rounded"
-                variants={underlineVariant}
-              />
-            </span>
+            </BeamUnderline>
           </motion.h2>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -186,19 +243,15 @@ const HSEAwarenessTraining = () => {
         {/* ================= BENEFITS ================= */}
         <section className="max-w-6xl mx-auto mb-20 bg-amber-900 p-10 rounded-xl text-white">
           <motion.h2
-            className="text-3xl font-bold text-yellow-400 mb-12 text-center relative"
+            className="text-3xl font-bold text-yellow-400 mb-12 text-center"
             variants={sectionHeaderVariant}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
           >
-            <span className="relative inline-block">
+            <BeamUnderline className="text-yellow-400">
               Benefits of HSE Awareness Training
-              <motion.div
-                className="absolute -bottom-2 left-1/2 -translate-x-1/2 h-1 bg-yellow-400 rounded"
-                variants={underlineVariant}
-              />
-            </span>
+            </BeamUnderline>
           </motion.h2>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -229,19 +282,15 @@ const HSEAwarenessTraining = () => {
         {/* ================= WHO CAN APPLY ================= */}
         <section className="max-w-6xl mx-auto mb-20">
           <motion.h2
-            className="text-3xl font-bold text-amber-900 mb-12 text-center relative"
+            className="text-3xl font-bold text-amber-900 mb-12 text-center"
             variants={sectionHeaderVariant}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
           >
-            <span className="relative inline-block">
+            <BeamUnderline>
               Who Can Apply?
-              <motion.div
-                className="absolute -bottom-2 left-1/2 -translate-x-1/2 h-1 bg-yellow-400 rounded"
-                variants={underlineVariant}
-              />
-            </span>
+            </BeamUnderline>
           </motion.h2>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -272,19 +321,15 @@ const HSEAwarenessTraining = () => {
         {/* ================= HOW TO APPLY ================= */}
         <section className="max-w-6xl mx-auto mb-20 bg-white p-8 rounded-xl shadow-lg border border-amber-200">
           <motion.h2
-            className="text-3xl font-bold text-amber-900 mb-8 text-center relative"
+            className="text-3xl font-bold text-amber-900 mb-8 text-center"
             variants={sectionHeaderVariant}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
           >
-            <span className="relative inline-block">
+            <BeamUnderline>
               How Can You Apply the Knowledge?
-              <motion.div
-                className="absolute -bottom-2 left-1/2 -translate-x-1/2 h-1 bg-yellow-400 rounded"
-                variants={underlineVariant}
-              />
-            </span>
+            </BeamUnderline>
           </motion.h2>
 
           <ol className="space-y-4">

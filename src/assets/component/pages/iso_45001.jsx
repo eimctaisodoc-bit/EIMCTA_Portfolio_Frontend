@@ -4,6 +4,60 @@ import { useInView } from 'react-intersection-observer';
 import Image from '../utilities/image';
 import VideoPlayer from '../utilities/Video';
 import image21 from "../../img/21.jpg";
+import isoIcon from "../../img/iso_.png";
+
+// --- BeamUnderline Component ---
+const BeamUnderline = ({ 
+  children, 
+  thickness = 8, 
+  className = "" 
+}) => {
+  const gradientId = "formalBeamGradient";
+
+  return (
+    <span className={`relative inline-block group ${className}`}>
+      {children}
+      <span 
+        className="absolute left-0 right-0 -bottom-2 block overflow-visible pointer-events-none"
+        style={{ height: `${thickness * 1.5}px` }}
+      >
+        <svg 
+          width="100%" 
+          height="100%" 
+          viewBox="0 0 100 20" 
+          preserveAspectRatio="none"
+          className="block"
+        >
+          <defs>
+            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#f59e0b" />
+              <stop offset="48%" stopColor="#b45309" />
+              <stop offset="50%" stopColor="#fde68a" />
+              <stop offset="52%" stopColor="#b45309" />
+              <stop offset="100%" stopColor="#f59e0b" />
+            </linearGradient>
+          </defs>
+          
+          {/* The Formal Beam Path */}
+          <path 
+            d="
+              M 0 10 
+              Q 25 10, 50 4
+              Q 75 10, 100 10
+              Q 75 10, 50 16
+              Q 25 10, 0 10
+              Z
+            " 
+            fill={`url(#${gradientId})`}
+          />
+          
+          {/* Minimalist Central Pivot Point */}
+          <circle cx="50" cy="10" r="0.6" fill="#fef3c7" opacity="0.8" />
+        </svg>
+      </span>
+    </span>
+  );
+};
 
 const animationVariants = {
   slideInRight: {
@@ -88,14 +142,9 @@ const SectionTitle = ({ icon, children, subtitle }) => {
             initial="hidden"
             animate={controls}
           >
-            {children}
-            <motion.span
-              className="absolute -bottom-2 left-1/2 -translate-x-1/2 h-1 bg-yellow-400 rounded-lg"
-              style={{ width: '90%', originX: 0.5 }}
-              variants={animationVariants.underline}
-              initial="hidden"
-              animate={controls}
-            />
+            <BeamUnderline>
+              {children}
+            </BeamUnderline>
           </motion.h2>
         </div>
       </div>
@@ -146,14 +195,49 @@ export default function ISO45001Certification() {
   const { ref: introRef, inView: introInView } = useInView({ triggerOnce: true, threshold: 0.2 });
 
   return (
-    <div style={{ fontFamily: "'Arial Narrow', Arial, sans-serif" }} className="min-h-screen pb-3  mt-[2rem] bg-gray-50 text-gray-800 antialiased overflow-x-hidden">
+    <div style={{ fontFamily: "'Arial Narrow', Arial, sans-serif" }} className="min-h-screen pb-3 mt-[2rem] bg-gray-50 text-gray-800 antialiased overflow-x-hidden">
       <div className="bg-white shadow-lg rounded-lg border-2 border-amber-100 max-w-7xl mx-auto">
-        <header className="bg-amber-800 text-white p-8 text-center rounded-t-lg">
-          <motion.h1 initial="hidden" animate="visible" variants={animationVariants.slideInRight} className="text-4xl md:text-5xl font-extrabold leading-tight tracking-wide text-white">ISO 45001:2018 (OHSMS)</motion.h1>
-          <motion.p initial="hidden" animate="visible" variants={animationVariants.slideInLeft} className="mt-2 text-lg text-amber-200">Safety Management System (SMS)</motion.p>
+        <header className="bg-white text-white p-8 text-center rounded-t-lg relative">
+          {/* ISO Icon in Header */}
+         
+           <div className="flex justify-center -mt-8 ">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className=""
+          >
+            <img 
+              src={isoIcon} 
+              alt="ISO Certification Icon" 
+              className="w-24 h-18 sm:w-32 
+              sm:h-24 md:w-40 md:h-30 object-contain"
+            />
+          </motion.div>
+        </div>
+
+          <motion.h1 
+            initial="hidden" 
+            animate="visible" 
+            variants={animationVariants.slideInRight} 
+            className="text-4xl md:text-5xl font-extrabold leading-tight tracking-wide text-white"
+          >
+            <BeamUnderline className="text-amber-800" thickness={6}>
+              ISO 45001:2018 (OHSMS)
+            </BeamUnderline>
+          </motion.h1>
+          <motion.p 
+            initial="hidden" 
+            animate="visible" 
+            variants={animationVariants.slideInLeft} 
+            className="mt-2 text-lg text-amber-700"
+          >
+            Safety Management System (SMS)
+          </motion.p>
         </header>
 
-
+        {/* ISO Icon below header */}
+       
         <Image src={image21} alt={image21} caption="" />
 
         <main className="container mx-auto px-4 py-16 space-y-20">
@@ -187,7 +271,7 @@ export default function ISO45001Certification() {
 
           <section>
             <SectionTitle icon={<Icon path={ICONS.who} />}>Who Can Apply?</SectionTitle>
-            <p className=" max-w-3xl mx-auto mb-8 text-amber-900/80 text-justify">ISO 45001 is designed for any organization, regardless of size or industry. It's especially vital for:</p>
+            <p className="max-w-3xl mx-auto mb-8 text-amber-900/80 text-justify">ISO 45001 is designed for any organization, regardless of size or industry. It's especially vital for:</p>
             <AnimatedGrid className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <InfoCard icon={<Icon path={ICONS.check} />} title="Manufacturing & Construction" customVariant={animationVariants.slideInLeft}>Manage high-risk environments with strict safety controls.</InfoCard>
               <InfoCard icon={<Icon path={ICONS.check} />} title="Healthcare & Logistics" customVariant={animationVariants.slideInUp}>Ensure staff well-being in critical, fast-paced operations.</InfoCard>
@@ -216,7 +300,7 @@ export default function ISO45001Certification() {
           </section>
         </main>
         
-          <VideoPlayer src="https://www.youtube.com/watch?v=kiDe9QhUpDM" title="" />
+        <VideoPlayer src="https://www.youtube.com/watch?v=kiDe9QhUpDM" title="" />
 
       </div>
     </div>

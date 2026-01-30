@@ -28,7 +28,7 @@ const AdminFeature = () => {
 
   const get = async () => {
     axios
-      .get("http://localhost:5000/")
+      .get("http://localhost:5000/adv")
       .then((response) => {
         const data = response.data.data[0];
         if (data) {
@@ -66,7 +66,7 @@ const AdminFeature = () => {
     try {
       // If you are uploading actual files, you might need FormData. 
       // If the backend accepts JSON (URLs/base64), this works:
-      const response = await axios.put(`http://localhost:5000/${_id}`, formData, { headers: { "Content-Type": "multipart/form-data" } });
+      const response = await axios.put(`https://eimcta-portfolio-backend-1i3r.vercel.app/adv/${_id}`, formData, { headers: { "Content-Type": "multipart/form-data" } });
       if (response.status === 201 || response.status === 200) {
         alert("Campaign Updated Successfully!");
         navigate("/");

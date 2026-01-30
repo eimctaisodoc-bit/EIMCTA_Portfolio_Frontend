@@ -9,14 +9,15 @@ import ModalPage from '../utilities/modal.jsx';
 import Scroll_x from '../utilities/ScrollX.jsx';
 import AboutCard from '../utilities/global.jsx';
 import ISOShowcase from './Glob_rec.jsx';
-import BusinessQuoteForm from './form.jsx';
+import CertificationProcess from './certificationProcess.jsx';
+import ConsultancyProcess from './ConsultancyProcess.jsx';
 
 // Lazy load components
 const ImageCarousel = lazy(() => import("../utilities/caro.jsx"));
 
 // Loading placeholder component
 const LoadingPlaceholder = () => (
-  <div className="flex items-center justify-center h-screen bg-gradient-to-br from-amber-50 to-amber-100">
+  <div className="flex items-center justify-center h-screen bg-linear-to-br from-amber-50 to-amber-100">
     <div className="w-16 h-16 border-4 rounded-full border-amber-200 border-t-amber-600 animate-spin"></div>
   </div>
 );
@@ -66,8 +67,12 @@ const Home = () => {
       </Suspense>
 
       <Scroll_x />
+      
       <ISOShowcase />
 
+      <ConsultancyProcess/>
+      <CertificationProcess/>
+      {/* <ISOProcess /> */}
       {/* ===== ISO SERVICES ===== */}
       <ISO_CREDENTIALS />
 
@@ -76,6 +81,7 @@ const Home = () => {
 
       {/* ===== TESTIMONIALS ===== */}
       <Testimonials />
+      {/* <YouTubePlaylists/> */}
 
       <AboutCard />
       {/* ===== BRANDING ===== */}

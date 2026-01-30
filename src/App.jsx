@@ -57,7 +57,7 @@ function App() {
   return (
     <div>
       <AnimatePresence mode="wait">
-        {/* <ScrollToTop /> */}
+        <ScrollToTop /> 
 
         <TopHeader />
 

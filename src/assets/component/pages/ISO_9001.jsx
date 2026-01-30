@@ -2,7 +2,61 @@ import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import Image from '../utilities/image';
 import VideoPlayer from '../utilities/Video';
-import image14 from "../../img/14.jpg"
+import image14 from "../../img/14.jpg";
+import isoIcon from "../../img/iso_.png";
+
+// BeamUnderline Component
+const BeamUnderline = ({ 
+  children, 
+  thickness = 8, 
+  className = "" 
+}) => {
+  const gradientId = "formalBeamGradient";
+
+  return (
+    <span className={`relative inline-block group ${className}`}>
+      {children}
+      <span 
+        className="absolute left-0 right-0 -bottom-2 block overflow-visible pointer-events-none"
+        style={{ height: `${thickness * 1.5}px` }}
+      >
+        <svg 
+          width="100%" 
+          height="100%" 
+          viewBox="0 0 100 20" 
+          preserveAspectRatio="none"
+          className="block"
+        >
+          <defs>
+            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#f59e0b" />
+              <stop offset="48%" stopColor="#b45309" />
+              <stop offset="50%" stopColor="#fde68a" />
+              <stop offset="52%" stopColor="#b45309" />
+              <stop offset="100%" stopColor="#f59e0b" />
+            </linearGradient>
+          </defs>
+          
+          {/* The Formal Beam Path */}
+          <path 
+            d="
+              M 0 10 
+              Q 25 10, 50 4
+              Q 75 10, 100 10
+              Q 75 10, 50 16
+              Q 25 10, 0 10
+              Z
+            " 
+            fill={`url(#${gradientId})`}
+          />
+          
+          {/* Minimalist Central Pivot Point */}
+          <circle cx="50" cy="10" r="0.6" fill="#fef3c7" opacity="0.8" />
+        </svg>
+      </span>
+    </span>
+  );
+};
 
 export default function ISO9001Certification() {
     const introRef = useRef(null);
@@ -51,7 +105,7 @@ export default function ISO9001Certification() {
     };
 
     const gridContainerVariants = {
-        hidden: { opacity: 1 }, // Parent is always visible
+        hidden: { opacity: 1 },
         visible: {
             opacity: 1,
             transition: {
@@ -74,40 +128,45 @@ export default function ISO9001Certification() {
         <div className="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8 font-sans text-amber-800 overflow-x-hidden">
             <div className="max-w-7xl mx-auto">
 
-                {/* --- Header Section --- */}
+                {/* --- Header Section with ISO Icon --- */}
                 <header className="text-center mb-16">
+                    <motion.div
+                        initial="hidden"
+                        animate="visible"
+                        variants={heroVariants.slideInLeft}
+                        className="flex justify-center "
+                    >
+                        <img 
+                            src={isoIcon} 
+                            alt="ISO Certification Icon" 
+                            className="w-24 h-18 sm:w-32 sm:h-24 md:w-40 md:h-30 object-contain"
+                        />
+                    </motion.div>
+                    
                     <motion.h1
                         initial="hidden"
                         animate="visible"
                         variants={heroVariants.slideInRight}
-                        className="text-4xl md:text-5xl font-extrabold text-amber-900 tracking-tight mb-4 relative pb-4"
+                        className="text-4xl md:text-5xl font-extrabold text-amber-900 tracking-tight mb-4"
                     >
-                        ISO 9001:2015(QMS)
-                        {/* NOTE: A motion.div is used for the animated underline, a powerful pattern in Framer Motion for dynamic "pseudo-elements". */}
-                        <motion.div
-                            initial="hidden"
-                            animate="visible"
-                            variants={{
-                                hidden: { width: "0%" },
-                                visible: { width: "25%", transition: { duration: 0.8, delay: 0.8, ease: [0.25, 0.46, 0.45, 0.94] } }
-                            }}
-                            style={{ originX: 0.5 }}
-                            className="absolute bottom-0 left-1/2 -translate-x-1/2 h-1.5 bg-amber-500 rounded-full"
-                        />
+                        <BeamUnderline thickness={8} className="">
+                            ISO 9001:2015(QMS)
+                        </BeamUnderline>
                     </motion.h1>
+                    
                     <motion.p
                         initial="hidden"
                         animate="visible"
                         variants={heroVariants.slideInLeft}
-                        className="text-lg text-amber-800 max-w-3xl mx-auto leading-relaxed"
+                        className="text-lg text-amber-800 max-w-3xl mx-auto leading-relaxed mt-8"
                     >
                         Elevating Your Business Through Excellence in Quality Management
                     </motion.p>
                 </header>
 
                 {/* --- Top Banner Image --- */}
-              
                 <Image src={image14} alt={image14} caption=""/>
+                
                 {/* --- Introduction Text --- */}
                 <motion.div
                     ref={introRef}
@@ -127,16 +186,11 @@ export default function ISO9001Certification() {
                         initial="hidden"
                         animate={isGridHeaderInView ? "visible" : "hidden"}
                         variants={sectionHeaderVariants}
-                        className="text-3xl md:text-4xl font-bold text-amber-900 mb-4 relative pb-4"
+                        className="text-3xl md:text-4xl font-bold text-amber-900 mb-4"
                     >
-                        A Framework for Success
-                        <motion.div
-                            initial="hidden"
-                            animate={isGridHeaderInView ? "visible" : "hidden"}
-                            variants={underlineVariant}
-                            style={{ originX: 0.5 }}
-                            className="absolute bottom-0 left-1/2 -translate-x-1/2 h-1 bg-amber-500 rounded-full"
-                        />
+                        <BeamUnderline thickness={6}>
+                            A Framework for Success
+                        </BeamUnderline>
                     </motion.h2>
                 </div>
 
@@ -299,7 +353,7 @@ const Tag = ({ label }) => (
     <span className="bg-amber-100 text-amber-900 px-3 py-1 rounded-full text-sm font-semibold">{label}</span>
 );
 
-// --- SVG Icons (Unchanged) ---
+// --- SVG Icons ---
 
 const InfoIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -331,5 +385,3 @@ const RefreshIcon = () => (
         <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
     </svg>
 );
-
-

@@ -23,7 +23,7 @@ const ModalPage = () => {
 
   const getData = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/");
+      const response = await axios.get("http://localhost:5000/adv");
       const data = response.data.data[0];
 
       setFormData({

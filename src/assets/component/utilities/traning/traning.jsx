@@ -2,6 +2,114 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { navbarItems } from "../Array/data";
 
+// BeamUnderline Component
+const BeamUnderline = ({ 
+  children, 
+  thickness = 8, 
+  className = "" 
+}) => {
+  const gradientId = `beamGradient${Math.random().toString(36).substr(2, 9)}`;
+
+  return (
+    <span className={`relative inline-block group ${className}`}>
+      {children}
+      <span 
+        className="absolute left-0 right-0 -bottom-2 block overflow-visible pointer-events-none"
+        style={{ height: `${thickness * 1.5}px` }}
+      >
+        <svg 
+          width="100%" 
+          height="100%" 
+          viewBox="0 0 100 20" 
+          preserveAspectRatio="none"
+          className="block"
+        >
+          <defs>
+            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#f59e0b" />
+              <stop offset="48%" stopColor="#b45309" />
+              <stop offset="50%" stopColor="#fde68a" />
+              <stop offset="52%" stopColor="#b45309" />
+              <stop offset="100%" stopColor="#f59e0b" />
+            </linearGradient>
+          </defs>
+          
+          {/* The Formal Beam Path */}
+          <path 
+            d="
+              M 0 10 
+              Q 25 10, 50 4
+              Q 75 10, 100 10
+              Q 75 10, 50 16
+              Q 25 10, 0 10
+              Z
+            " 
+            fill={`url(#${gradientId})`}
+          />
+          
+          {/* Minimalist Central Pivot Point */}
+          <circle cx="50" cy="10" r="0.6" fill="#fef3c7" opacity="0.8" />
+        </svg>
+      </span>
+    </span>
+  );
+};
+
+// Animated version with Framer Motion
+const AnimatedBeamUnderline = ({ children, thickness = 8, className = "" }) => {
+  const gradientId = `animatedBeamGradient${Math.random().toString(36).substr(2, 9)}`;
+
+  return (
+    <motion.span 
+      className={`relative inline-block group ${className}`}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      {children}
+      <motion.span 
+        className="absolute left-0 right-0 -bottom-2 block overflow-visible pointer-events-none"
+        style={{ height: `${thickness * 1.5}px` }}
+        initial={{ opacity: 0, scaleX: 0 }}
+        animate={{ opacity: 1, scaleX: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
+      >
+        <svg 
+          width="100%" 
+          height="100%" 
+          viewBox="0 0 100 20" 
+          preserveAspectRatio="none"
+          className="block"
+        >
+          <defs>
+            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#f59e0b" />
+              <stop offset="48%" stopColor="#b45309" />
+              <stop offset="50%" stopColor="#fde68a" />
+              <stop offset="52%" stopColor="#b45309" />
+              <stop offset="100%" stopColor="#f59e0b" />
+            </linearGradient>
+          </defs>
+          
+          <path 
+            d="
+              M 0 10 
+              Q 25 10, 50 4
+              Q 75 10, 100 10
+              Q 75 10, 50 16
+              Q 25 10, 0 10
+              Z
+            " 
+            fill={`url(#${gradientId})`}
+          />
+          
+          <circle cx="50" cy="10" r="0.6" fill="#fef3c7" opacity="0.8" />
+        </svg>
+      </motion.span>
+    </motion.span>
+  );
+};
+
 // Animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -38,18 +146,6 @@ const cardVariants = {
     transition: {
       duration: 0.6,
       ease: "easeOut"
-    }
-  }
-};
-
-const underlineVariants = {
-  hidden: { width: 0 },
-  visible: {
-    width: "90%",
-    transition: {
-      duration: 0.8,
-      ease: "easeOut",
-      delay: 0.3
     }
   }
 };
@@ -108,20 +204,9 @@ const Training = () => {
       <header className="relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 py-24 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl">
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-amber-900 relative inline-block"
-            >
+            <AnimatedBeamUnderline className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-amber-900">
               Elevate Your Expertise
-              <motion.div 
-                variants={underlineVariants}
-                initial="hidden"
-                animate="visible"
-                className="absolute left-1/2 -bottom-2 h-1 bg-yellow-400 rounded-full -translate-x-1/2"
-              />
-            </motion.h1>
+            </AnimatedBeamUnderline>
 
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -212,6 +297,7 @@ const Training = () => {
                     }`}>
                     {group?.children?.length || 0}
                   </span>
+                 
                 </motion.button>
               );
             })}
@@ -239,20 +325,9 @@ const Training = () => {
                   {activeTab + 1}
                 </motion.span>
                 <div>
-                  <motion.h2 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="text-2xl md:text-3xl lg:text-4xl font-bold text-amber-900 relative inline-block"
-                  >
+                  <BeamUnderline className="text-2xl md:text-3xl lg:text-4xl font-bold text-amber-900">
                     {groupTitle}
-                    <motion.div 
-                      variants={underlineVariants}
-                      initial="hidden"
-                      animate="visible"
-                      className="absolute left-1/2 -bottom-2 h-1 bg-yellow-400 rounded-full -translate-x-1/2"
-                    />
-                  </motion.h2>
+                  </BeamUnderline>
                   {groupDescription && (
                     <motion.p 
                       initial={{ opacity: 0 }}
@@ -284,24 +359,22 @@ const Training = () => {
                     whileHover={{ y: -10, transition: { duration: 0.3 } }}
                     onMouseEnter={() => setHoveredCard(itemIdx)}
                     onMouseLeave={() => setHoveredCard(null)}
-                    className="relative rounded-2xl overflow-hidden bg-white border border-amber-200 shadow-md transition-all duration-300 hover:shadow-lg hover:border-amber-300"
+                    className="relative rounded-2xl overflow-hidden bg-white border border-amber-200 shadow-md transition-all duration-300 hover:shadow-lg hover:border-amber-300 group/card"
                   >
                     <div className="relative flex flex-col h-full p-6">
                       {/* Card accent */}
-                      <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-400 to-yellow-400" />
 
                       {/* Card content */}
                       <div className="flex items-start mb-4">
                         <span className="flex-shrink-0 bg-yellow-100 text-amber-800 text-sm font-medium mr-3 px-2.5 py-0.5 rounded-full">
                           {activeTab + 1}.{itemIdx + 1}
                         </span>
-                        <h3 className="text-lg md:text-xl font-semibold text-amber-900">{title}</h3>
+                        <h3 className="text-lg md:text-xl font-semibold text-amber-900 group-hover/card:text-amber-800 transition-colors">
+                            {title}
+                        </h3>
                       </div>
 
                       <p className="text-sm md:text-base text-amber-700 mb-6 line-clamp-3 text-justify">{description}</p>
-
-                      {/* Card footer */}
-                   
                     </div>
                   </motion.div>
                 );

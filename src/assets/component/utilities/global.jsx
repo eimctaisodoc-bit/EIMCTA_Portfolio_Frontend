@@ -6,6 +6,60 @@ import img2 from '../../img/21.jpg';
 import img3 from '../../img/20.jpg';  
 import eduimg from '../../img/educationSystem.jpg';
 const AboutCard = () => {
+
+  const BeamUnderline = ({ 
+  children, 
+  thickness = 8, 
+  className = "" 
+}) => {
+  const gradientId = "formalBeamGradient";
+
+  return (
+    <span className={`relative inline-block group ${className}`}>
+      {children}
+      <span 
+        className="absolute left-0 right-0 -bottom-2 block overflow-visible pointer-events-none"
+        style={{ height: `${thickness * 1.5}px` }}
+      >
+        <svg 
+          width="100%" 
+          height="100%" 
+          viewBox="0 0 100 20" 
+          preserveAspectRatio="none"
+          className="block"
+        >
+          <defs>
+            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#f59e0b" />
+              <stop offset="48%" stopColor="#b45309" />
+              <stop offset="50%" stopColor="#fde68a" />
+              <stop offset="52%" stopColor="#b45309" />
+              <stop offset="100%" stopColor="#f59e0b" />
+            </linearGradient>
+          </defs>
+          
+          {/* The Formal Beam Path */}
+          <path 
+            d="
+              M 0 10 
+              Q 25 10, 50 4
+              Q 75 10, 100 10
+              Q 75 10, 50 16
+              Q 25 10, 0 10
+              Z
+            " 
+            fill={`url(#${gradientId})`}
+          />
+          
+          {/* Minimalist Central Pivot Point */}
+          <circle cx="50" cy="10" r="0.6" fill="#fef3c7" opacity="0.8" />
+        </svg>
+      </span>
+    </span>
+  );
+};
+
+
   const services = [
     {
       id: 1,
@@ -78,10 +132,13 @@ const AboutCard = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h1 className="text-3xl sm:text-xs  md:text-3xl lg:text-4xl font-bold text-amber-900 mb-4 relative inline-block">
+          <BeamUnderline thiockness={10}>
+          <h1 className="text-3xl sm:text-xs  md:text-3xl lg:text-4xl font-bold
+            text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-500 relative inline-block">
             ISO Consultancy Services
            
           </h1>
+            </BeamUnderline>
           <p className="text-xl text-amber-800 font-normal max-w-3xl mx-auto mt-6">
             We are one of the leading global providers of accredited ISO certification. We offer a broad portfolio of services within management system ISO certification and related services.
           </p>

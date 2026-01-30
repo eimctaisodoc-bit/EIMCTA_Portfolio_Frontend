@@ -31,6 +31,59 @@ const animationVariants = {
   },
 };
 
+// BeamUnderline Component
+const BeamUnderline = ({ 
+  children, 
+  thickness = 8, 
+  className = "" 
+}) => {
+  const gradientId = "formalBeamGradient";
+
+  return (
+    <span className={`relative inline-block group ${className}`}>
+      {children}
+      <span 
+        className="absolute left-0 right-0 -bottom-2 block overflow-visible pointer-events-none"
+        style={{ height: `${thickness * 1.5}px` }}
+      >
+        <svg 
+          width="100%" 
+          height="100%" 
+          viewBox="0 0 100 20" 
+          preserveAspectRatio="none"
+          className="block"
+        >
+          <defs>
+            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#f59e0b" />
+              <stop offset="48%" stopColor="#b45309" />
+              <stop offset="50%" stopColor="#fde68a" />
+              <stop offset="52%" stopColor="#b45309" />
+              <stop offset="100%" stopColor="#f59e0b" />
+            </linearGradient>
+          </defs>
+          
+          {/* The Formal Beam Path */}
+          <path 
+            d="
+              M 0 10 
+              Q 25 10, 50 4
+              Q 75 10, 100 10
+              Q 75 10, 50 16
+              Q 25 10, 0 10
+              Z
+            " 
+            fill={`url(#${gradientId})`}
+          />
+          
+          {/* Minimalist Central Pivot Point */}
+          <circle cx="50" cy="10" r="0.6" fill="#fef3c7" opacity="0.8" />
+        </svg>
+      </span>
+    </span>
+  );
+};
+
 // Reusable component to trigger animations on scroll
 const AnimatedComponent = ({ children, variants, className }) => {
   const ref = useRef(null);
@@ -56,7 +109,6 @@ const AnimatedComponent = ({ children, variants, className }) => {
   );
 };
 
-
 const HealthSafety = () => {
   // Helper component for list items with icons
   const BenefitItem = ({ children }) => (
@@ -74,14 +126,12 @@ const HealthSafety = () => {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, amount: 0.5 });
     const textControls = useAnimation();
-    const underlineControls = useAnimation();
 
     useEffect(() => {
       if (isInView) {
         textControls.start('visible');
-        underlineControls.start('visible');
       }
-    }, [isInView, textControls, underlineControls]);
+    }, [isInView, textControls]);
 
     return (
       <div ref={ref} className="flex flex-col md:flex-row items-center justify-center text-center mb-8 w-[90%] max-w-4xl mx-auto">
@@ -89,24 +139,18 @@ const HealthSafety = () => {
           <Icon className="w-5 md:w-6 h-5 md:h-6 text-amber-600" />
         </div>
         <div className="relative">
-          <motion.h2
+          <motion.div
             variants={animationVariants.sectionHeaderVariant}
             initial="hidden"
             animate={textControls}
-            className="text-lg md:text-2xl lg:text-3xl font-bold text-amber-900 inline-block relative text-center"
+            className="inline-block relative text-center"
           >
-            <span className="inline-block">{title}</span>
-            <motion.span
-              variants={{
-                hidden: { scaleX: 0 },
-                visible: { scaleX: 1, transition: { duration: 0.8, delay: 0.3, ease: 'easeInOut' } },
-              }}
-              style={{ originX: 0.5 }}
-              initial="hidden"
-              animate={underlineControls}
-              className="absolute -bottom-2 left-3 -translate-x-1/2 w-[90%] h-1 bg-amber-400 rounded-lg">
-            </motion.span>
-          </motion.h2>
+            <BeamUnderline className="inline-block">
+              <h2 className="text-lg md:text-2xl lg:text-3xl font-bold text-amber-900">
+                {title}
+              </h2>
+            </BeamUnderline>
+          </motion.div>
         </div>
       </div>
     );
@@ -124,19 +168,17 @@ const HealthSafety = () => {
         />
         <div className="absolute inset-0 bg-amber-900 bg-opacity-30 flex items-center justify-center">
           <div className="text-center px-6">
-            <motion.h1
+            <motion.div
               variants={animationVariants.slideInRight}
               initial="hidden"
               animate="visible"
-              className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-4 drop-shadow-lg relative inline-block"
+              className="mb-4 drop-shadow-lg relative inline-block"
             >
-              Ensuring Quality and Safety in Healthcare
-              <motion.span
-                initial={{ width: 0 }}
-                animate={{ width: "40%" }}
-                transition={{ duration: 0.8, delay: 0.3, ease: 'easeInOut' }}
-                className="absolute -bottom-2 left-1/2 -translate-x-1/2 h-1 bg-amber-400 rounded-lg"></motion.span>
-            </motion.h1>
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white">
+                  Ensuring Quality and Safety in Healthcare
+                </h1>
+             
+            </motion.div>
             <motion.p
               variants={animationVariants.slideInLeft}
               initial="hidden"
@@ -163,7 +205,7 @@ const HealthSafety = () => {
 
           {/* Why ISO Matters Section */}
           <section className="px-8 py-12 sm:px-12 bg-amber-100/50 transition-colors duration-300">
-            <SectionHeader icon={ShieldCheck} title="Why ISO Standards Matter in Healthcare" />
+            <SectionHeader icon={ShieldCheck} title="Why ISO Standards Matter in Healthcare?" />
             <AnimatedComponent variants={animationVariants.paragraphVariant}>
               <p className="mb-8 text-lg text-amber-800">
                 ISO standards provide healthcare organizations with structured processes to manage risks, improve patient safety, and protect sensitive data. Some of the most relevant ISO standards in healthcare include:
@@ -181,7 +223,12 @@ const HealthSafety = () => {
                     transition={{ duration: 0.3, ease: "easeOut" }}
                     className="p-6 bg-white rounded-xl border border-amber-200 shadow-sm hover:shadow-md hover:border-amber-300"
                   >
-                    <strong className="block text-lg md:text-xl font-semibold text-amber-900 mb-2">{item.title}</strong>
+                    <div className="mb-2">
+                        <strong className="text-lg md:text-xl font-semibold text-amber-900">
+                          {item.title}
+                        </strong>
+                   
+                    </div>
                     <p className="text-sm md:text-base text-amber-800 text-justify">{item.description}</p>
                   </motion.div>
                 </AnimatedComponent>
@@ -238,7 +285,8 @@ const HealthSafety = () => {
                   animate="visible"
                   className="bg-amber-100 text-amber-900 px-4 py-2 rounded-full font-medium text-sm md:text-base hover:bg-amber-200 hover:shadow-sm transition-all duration-300 cursor-default"
                 >
-                  {item}
+                    {item}
+                  
                 </motion.span>
               ))}
             </AnimatedComponent>
@@ -261,7 +309,11 @@ const HealthSafety = () => {
                     <span className="absolute flex items-center justify-center w-10 h-10 bg-amber-100 rounded-full -left-5 ring-4 ring-white text-lg font-bold text-amber-900 group-hover:bg-amber-200 transition-colors duration-300">
                       {item.step}
                     </span>
-                    <h3 className="text-lg md:text-xl font-semibold text-amber-900 mb-2">{item.title}</h3>
+                    <div className="mb-2">
+                        <h3 className="text-lg md:text-xl font-semibold text-amber-900">
+                          {item.title}
+                        </h3>
+                    </div>
                     <p className="text-sm md:text-base text-amber-800 text-justify">{item.description}</p>
                   </li>
                 </AnimatedComponent>
@@ -295,7 +347,13 @@ const HealthSafety = () => {
                         <FileText className="w-4 md:w-5 h-4 md:h-5 text-amber-600" />
                       </div>
                       <div>
-                        <h3 className="text-lg md:text-xl font-semibold text-amber-900 mb-1">{doc.title}</h3>
+                        <div className="mb-2">
+                          
+                            <h3 className="text-lg md:text-xl font-semibold text-amber-900">
+                              {doc.title}
+                            </h3>
+                          
+                        </div>
                         <p className="text-sm md:text-base text-amber-700 text-justify">{doc.description}</p>
                       </div>
                     </div>
@@ -304,17 +362,11 @@ const HealthSafety = () => {
               ))}
             </div>
           </section>
-
-          {/* Video Guide Section */}
-         
-
-        
         </div>
       </div>
-       <BusinessQuoteForm />
+      <BusinessQuoteForm />
     </div>
   );
 };
 
 export default HealthSafety;
-
