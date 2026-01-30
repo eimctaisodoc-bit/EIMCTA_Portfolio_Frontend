@@ -26,7 +26,7 @@ import logo from '../../img/eimcta.png';
 import { FaCodeBranch } from "react-icons/fa";
 
 // 1) Import the PDF (Vite/CRA will turn this into a file URL)
-import EimctaBrochureFile from "../../img/Brochure Design -.pdf";
+import EimctaBrochureFile from "../../img/Brochure Design -.rar";
 
 const Footer = () => {
   const ref = useRef(null);
@@ -41,12 +41,49 @@ const Footer = () => {
   }, [isVideoInView]);
 
   // 2) Download helper
-  const handleDownload = (fileSource, fileName) => {
-    const tempLink = document.createElement("a");
-    tempLink.href = fileSource;     // URL to the PDF
-    tempLink.download = fileName;   // saved file name
-    tempLink.click();
+
+  const handleDownload = async (fileUrl, fileName) => {
+    try {
+      const res = await fetch(fileUrl);
+      if (!res.ok) throw new Error("Download failed");
+
+      const type = (res.headers.get("content-type") || "").toLowerCase();
+
+      const isRarByHeader =
+        type.includes("application/vnd.rar") ||
+        type.includes("application/x-rar-compressed") ||
+        type.includes("application/octet-stream"); // common fallback
+
+      const isRarByName = fileName.toLowerCase().endsWith(".rar");
+
+      if (!isRarByHeader && !isRarByName) {
+        console.log("Not RAR:", type);
+        alert("Invalid RAR file");
+        return;
+      }
+
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      // small delay helps some browsers finish the download
+      setTimeout(() => URL.revokeObjectURL(url), 3000);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to download file");
+    }
+    alert("Note: To open the brochure, right-click on EIMCTA_Complete_Brochure.rar , select 'Extract All' and then open the extracted folder. If you dont have a RAR extractor, you can download WinRAR or 7-Zip for free from their official websites.");
   };
+
+
+
+
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -90,12 +127,6 @@ const Footer = () => {
     },
   ];
 
-  const brochureDownloads = [
-    { title: "Service Profile", fileName: "EIMCTA_Service_Profile.pdf" },
-    { title: "ISO 21001", fileName: "EIMCTA_ISO_21001_Brochure.pdf" },
-    { title: "Calendar", fileName: "EIMCTA_Calendar.pdf" },
-    { title: "Full Brochure", fileName: "EIMCTA_Full_Brochure.pdf" },
-  ];
 
   const handleFaqClick = (id) => {
     setExpandedFaq(expandedFaq === id ? null : id);
@@ -224,7 +255,7 @@ const Footer = () => {
                       +977 9766 561697
                     </a>
 
-  <div className="flex items-center  gap-2 text-xs 
+                    <div className="flex items-center  gap-2 text-xs 
                     text-amber-600 bg-amber-100 px-3 py-1 rounded-full w-fit">
 
                       <div className="flex justify-between gap-2 items-center text-center">
@@ -325,7 +356,7 @@ const Footer = () => {
                 <div className="flex flex-col items-center space-y-6">
                   <div className="relative">
                     <img
-                       src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://docs.google.com/forms/d/e/1FAIpQLScx_B-qvhNtZgOqOZEoZKZtZrWMSv1ThgU0mak5xtoGaiinsw/viewform?pli=1"
+                      src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://docs.google.com/forms/d/e/1FAIpQLScx_B-qvhNtZgOqOZEoZKZtZrWMSv1ThgU0mak5xtoGaiinsw/viewform?pli=1"
                       alt="Get Quote QR Code"
                       className="w-40 h-40 object-contain rounded-xl p-2"
                     />
@@ -397,12 +428,21 @@ const Footer = () => {
                 </Link>
 
                 <button
-                  onClick={() => handleDownload(EimctaBrochureFile, "EIMCTA_Complete_Brochure.pdf")}
-                  className="inline-flex items-center justify-center gap-2 px-4 py-3 bg-linear-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-xl hover:from-amber-600 hover:to-amber-700 transition-all text-sm flex-1"
+                  onClick={() =>
+                    handleDownload(
+                      EimctaBrochureFile,
+                      "EIMCTA_Complete_Brochure.rar"
+                    )
+                  }
+                  className="inline-flex items-center justify-center gap-2 px-4 py-3
+  bg-linear-to-r from-amber-500 to-amber-600 text-white font-semibold
+  rounded-xl hover:from-amber-600 hover:to-amber-700 transition-all text-sm flex-1"
                 >
                   <Download size={16} />
-                  Download Brochure
+                  Download Brochure 
                 </button>
+
+
               </div>
             </div>
           </motion.div>
