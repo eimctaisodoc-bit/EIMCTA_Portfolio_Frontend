@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { navbarItems } from "../Array/data";
+import InnerSidebar from "../innserSidebar";
 
 // BeamUnderline Component
 const BeamUnderline = ({ 
@@ -199,6 +200,11 @@ const Training = () => {
   const groupItems = activeGroup?.children || [];
 
   return (
+    <>
+     <div className="flex flex-row gap-4" >
+           <aside className="hidden lg:block w-80 sticky top-16 self-start">
+                  <InnerSidebar />
+                </aside>
     <div className="min-h-screen bg-gray-50 font-['Arial_Narrow']">
       {/* Hero section */}
       <header className="relative overflow-hidden">
@@ -384,6 +390,8 @@ const Training = () => {
         </div>
       </main>
     </div>
+    </div>
+    </>
   );
 };
 

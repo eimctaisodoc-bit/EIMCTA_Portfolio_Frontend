@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import {faqData} from "../utilities/Array/data";
 import { ChevronDown } from "lucide-react";
+import InnerSidebar from '../utilities/innserSidebar';
 
 const FAQItem = ({ item, isOpen, onClick }) => {
   // Use the icon component provided in the data
@@ -90,6 +91,11 @@ const Faq = () => {
 
   return (
     // Includes font-sans and custom font-family for Arial Narrow
+    <>
+     <div className="flex flex-row gap-4" >
+       <aside className="hidden lg:block w-80 sticky top-16 self-start">
+              <InnerSidebar />
+            </aside>
     <div className="min-h-screen bg-slate-50 py-16 px-4 font-sans antialiased" style={{ fontFamily: 'Arial Narrow, Arial, sans-serif' }}>
       <div className="mx-auto max-w-4xl">
         {/* Header Section */}
@@ -122,6 +128,8 @@ const Faq = () => {
         
       </div>
     </div>
+    </div>
+    </>
   );
 };
 

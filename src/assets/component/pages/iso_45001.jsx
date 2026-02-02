@@ -5,6 +5,7 @@ import Image from '../utilities/image';
 import VideoPlayer from '../utilities/Video';
 import image21 from "../../img/21.jpg";
 import isoIcon from "../../img/iso_.png";
+import InnerSidebar from '../utilities/innserSidebar';
 
 // --- BeamUnderline Component ---
 const BeamUnderline = ({ 
@@ -130,14 +131,14 @@ const SectionTitle = ({ icon, children, subtitle }) => {
   }, [controls, inView]);
 
   return (
-    <div ref={ref} className="relative mb-8 text-center">
+    <div ref={ref} className="relative mb-10 text-center">
       <div className="flex items-center justify-center gap-3">
         <motion.div animate={controls} initial="hidden" variants={animationVariants.scaleUp}>
           <div className="text-yellow-400 bg-yellow-100 rounded-full p-2">{icon}</div>
         </motion.div>
         <div className="relative">
           <motion.h2
-            className="text-3xl md:text-4xl font-bold text-amber-900 inline-block"
+            className="text-2xl md:text-3xl lg:text-4xl font-bold text-amber-900 leading-tight inline-block"
             variants={animationVariants.sectionHeader}
             initial="hidden"
             animate={controls}
@@ -150,7 +151,7 @@ const SectionTitle = ({ icon, children, subtitle }) => {
       </div>
       {subtitle && (
         <motion.p
-          className="mt-2 text-amber-900/80 max-w-3xl mx-auto text-justify"
+          className="mt-4 text-gray-700 max-w-3xl mx-auto text-justify leading-relaxed"
           variants={animationVariants.paragraph}
           initial="hidden"
           animate={controls}
@@ -172,7 +173,7 @@ const InfoCard = ({ icon, title, children, customVariant }) => (
       <div className="bg-yellow-100 text-yellow-600 p-3 rounded-full">{icon}</div>
       <h3 className="text-lg font-bold text-amber-900">{title}</h3>
     </div>
-    <p className="mt-4 text-amber-900/80 leading-relaxed text-justify">{children}</p>
+    <p className="mt-4 text-gray-700 leading-relaxed text-justify">{children}</p>
   </motion.div>
 );
 
@@ -191,118 +192,291 @@ const AnimatedGrid = ({ children, className }) => {
   );
 }
 
-export default function ISO45001Certification() {
-  const { ref: introRef, inView: introInView } = useInView({ triggerOnce: true, threshold: 0.2 });
+const RequirementTable = () => {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const tableVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.6 }
+    }
+  };
 
   return (
-    <div style={{ fontFamily: "'Arial Narrow', Arial, sans-serif" }} className="min-h-screen pb-3 mt-[2rem] bg-gray-50 text-gray-800 antialiased overflow-x-hidden">
+    <motion.div 
+      ref={ref}
+      variants={tableVariants}
+      initial="hidden"
+      animate={inView ? 'visible' : 'hidden'}
+      className="overflow-x-auto rounded-xl border border-amber-200 shadow-sm bg-white"
+    >
+      <table className="min-w-full divide-y divide-amber-100">
+        <thead className="bg-amber-50">
+          <tr>
+            <th className="px-6 py-4 text-left text-base font-semibold text-amber-900">Phase</th>
+            <th className="px-6 py-4 text-left text-base font-semibold text-amber-900">Key Requirements</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-amber-100 bg-white">
+          <tr className="hover:bg-amber-50 transition-colors">
+            <td className="px-6 py-4 whitespace-nowrap text-base font-bold text-amber-900">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                <span>Context & Leadership</span>
+              </div>
+            </td>
+            <td className="px-6 py-4 text-base text-gray-700 leading-relaxed">
+              Understanding internal/external issues and ensuring top management commitment.
+            </td>
+          </tr>
+          <tr className="hover:bg-amber-50 transition-colors">
+            <td className="px-6 py-4 whitespace-nowrap text-base font-bold text-amber-900">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                <span>Planning</span>
+              </div>
+            </td>
+            <td className="px-6 py-4 text-base text-gray-700 leading-relaxed">
+              Identifying hazards, assessing risks, and setting measurable OH&S objectives.
+            </td>
+          </tr>
+          <tr className="hover:bg-amber-50 transition-colors">
+            <td className="px-6 py-4 whitespace-nowrap text-base font-bold text-amber-900">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                <span>Support & Operation</span>
+              </div>
+            </td>
+            <td className="px-6 py-4 text-base text-gray-700 leading-relaxed">
+              Providing necessary resources, ensuring competence, and managing operational controls.
+            </td>
+          </tr>
+          <tr className="hover:bg-amber-50 transition-colors">
+            <td className="px-6 py-4 whitespace-nowrap text-base font-bold text-amber-900">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                <span>Performance Evaluation</span>
+              </div>
+            </td>
+            <td className="px-6 py-4 text-base text-gray-700 leading-relaxed">
+              Monitoring, measuring, and analyzing the OHSMS through internal audits.
+            </td>
+          </tr>
+          <tr className="hover:bg-amber-50 transition-colors">
+            <td className="px-6 py-4 whitespace-nowrap text-base font-bold text-amber-900">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                <span>Improvement</span>
+              </div>
+            </td>
+            <td className="px-6 py-4 text-base text-gray-700 leading-relaxed">
+              Reacting to nonconformities and taking corrective actions to enhance performance.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </motion.div>
+  );
+};
+
+export default function ISO45001Certification() {
+  const { ref: introRef, inView: introInView } = useInView({ triggerOnce: true, threshold: 0.2 });
+  
+  return (
+    <>
+     <div className="flex flex-row gap-4" >
+       <aside className="hidden lg:block w-80 sticky top-16 self-start">
+              <InnerSidebar />
+            </aside>
+    <div className="min-h-screen pb-3 mt-[2rem] bg-white antialiased overflow-x-hidden">
       <div className="bg-white shadow-lg rounded-lg border-2 border-amber-100 max-w-7xl mx-auto">
-        <header className="bg-white text-white p-8 text-center rounded-t-lg relative">
-          {/* ISO Icon in Header */}
-         
-           <div className="flex justify-center -mt-8 ">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-            className=""
-          >
-            <img 
-              src={isoIcon} 
-              alt="ISO Certification Icon" 
-              className="w-24 h-18 sm:w-32 
-              sm:h-24 md:w-40 md:h-30 object-contain"
-            />
-          </motion.div>
-        </div>
+        {/* Header Section */}
+        <header className="relative overflow-hidden bg-white text-white p-8 text-center rounded-t-lg">
+          <div className="absolute inset-0 "></div>
+          
+          <div className="flex justify-center -mt-8 relative z-10">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+            >
+              <img 
+                src={isoIcon} 
+                alt="ISO Certification Icon" 
+                className="w-24 h-18 sm:w-32 sm:h-24 md:w-40 md:h-30 object-contain"
+              />
+            </motion.div>
+          </div>
 
           <motion.h1 
             initial="hidden" 
             animate="visible" 
             variants={animationVariants.slideInRight} 
-            className="text-4xl md:text-5xl font-extrabold leading-tight tracking-wide text-white"
+            className="text-3xl md:text-5xl font-bold text-amber-800 leading-tight mt-6 relative z-10"
           >
             <BeamUnderline className="text-amber-800" thickness={6}>
-              ISO 45001:2018 (OHSMS)
+               ISO 45001:2018
             </BeamUnderline>
           </motion.h1>
           <motion.p 
             initial="hidden" 
             animate="visible" 
             variants={animationVariants.slideInLeft} 
-            className="mt-2 text-lg text-amber-700"
+            className="mt-4 text-base md:text-lg text-amber-800 max-w-3xl mx-auto relative z-10 leading-relaxed"
           >
-            Safety Management System (SMS)
+            Occupational Health & Safety Management System (OHSMS)
           </motion.p>
         </header>
 
-        {/* ISO Icon below header */}
-       
-        <Image src={image21} alt={image21} caption="" />
+        {/* Hero Statement */}
+     
+
+        {/* Main Image */}
+        <div className="px-4 py-8">
+          <Image src={image21} alt="Workplace Safety" caption="" />
+        </div>
 
         <main className="container mx-auto px-4 py-16 space-y-20">
-          <motion.section ref={introRef} className="text-center max-w-3xl mx-auto" initial="hidden" animate={introInView ? "visible" : "hidden"} variants={animationVariants.paragraph}>
-            <p className="text-lg md:text-xl text-amber-900/80 leading-relaxed text-justify">
-              ISO 45001:2018 is the global standard for Occupational Health and Safety Management. It provides a framework to proactively improve employee safety, reduce workplace risks, and create better, safer working conditions.
-            </p>
-          </motion.section>
-
+          {/* Section 1: What is ISO 45001:2018 */}
           <section>
-            <SectionTitle icon={<Icon path={ICONS.about} />}>About the ISO 45001 Standard</SectionTitle>
-            <AnimatedGrid className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <InfoCard icon={<Icon path={ICONS.check} />} title="Identify Hazards" customVariant={animationVariants.slideInUp}>Proactively find and manage potential workplace dangers.</InfoCard>
-              <InfoCard icon={<Icon path={ICONS.check} />} title="Implement Measures" customVariant={animationVariants.slideInUp}>Establish effective preventive and corrective actions.</InfoCard>
-              <InfoCard icon={<Icon path={ICONS.check} />} title="Improve Performance" customVariant={animationVariants.slideInUp}>Continuously enhance your health and safety record.</InfoCard>
-              <InfoCard icon={<Icon path={ICONS.check} />} title="Ensure Compliance" customVariant={animationVariants.slideInUp}>Meet all relevant national and international legal requirements.</InfoCard>
-            </AnimatedGrid>
+            <SectionTitle 
+              icon={<Icon path={ICONS.about} />}
+              subtitle="ISO 45001:2018 is the first and only international standard for Occupational Health and Safety Management Systems (OHSMS). It provides a robust framework for organizations to manage risks and prevent work-related injuries and ill health."
+            >
+              What is ISO 45001:2018 (OHSMS)?
+            </SectionTitle>
+            
+            <motion.div 
+              ref={introRef}
+              initial="hidden"
+              animate={introInView ? "visible" : "hidden"}
+              variants={animationVariants.paragraph}
+              className="max-w-4xl mx-auto"
+            >
+              <div className="bg-white p-6 md:p-8 rounded-xl border border-amber-200 shadow-sm">
+                <p className="text-base md:text-lg text-gray-700 leading-relaxed text-justify">
+                  Unlike previous standards, ISO 45001 focuses on the interaction between an organization and its business environment, emphasizing <span className="font-semibold text-amber-900">proactive risk prevention</span> rather than reactive problem-solving. It follows the High-Level Structure (HLS), making it easy to integrate with other standards like ISO 9001 (Quality) and ISO 14001 (Environment).
+                </p>
+              </div>
+            </motion.div>
           </section>
 
+          {/* Section 2: Benefits */}
           <section>
-            <SectionTitle icon={<Icon path={ICONS.benefits} />}>Benefits of Certification</SectionTitle>
+            <SectionTitle 
+              icon={<Icon path={ICONS.benefits} />}
+              subtitle="Implementing ISO 45001 is a strategic move that pays dividends in both culture and capital."
+            >
+              Benefits of the Standard
+            </SectionTitle>
+            
             <AnimatedGrid className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <InfoCard icon={<Icon path={ICONS.check} />} title="Legal Compliance" customVariant={animationVariants.scaleUp}>Avoid costly penalties by staying aligned with regulations.</InfoCard>
-              <InfoCard icon={<Icon path={ICONS.check} />} title="Fewer Accidents" customVariant={animationVariants.scaleUp}>Reduce incidents and lost productivity with proactive risk management.</InfoCard>
-              <InfoCard icon={<Icon path={ICONS.check} />} title="Cost Savings" customVariant={animationVariants.scaleUp}>Minimize claims, compensation, and insurance premiums.</InfoCard>
-              <InfoCard icon={<Icon path={ICONS.check} />} title="Stronger Safety Culture" customVariant={animationVariants.scaleUp}>Build employee commitment to a safer workplace.</InfoCard>
-              <InfoCard icon={<Icon path={ICONS.check} />} title="Stakeholder Trust" customVariant={animationVariants.scaleUp}>Demonstrate responsibility to clients, partners, and regulators.</InfoCard>
-              <InfoCard icon={<Icon path={ICONS.check} />} title="Operational Efficiency" customVariant={animationVariants.scaleUp}>Improve processes and reduce downtime.</InfoCard>
+              <InfoCard 
+                icon={<Icon path={ICONS.check} />} 
+                title="Reduced Workplace Incidents"
+                customVariant={animationVariants.scaleUp}
+              >
+                Minimize the risk of accidents, injuries, and long-term health issues.
+              </InfoCard>
+              <InfoCard 
+                icon={<Icon path={ICONS.check} />} 
+                title="Lower Insurance Premiums"
+                customVariant={animationVariants.scaleUp}
+              >
+                Demonstrating a commitment to safety often leads to reduced commercial insurance costs.
+              </InfoCard>
+              <InfoCard 
+                icon={<Icon path={ICONS.check} />} 
+                title="Legal Compliance"
+                customVariant={animationVariants.scaleUp}
+              >
+                Stay ahead of evolving health and safety legislation, avoiding costly fines and litigation.
+              </InfoCard>
+              <InfoCard 
+                icon={<Icon path={ICONS.check} />} 
+                title="Enhanced Reputation"
+                customVariant={animationVariants.scaleUp}
+              >
+                Position your brand as an ethical employer of choice to clients, investors, and talent.
+              </InfoCard>
+              <InfoCard 
+                icon={<Icon path={ICONS.check} />} 
+                title="Operational Efficiency"
+                customVariant={animationVariants.scaleUp}
+              >
+                Reduce downtime caused by employee absence and stop-work orders.
+              </InfoCard>
             </AnimatedGrid>
           </section>
 
+          {/* Section 3: Requirements Table */}
           <section>
-            <SectionTitle icon={<Icon path={ICONS.who} />}>Who Can Apply?</SectionTitle>
-            <p className="max-w-3xl mx-auto mb-8 text-amber-900/80 text-justify">ISO 45001 is designed for any organization, regardless of size or industry. It's especially vital for:</p>
-            <AnimatedGrid className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <InfoCard icon={<Icon path={ICONS.check} />} title="Manufacturing & Construction" customVariant={animationVariants.slideInLeft}>Manage high-risk environments with strict safety controls.</InfoCard>
-              <InfoCard icon={<Icon path={ICONS.check} />} title="Healthcare & Logistics" customVariant={animationVariants.slideInUp}>Ensure staff well-being in critical, fast-paced operations.</InfoCard>
-              <InfoCard icon={<Icon path={ICONS.check} />} title="Service Industries" customVariant={animationVariants.slideInRight}>Build trust and safeguard employees in all sectors.</InfoCard>
-            </AnimatedGrid>
+            <SectionTitle 
+              icon={<Icon path={ICONS.how} />}
+              subtitle="Getting certified involves a systematic approach to identifying and mitigating workplace hazards."
+            >
+              Requirements for Implementation & Certification
+            </SectionTitle>
+            
+            <div className="mt-8">
+              <RequirementTable />
+            </div>
           </section>
 
+          {/* Section 4: Why Choose EIMCTA */}
           <section>
-            <SectionTitle icon={<Icon path={ICONS.how} />}>The Certification Process</SectionTitle>
-            <AnimatedGrid className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-              <InfoCard icon={<Icon path={ICONS.check} />} title="1. Gap Analysis" customVariant={animationVariants.slideInUp}>Review current practices against ISO 45001 requirements.</InfoCard>
-              <InfoCard icon={<Icon path={ICONS.check} />} title="2. Documentation" customVariant={animationVariants.slideInUp}>Update policies and procedures to align with the standard.</InfoCard>
-              <InfoCard icon={<Icon path={ICONS.check} />} title="3. Employee Training" customVariant={animationVariants.slideInUp}>Engage your workforce in new safety initiatives.</InfoCard>
-              <InfoCard icon={<Icon path={ICONS.check} />} title="4. Internal Audits" customVariant={animationVariants.slideInUp}>Evaluate system performance and fix non-conformities.</InfoCard>
-              <InfoCard icon={<Icon path={ICONS.check} />} title="5. Certification Audit" customVariant={animationVariants.slideInUp}>An accredited body conducts the final audit for certification.</InfoCard>
+            <SectionTitle 
+              icon={<Icon path={ICONS.why} />}
+              subtitle="At EIMCTA, we don't just 'check boxes.' We partner with you to build a culture of safety that actually works for your specific industry."
+            >
+              Why Should You Select EIMCTA?
+            </SectionTitle>
+            
+            <AnimatedGrid className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+              <InfoCard 
+                icon={<Icon path={ICONS.check} />} 
+                title="Expert Guidance"
+                customVariant={animationVariants.slideInLeft}
+              >
+                Our consultants bring years of boots-on-the-ground experience across diverse sectors.
+              </InfoCard>
+              <InfoCard 
+                icon={<Icon path={ICONS.check} />} 
+                title="Tailored Solutions"
+                customVariant={animationVariants.slideInRight}
+              >
+                We skip the "one-size-fits-all" templates, designing a system that fits your unique workflow.
+              </InfoCard>
+              <InfoCard 
+                icon={<Icon path={ICONS.check} />} 
+                title="End-to-End Support"
+                customVariant={animationVariants.slideInLeft}
+              >
+                From initial gap analysis to the final certification audit, we walk the path with you.
+              </InfoCard>
+              <InfoCard 
+                icon={<Icon path={ICONS.check} />} 
+                title="Efficiency First"
+                customVariant={animationVariants.slideInRight}
+              >
+                We focus on simplifying documentation, ensuring your team spends more time working safely and less time on paperwork.
+              </InfoCard>
             </AnimatedGrid>
           </section>
 
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center bg-amber-100/50 p-8 rounded-2xl">
-            <InfoCard icon={<Icon path={ICONS.why} className="text-yellow-400 bg-yellow-100 rounded-full p-1 w-8 h-8" />} title="Why Choose Everest Consultrain?" customVariant={animationVariants.slideInLeft}>
-              Our expert consultants simplify the certification journey with end-to-end guidance, customized solutions, and effective training, ensuring your success is efficient and cost-effective.
-            </InfoCard>
-            <InfoCard icon={<Icon path={ICONS.improvement} className="text-yellow-400 bg-yellow-100 rounded-full p-1 w-8 h-8" />} title="A Journey of Continuous Improvement" customVariant={animationVariants.slideInRight}>
-              Certification is just the beginning. We help you sustain a strong safety culture through regular audits and performance reviews, keeping you compliant and resilient.
-            </InfoCard>
-          </section>
+          {/* CTA Section */}
+         
         </main>
         
-        <VideoPlayer src="https://www.youtube.com/watch?v=kiDe9QhUpDM" title="" />
+        {/* Video Section */}
+        <div className="px-4 pb-16">
+          <VideoPlayer src="https://www.youtube.com/watch?v=kiDe9QhUpDM" title="" />
+        </div>
 
       </div>
     </div>
+    </div>
+    </>
   );
 }

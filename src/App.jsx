@@ -40,7 +40,6 @@ import ScrollToTop from './assets/component/utilities/scroltotop.jsx';
 import BusinessQuoteForm from './assets/component/pages/form.jsx';
 import Admin_Form from './assets/component/utilities/AdminForm.jsx';
 import AdminFeature from './assets/component/utilities/AdminFeature.jsx';
-
 // import ISO22000Certification from './assets/component/pages/ISO_2200';
 
 function App() {
@@ -50,20 +49,20 @@ function App() {
     "/Adminfeature"
 
   ];
-
   const shouldHide = hidePaths.some(path =>
     location.pathname.startsWith(path)
   );
+
   return (
     <div>
       <AnimatePresence mode="wait">
-        <ScrollToTop /> 
+        <ScrollToTop />
 
         <TopHeader />
 
         <TopContactBar />
         <Navbar />
-
+      
         <Routes>
           <Route path="/" element={
             <PageTransitionWrapper> <Home /></PageTransitionWrapper>} />
@@ -77,7 +76,8 @@ function App() {
             <PageTransitionWrapper> <About /></PageTransitionWrapper>} />
 
           <Route path="/services" element={
-            <PageTransitionWrapper> <Services /></PageTransitionWrapper>} />
+            <PageTransitionWrapper> <Services /></PageTransitionWrapper>} /> 
+            {/* Remove /service page */}
 
 
           <Route path="/contact-us" element={
@@ -131,8 +131,8 @@ function App() {
 
         </Routes>
 
-        <Chat /> 
-         {!shouldHide && <BusinessQuoteForm />}
+        <Chat />
+        {!shouldHide && <BusinessQuoteForm />}
         <ScrollToTopButton />
 
         <Footer />

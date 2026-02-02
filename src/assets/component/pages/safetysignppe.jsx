@@ -5,6 +5,7 @@ import {
   ShieldCheck, Ban, ArrowRight, CheckCircle, Info, X, AlertOctagon,
   Maximize2, Ruler, MapPin, BookOpen
 } from "lucide-react";
+import InnerSidebar from "../utilities/innserSidebar";
 
 // Custom Scrollbar Styles
 const customScrollbarStyles = `
@@ -818,6 +819,10 @@ const SafetySignPPE = () => {
 
   return (
     <>
+     <div className="flex flex-row gap-4" >
+           <aside className="hidden lg:block w-80 sticky top-16 self-start">
+                  <InnerSidebar />
+                </aside>
       <style>{customScrollbarStyles}</style>
       <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-amber-50 px-4 py-8 md:px-6 md:py-12 font-sans">
         <div className="mx-auto w-full max-w-7xl custom-scrollbar">
@@ -988,6 +993,7 @@ const SafetySignPPE = () => {
           {/* Footer */}
         
         </div>
+      </div>
       </div>
     </>
   );

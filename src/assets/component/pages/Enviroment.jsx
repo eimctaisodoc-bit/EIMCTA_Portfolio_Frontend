@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "../utilities/image";
 import img1 from "../../img/eia.png";
-import img2 from "../../img/eia.png";
+import InnerSidebar from "../utilities/innserSidebar";
 
-// --- SVG Icon Components ---
+// --- SVG Icon Components (Keep existing icons) ---
 const FaLeaf = (props) => (
   <svg {...props} stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 576 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
     <path d="M576 64a64 64 0 0 0-64-64H64A64 64 0 0 0 0 64v384a64 64 0 0 0 64 64h448a64 64 0 0 0 64-64V64zM320 128c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-160 0c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm224 256H128V288h384v96z"></path>
@@ -42,11 +42,6 @@ const FaCheck = (props) => (
 const FaCertificate = (props) => (
   <svg {...props} stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
     <path d="M480 32H32C14.33 32 0 46.33 0 64v384c0 17.67 14.33 32 32 32h448c17.67 0 32-14.33 32-32V64c0-17.67-14.33-32-32-32zm-48 112c-22.09 0-40-17.91-40-40s17.91-40 40-40 40 17.91 40 40-17.91 40-40 40zM96 144c-22.09 0-40-17.91-40-40s17.91-40 40-40 40 17.91 40 40-17.91 40-40 40zm320 272H96V224h320v192z"></path>
-  </svg>
-);
-const FaPlayCircle = (props) => (
-  <svg {...props} stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-    <path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm115.7 272l-176 101c-15.8 8.8-35.7-2.5-35.7-21V152c0-18.4 19.8-29.8 35.7-21l176 107c16.4 9.2 16.4 32.9 0 42z"></path>
   </svg>
 );
 
@@ -91,21 +86,10 @@ const BeamUnderline = ({
               <stop offset="100%" stopColor="#f59e0b" />
             </linearGradient>
           </defs>
-          
-          {/* The Formal Beam Path */}
           <path 
-            d="
-              M 0 10 
-              Q 25 10, 50 4
-              Q 75 10, 100 10
-              Q 75 10, 50 16
-              Q 25 10, 0 10
-              Z
-            " 
+            d="M 0 10 Q 25 10, 50 4 Q 75 10, 100 10 Q 75 10, 50 16 Q 25 10, 0 10 Z" 
             fill={`url(#${gradientId})`}
           />
-          
-          {/* Minimalist Central Pivot Point */}
           <circle cx="50" cy="10" r="0.6" fill="#fef3c7" opacity="0.8" />
         </svg>
       </span>
@@ -113,35 +97,9 @@ const BeamUnderline = ({
   );
 };
 
-// Helper Component: Video Player with placeholder
-const VideoPlayer = ({ title, src, link }) => (
-  <section className="mt-16 animate-on-scroll">
-    <h2 className="text-2xl md:text-3xl font-semibold text-amber-900 mb-8 text-center relative pb-4 animate-itemVariants">
-      <BeamUnderline thickness={6}>
-        {title}
-      </BeamUnderline>
-    </h2>
-    <div className="relative bg-black rounded-xl shadow-lg overflow-hidden group border-4 border-amber-200 animate-scaleUp">
-      <video
-        className="w-full h-full"
-        poster="https://placehold.co/1280x720/1a1a1a/ffffff?text=Video+Highlight"
-        controls
-      >
-        <source src={src} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-      <a href={link} target="_blank" rel="noopener noreferrer" className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 group-hover:bg-opacity-30 transition-all duration-300">
-        <FaPlayCircle className="text-white text-6xl opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-transform" />
-      </a>
-    </div>
-  </section>
-);
-
 // Main Component
 const EnvironmentalServices = () => {
-  // Inject animations and set up IntersectionObserver
   React.useEffect(() => {
-    // Injecting CSS for animations
     const style = document.createElement('style');
     style.textContent = `
       @keyframes slideInRight { from { opacity: 0; transform: translateX(80px); } to { opacity: 1; transform: translateX(0); } }
@@ -149,41 +107,23 @@ const EnvironmentalServices = () => {
       @keyframes slideInUp { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: translateY(0); } }
       @keyframes itemVariants { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
       @keyframes paragraph-anim { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-      @keyframes rotate3D { from { opacity: 0; transform: perspective(800px) translateY(30px) rotateX(-10deg); } to { opacity: 1; transform: perspective(800px) translateY(0) rotateX(0deg); } }
       @keyframes scaleUp { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
-      @keyframes beamAppear { 
-        0% { opacity: 0; transform: scaleX(0.3); } 
-        100% { opacity: 1; transform: scaleX(1); } 
-      }
+      @keyframes beamAppear { 0% { opacity: 0; transform: scaleX(0.3); } 100% { opacity: 1; transform: scaleX(1); } }
 
-      .animate-on-scroll { 
-        opacity: 0; 
-        transition: opacity 0.5s ease-out;
-      }
-      .animate-on-scroll.is-visible {
-        opacity: 1;
-      }
-
+      .animate-on-scroll { opacity: 0; transition: opacity 0.5s ease-out; }
+      .animate-on-scroll.is-visible { opacity: 1; }
       .is-visible .animate-slideInRight { animation: slideInRight 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
       .is-visible .animate-slideInLeft { animation: slideInLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
       .is-visible .animate-itemVariants { animation: itemVariants 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
       .is-visible .animate-paragraph { animation: paragraph-anim 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards; }
       .is-visible .animate-slideInUp { animation: slideInUp 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
-      .is-visible .animate-rotate3D { animation: rotate3D 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
-      .is-visible .animate-scaleUp { animation: scaleUp 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
-
-      /* Beam underline animation */
-      .is-visible .beam-underline svg {
-        animation: beamAppear 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards;
-        transform-origin: center center;
-      }
+      .is-visible .beam-underline svg { animation: beamAppear 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards; transform-origin: center center; }
 
       .card-hover { transition: transform 0.3s ease-out; }
-      .card-hover:hover { transform: translateY(-8px) perspective(800px) rotateX(2deg) rotateY(-1deg); }
+      .card-hover:hover { transform: translateY(-8px) perspective(800px) rotateX(2deg); }
     `;
     document.head.appendChild(style);
 
-    // IntersectionObserver setup
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -196,250 +136,146 @@ const EnvironmentalServices = () => {
     const elements = document.querySelectorAll('.animate-on-scroll');
     elements.forEach(el => observer.observe(el));
     
-    // Add Google Font "Inter"
-    const link = document.createElement("link");
-    link.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap";
-    link.rel = "stylesheet";
-    document.head.appendChild(link);
-    
     return () => {
-        if (document.head.contains(style)) {
-            document.head.removeChild(style);
-        }
-        if (document.head.contains(link)) {
-            document.head.removeChild(link);
-        }
+        if (document.head.contains(style)) document.head.removeChild(style);
         elements.forEach(el => observer.unobserve(el));
     }
   }, []);
 
   return (
+    <>
+     <div className="flex flex-row gap-4" >
+           <aside className="hidden lg:block w-80 sticky top-16 self-start">
+                  <InnerSidebar />
+                </aside>
     <div className="bg-gray-50 text-gray-800 px-4 py-8 md:px-8 lg:px-20 max-w-7xl mx-auto font-['Inter',_sans-serif]">
       
-      {/* Hero Section with SEO-optimized heading */}
+      {/* 1. Hero: What is ISO EIA? */}
       <section className="text-center mb-12 relative overflow-hidden rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 p-8 md:p-12 text-white shadow-xl animate-on-scroll">
         <PatternBackground />
         <div className="relative z-10">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 animate-slideInRight">
-            
               <span className="text-white drop-shadow-md">
-                ISO-Certified Environmental Impact Assessment & Monitoring Services
+                ISO Environmental Impact Assessment (EIA)
               </span>
-           
           </h1>
-          <p className="text-lg md:text-xl text-amber-100 text-justify max-w-4xl mx-auto leading-relaxed animate-slideInLeft">
-            EIMCTA provides comprehensive, impartial environmental services grounded in ISO standards. Our expert team delivers reliable Environmental Impact Assessments (EIA) and precise environmental monitoring using calibrated equipment to ensure regulatory compliance and sustainable development.
+          <p className="text-lg md:text-xl text-amber-500 bg-white/95 p-6 rounded-lg shadow-inner max-w-4xl mx-auto leading-relaxed animate-slideInLeft text-justify">
+            An ISO-aligned Environmental Impact Assessment is a systematic process used to identify, predict, and evaluate the environmental effects of proposed projects. Guided by international standards like <strong>ISO 14001</strong>, it integrates environmental considerations into the decision-making process to ensure sustainable and compliant project development.
           </p>
         </div>
       </section>
 
-      {/* EIA Image with descriptive alt text */}
       <Image 
         src={img1} 
-        alt='Environmental Impact Assessment process showing project planning, analysis, and compliance stages'
-        className="w-full rounded-lg shadow-md mb-8"
+        alt='ISO EIA Process Flow'
+        className="w-full rounded-lg shadow-md mb-12 border-4 border-amber-100"
       />
 
-      {/* Enhanced EIA Section with better structure */}
-      <section className="mb-16 bg-white rounded-xl p-6 md:p-8 shadow-lg border border-amber-200 relative overflow-hidden hover:shadow-2xl transition-shadow duration-300 animate-on-scroll">
-        <PatternBackground />
-        <div className="relative z-10">
-          <div className="flex items-center mb-4">
-            <div className="bg-amber-100 p-3 rounded-full mr-4 border-2 border-amber-200">
-              <FaLeaf className="text-amber-500 text-xl" />
+      {/* 2. Benefits of this Standard */}
+      <section className="mb-16 bg-white rounded-xl p-8 shadow-lg border border-amber-200 animate-on-scroll">
+        <h2 className="text-2xl md:text-3xl font-semibold text-amber-900 mb-8 text-center relative pb-4 animate-itemVariants">
+          <BeamUnderline thickness={8} className="beam-underline">
+            Strategic Benefits of ISO EIA Standards
+          </BeamUnderline>
+        </h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            { title: "Risk Mitigation", desc: "Identify environmental liabilities early to avoid costly project delays or legal hurdles.", icon: <FaShieldAlt /> },
+            { title: "Regulatory Ease", desc: "Streamline permits and approvals by adhering to globally recognized compliance frameworks.", icon: <FaCertificate /> },
+            { title: "Resource Efficiency", desc: "Lower operational costs through optimized energy and raw material usage.", icon: <FaRecycle /> },
+            { title: "Enhanced Reputation", desc: "Build trust with stakeholders and investors through transparent ESG reporting.", icon: <FaUsers /> },
+            { title: "Global Compliance", desc: "Ensure your project meets both local environmental laws and international trade requirements.", icon: <FaLeaf /> },
+            { title: "Sustainable Growth", desc: "Balance economic development with environmental stewardship for long-term viability.", icon: <FaChartLine /> }
+          ].map((benefit, idx) => (
+            <div key={idx} className="p-5 border border-amber-100 rounded-xl bg-amber-50/50 card-hover animate-slideInUp" style={{animationDelay: `${idx * 0.1}s`}}>
+              <div className="text-amber-600 mb-3 text-2xl">{benefit.icon}</div>
+              <h3 className="font-bold text-amber-900 mb-2">{benefit.title}</h3>
+              <p className="text-sm text-gray-700 leading-relaxed">{benefit.desc}</p>
             </div>
-            <h2 className="text-2xl md:text-3xl font-semibold text-amber-900 relative pb-4 animate-itemVariants">
-              <BeamUnderline thickness={8} className="beam-underline">
-                Environmental Impact Assessment (EIA) Services
-              </BeamUnderline>
-            </h2>
+          ))}
+        </div>
+      </section>
+
+      {/* 3. Requirements & Implementation */}
+      <section className="mb-16 animate-on-scroll">
+        <div className="flex items-center mb-8 justify-center">
+          <h2 className="text-2xl md:text-3xl font-semibold text-amber-900 relative pb-4 animate-itemVariants">
+            <BeamUnderline thickness={8} className="beam-underline">
+              Requirements for Implementation & Certification
+            </BeamUnderline>
+          </h2>
+        </div>
+        <div className="grid md:grid-cols-2 gap-8 items-stretch">
+          <div className="bg-white p-8 rounded-xl shadow-md border-l-8 border-amber-500 animate-paragraph">
+            <h3 className="text-xl font-bold text-amber-800 mb-4 uppercase tracking-wider">Implementation Steps</h3>
+            <ul className="space-y-4">
+              {[
+                "Initial Screening & Project Scoping",
+                "Baseline Environmental Study (Air, Water, Soil)",
+                "Impact Prediction & Evaluation Modeling",
+                "Mitigation Strategy Development",
+                "Environmental Management Plan (EMP) Creation"
+              ].map((step, i) => (
+                <li key={i} className="flex items-center text-gray-700">
+                  <span className="bg-amber-100 text-amber-600 w-6 h-6 rounded-full flex items-center justify-center mr-3 font-bold text-xs">{i+1}</span>
+                  {step}
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="animate-paragraph">
-              <p className="text-gray-700 mb-4 leading-relaxed">
-                An Environmental Impact Assessment (EIA) is a systematic process that evaluates potential environmental effects of proposed projects before implementation. Our ISO-aligned methodology ensures:
-              </p>
-              <ul className="space-y-3">
-                {[
-                  "Early identification of environmental risks and opportunities",
-                  "Development of effective mitigation strategies",
-                  "Full regulatory compliance with local and international standards",
-                  "Enhanced project sustainability and social acceptance",
-                  "Improved stakeholder confidence through transparent processes"
-                ].map((item, index) => (
-                  <li key={index} className="flex items-start">
-                    <FaCheck className="text-green-500 mt-1 mr-3 flex-shrink-0" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="bg-amber-50 p-6 rounded-lg border border-amber-200 shadow-inner card-hover animate-slideInRight">
-              <h3 className="font-semibold text-amber-800 mb-3 text-lg">Strategic Environmental Assessment (SEA)</h3>
-              <p className="text-gray-700 mb-4">
-                For policies, plans and programs, we conduct Strategic Environmental Assessments to integrate environmental considerations at the highest decision-making levels, ensuring sustainable development from conception.
-              </p>
-              <div className="bg-amber-100 p-4 rounded-lg border-l-4 border-amber-400">
-                <p className="text-amber-900 font-medium italic">
-                  "Our SEA services help align organizational strategies with environmental sustainability goals and regulatory requirements."
-                </p>
-              </div>
-            </div>
+          <div className="bg-amber-900 text-white p-8 rounded-xl shadow-md animate-slideInRight">
+            <h3 className="text-xl font-bold mb-4 uppercase tracking-wider text-amber-200">Certification Requirements</h3>
+            <p className="mb-4 text-amber-100 italic">To achieve ISO-aligned certification, projects must demonstrate:</p>
+            <ul className="space-y-3">
+              {[
+                "Evidence of Stakeholder Consultation",
+                "Documentation of Impact Analysis",
+                "Adherence to ISO 14001 Audit Criteria",
+                "Continuous Monitoring Post-Implementation",
+                "Transparent Reporting of Mitigation Results"
+              ].map((req, i) => (
+                <li key={i} className="flex items-start">
+                  <FaCheck className="text-amber-400 mt-1 mr-3 flex-shrink-0" />
+                  <span>{req}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
-      
-      {/* Enhanced Core Principles Section */}
-      <section className="mb-16 relative overflow-hidden rounded-xl bg-transparent p-8 animate-on-scroll">
-        <div className="relative z-10">
-          <h2 className="text-2xl md:text-3xl font-semibold text-amber-900 mb-8 text-center relative pb-4 animate-itemVariants">
+
+      {/* 4. Why EIMCTA? */}
+      <section className="mb-16 bg-white rounded-xl p-8 relative overflow-hidden border border-amber-200 shadow-2xl animate-on-scroll">
+        <PatternBackground />
+        <div className="relative z-10 text-center">
+          <h2 className="text-2xl md:text-3xl font-semibold text-amber-900 mb-10 relative pb-4 animate-itemVariants">
             <BeamUnderline thickness={8} className="beam-underline">
-              Our <span className="text-amber-800">Environmental Monitoring</span> Core Principles
+              Why Choose EIMCTA for Your EIA?
             </BeamUnderline>
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { 
-                icon: <FaFlask className="text-2xl" />, 
-                title: "Precision Sampling & Analysis", 
-                desc: "Methodical collection and standardized laboratory analysis of air, water, soil, and waste samples using calibrated equipment." 
-              },
-              { 
-                icon: <FaChartLine className="text-2xl" />, 
-                title: "Rigorous QA/QC Processes", 
-                desc: "Comprehensive quality assurance and control protocols ensuring credible, defensible, and reproducible environmental data." 
-              },
-              { 
-                icon: <FaShieldAlt className="text-2xl" />, 
-                title: "Regulatory Compliance", 
-                desc: "Monitoring programs aligned with national and international environmental regulations and industry best practices." 
-              },
-              { 
-                icon: <FaUsers className="text-2xl" />, 
-                title: "Comprehensive Risk Assessment", 
-                desc: "Thorough evaluation of environmental and public health risks to inform effective mitigation strategies." 
-              }
-            ].map((principle, index) => (
-              <div 
-                key={index}
-                className="bg-white p-6 rounded-xl shadow-lg border border-amber-200 card-hover animate-slideInUp"
-                style={{animationDelay: `${index * 0.1}s`}}
-              >
-                <div className="bg-amber-100 w-12 h-12 rounded-full flex items-center justify-center mb-4 text-amber-500">
-                  {principle.icon}
-                </div>
-                <h3 className="text-xl font-semibold text-amber-900 mb-2">{principle.title}</h3>
-                <p className="text-amber-800 text-sm leading-relaxed">{principle.desc}</p>
+              { title: "Expert Calibrated Tools", text: "We use high-precision, ISO-calibrated monitoring equipment for 100% accurate data." },
+              { title: "Industry Specialists", text: "Our team consists of certified environmental scientists and ISO Lead Auditors." },
+              { title: "Bespoke Solutions", text: "Custom EIA frameworks designed specifically for your industry and region." },
+              { title: "End-to-End Support", text: "From initial screening to final certification, we handle every technical detail." }
+            ].map((item, i) => (
+              <div key={i} className="bg-amber-50 p-6 rounded-lg border border-amber-100 animate-slideInUp" style={{animationDelay: `${i * 0.15}s`}}>
+                <h4 className="font-bold text-amber-800 mb-2">{item.title}</h4>
+                <p className="text-xs text-gray-600 leading-relaxed">{item.text}</p>
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Enhanced Benefits Section with better categorization */}
-      <section className="mb-16 bg-white rounded-xl p-8 relative overflow-hidden border border-amber-200 hover:shadow-xl transition-shadow duration-300 animate-on-scroll">
-        <PatternBackground />
-        <div className="relative z-10">
-          <h2 className="text-2xl md:text-3xl font-semibold text-amber-900 mb-8 text-center relative pb-4 animate-itemVariants">
-            <BeamUnderline thickness={8} className="beam-underline">
-              Comprehensive Benefits of Our Environmental Services
-            </BeamUnderline>
-          </h2>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 animate-paragraph">
-            <div className="bg-amber-50 p-4 rounded-lg">
-              <h3 className="font-semibold text-amber-800 mb-3 flex items-center">
-                <FaShieldAlt className="mr-2" /> Regulatory & Compliance
-              </h3>
-              <ul className="space-y-2">
-                {["Regulatory compliance", "Risk mitigation", "Legal protection", "Permit acquisition"].map((item, index) => (
-                  <li key={index} className="flex items-center">
-                    <FaCheck className="text-green-500 text-xs mr-2" />
-                    <span className="text-amber-900">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            <div className="bg-green-50 p-4 rounded-lg">
-              <h3 className="font-semibold text-green-800 mb-3 flex items-center">
-                <FaLeaf className="mr-2" /> Environmental Protection
-              </h3>
-              <ul className="space-y-2">
-                {["Ecosystem conservation", "Pollution prevention", "Resource sustainability", "Biodiversity protection"].map((item, index) => (
-                  <li key={index} className="flex items-center">
-                    <FaCheck className="text-green-500 text-xs mr-2" />
-                    <span className="text-green-900">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            <div className="bg-blue-50 p-4 rounded-lg">
-              <h3 className="font-semibold text-blue-800 mb-3 flex items-center">
-                <FaUsers className="mr-2" /> Community & Health
-              </h3>
-              <ul className="space-y-2">
-                {["Public health protection", "Stakeholder engagement", "Community relations", "Transparent reporting"].map((item, index) => (
-                  <li key={index} className="flex items-center">
-                    <FaCheck className="text-green-500 text-xs mr-2" />
-                    <span className="text-blue-900">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            <div className="bg-purple-50 p-4 rounded-lg">
-              <h3 className="font-semibold text-purple-800 mb-3 flex items-center">
-                <FaChartLine className="mr-2" /> Business Value
-              </h3>
-              <ul className="space-y-2">
-                {["Cost savings", "Corporate reputation", "Investor confidence", "Market differentiation"].map((item, index) => (
-                  <li key={index} className="flex items-center">
-                    <FaCheck className="text-green-500 text-xs mr-2" />
-                    <span className="text-purple-900">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            <div className="bg-teal-50 p-4 rounded-lg">
-              <h3 className="font-semibold text-teal-800 mb-3 flex items-center">
-                <FaRecycle className="mr-2" /> Sustainability
-              </h3>
-              <ul className="space-y-2">
-                {["Circular economy", "Waste minimization", "Carbon footprint reduction", "Climate resilience"].map((item, index) => (
-                  <li key={index} className="flex items-center">
-                    <FaCheck className="text-green-500 text-xs mr-2" />
-                    <span className="text-teal-900">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            <div className="bg-amber-50 p-4 rounded-lg">
-              <h3 className="font-semibold text-amber-800 mb-3 flex items-center">
-                <FaCertificate className="mr-2" /> Long-term Advantages
-              </h3>
-              <ul className="space-y-2">
-                {["Future-proofing operations", "Data-driven decisions", "Continuous improvement", "Sustainable growth"].map((item, index) => (
-                  <li key={index} className="flex items-center">
-                    <FaCheck className="text-green-500 text-xs mr-2" />
-                    <span className="text-amber-900">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div className="mt-10 p-4 bg-amber-100 rounded-lg inline-block border-2 border-dashed border-amber-400">
+            <p className="text-amber-900 font-medium">
+              EIMCTA: Precision in Assessment, Integrity in Compliance.
+            </p>
           </div>
         </div>
       </section>
-
-      {/* <VideoPlayer 
-        title="Our Environmental Assessment Process in Action" 
-        src="https://www.w3.org/2010/05/video/mediaevents.html" 
-        link="#" 
-      /> */}
     </div>
+    </div>
+    </>
   );
 };
 

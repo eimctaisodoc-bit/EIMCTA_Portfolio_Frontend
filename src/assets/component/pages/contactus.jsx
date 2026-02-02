@@ -25,6 +25,7 @@ import {
   Twitter,
   MessageCircle
 } from 'lucide-react';
+import InnerSidebar from "../utilities/innserSidebar";
 
 // Animation variants
 const slideInRight = {
@@ -342,6 +343,12 @@ export default function Contact() {
   }, []);
 
   return (
+    <>
+    <div className="flex flex-row gap-4" >
+       <aside className="hidden lg:block w-80 sticky top-16 self-start">
+              <InnerSidebar />
+            </aside>
+    
     <div className="relative overflow-hidden bg-white min-h-screen" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
       <style>{`
         @keyframes blob {
@@ -666,5 +673,7 @@ Support: iso.kathmandu@gmail.com`}
         </div>
       </div>
     </div>
+    </div>
+    </>
   );
 }

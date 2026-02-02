@@ -13,6 +13,7 @@ import {
 
 import img from '../../img/HSE Implementation  Training  Workshop.png';
 import isoIcon from "../../img/iso_.png";
+import InnerSidebar from "./innserSidebar";
 
 // ---------------- BEAM UNDERLINE COMPONENT ----------------
 const BeamUnderline = ({ 
@@ -100,6 +101,10 @@ const cardHover = {
 const HSEAwarenessTraining = () => {
   return (
     <main>
+       <div className="flex flex-row gap-4" >
+             <aside className="hidden lg:block w-80 sticky top-16 self-start">
+                    <InnerSidebar />
+                  </aside>
       <div className="w-full px-4 py-8 bg-gray-50 font-['Arial_Narrow'] overflow-x-hidden">
 
         {/* ================= HERO ================= */}
@@ -352,6 +357,7 @@ const HSEAwarenessTraining = () => {
           </ol>
         </section>
 
+      </div>
       </div>
     </main>
   );

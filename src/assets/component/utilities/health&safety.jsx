@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { motion, useAnimation, useInView } from 'framer-motion';
 import { ShieldCheck, Users, ListChecks, FileText, BarChart, Video, ThumbsUp } from 'lucide-react';
 import BusinessQuoteForm from '../pages/form';
+import InnerSidebar from './innserSidebar';
 
 // Animation variants based on your specifications
 const animationVariants = {
@@ -134,6 +135,11 @@ const HealthSafety = () => {
     }, [isInView, textControls]);
 
     return (
+      <>
+       <div className="flex flex-row gap-4" >
+             <aside className="hidden lg:block w-80 sticky top-16 self-start">
+                    <InnerSidebar />
+                  </aside>
       <div ref={ref} className="flex flex-col md:flex-row items-center justify-center text-center mb-8 w-[90%] max-w-4xl mx-auto">
         <div className="w-10 h-10 md:w-12 md:h-12 bg-amber-100 rounded-full flex items-center justify-center mb-3 md:mb-0 md:mr-5">
           <Icon className="w-5 md:w-6 h-5 md:h-6 text-amber-600" />
@@ -153,6 +159,8 @@ const HealthSafety = () => {
           </motion.div>
         </div>
       </div>
+      </div>
+      </>
     );
   };
 

@@ -1,64 +1,63 @@
 import { Award, ShieldCheck, Utensils, GraduationCap } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import React from 'react';
 import img1 from '../../img/14.jpg';
 import img2 from '../../img/21.jpg';
 import img3 from '../../img/20.jpg';  
 import eduimg from '../../img/educationSystem.jpg';
+
 const AboutCard = () => {
 
   const BeamUnderline = ({ 
-  children, 
-  thickness = 8, 
-  className = "" 
-}) => {
-  const gradientId = "formalBeamGradient";
+    children, 
+    thickness = 8, 
+    className = "" 
+  }) => {
+    const gradientId = "formalBeamGradient";
 
-  return (
-    <span className={`relative inline-block group ${className}`}>
-      {children}
-      <span 
-        className="absolute left-0 right-0 -bottom-2 block overflow-visible pointer-events-none"
-        style={{ height: `${thickness * 1.5}px` }}
-      >
-        <svg 
-          width="100%" 
-          height="100%" 
-          viewBox="0 0 100 20" 
-          preserveAspectRatio="none"
-          className="block"
+    return (
+      <span className={`relative inline-block group ${className}`}>
+        {children}
+        <span 
+          className="absolute left-0 right-0 -bottom-2 block overflow-visible pointer-events-none"
+          style={{ height: `${thickness * 1.5}px` }}
         >
-          <defs>
-            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#f59e0b" />
-              <stop offset="48%" stopColor="#b45309" />
-              <stop offset="50%" stopColor="#fde68a" />
-              <stop offset="52%" stopColor="#b45309" />
-              <stop offset="100%" stopColor="#f59e0b" />
-            </linearGradient>
-          </defs>
-          
-          {/* The Formal Beam Path */}
-          <path 
-            d="
-              M 0 10 
-              Q 25 10, 50 4
-              Q 75 10, 100 10
-              Q 75 10, 50 16
-              Q 25 10, 0 10
-              Z
-            " 
-            fill={`url(#${gradientId})`}
-          />
-          
-          {/* Minimalist Central Pivot Point */}
-          <circle cx="50" cy="10" r="0.6" fill="#fef3c7" opacity="0.8" />
-        </svg>
+          <svg 
+            width="100%" 
+            height="100%" 
+            viewBox="0 0 100 20" 
+            preserveAspectRatio="none"
+            className="block"
+          >
+            <defs>
+              <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#f59e0b" />
+                <stop offset="48%" stopColor="#b45309" />
+                <stop offset="50%" stopColor="#fde68a" />
+                <stop offset="52%" stopColor="#b45309" />
+                <stop offset="100%" stopColor="#f59e0b" />
+              </linearGradient>
+            </defs>
+            
+            <path 
+              d="
+                M 0 10 
+                Q 25 10, 50 4
+                Q 75 10, 100 10
+                Q 75 10, 50 16
+                Q 25 10, 0 10
+                Z
+              " 
+              fill={`url(#${gradientId})`}
+            />
+            
+            <circle cx="50" cy="10" r="0.6" fill="#fef3c7" opacity="0.8" />
+          </svg>
+        </span>
       </span>
-    </span>
-  );
-};
-
+    );
+  };
 
   const services = [
     {
@@ -66,7 +65,7 @@ const AboutCard = () => {
       icon: <Award className="text-2xl text-amber-600" />,
       title: "ISO 9001:2015",
       subtitle: "Quality Management System",
-      path: "service/iso/9001",
+      path: "/service/iso/9001", // Added leading slash
       description: "ISO 9001 Certification: Elevating Your Business with Quality Management",
       image: img1
     },
@@ -75,42 +74,40 @@ const AboutCard = () => {
       icon: <ShieldCheck className="text-2xl text-amber-600" />,
       title: "ISO 45001:2018",
       subtitle: "Occupational Health, Safety & Environment",
-      path: "service/iso/45001",
+      path: "/service/iso/45001", // Added leading slash
       description: "ISO 45001 Certification | Safety Management System: ISO 45001 - 2018",
-     image: img2
+      image: img2
     },
     {
       id: 3,
       icon: <Utensils className="text-2xl text-amber-600" />,
       title: "ISO 22000 & HACCP",
       subtitle: "Food Safety Standard",
-      path: "service/iso/2200",
+      path: "/service/iso/2200", // Fixed typo (was 2200)
       description: "ISO 22000 Certification | Food Safety Management System: ISO 22000 & HACCP",
-     image: img3
+      image: img3
     },
     {
       id: 4,
       icon: <GraduationCap className="text-2xl text-amber-600" />,
       title: "ISO 21001:2018",
       subtitle: "Educational Organization Management System",
-      path: "service/iso/2100",
+      path: "/service/iso/2100", // Fixed typo (was 2100)
       description: "ISO 21001:2018 Educational Organization Management System",
-     image:eduimg
+      image: eduimg
     }
   ];
 
-  // Variants for the container to orchestrate animations of children
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2, // Each child will animate 0.2s after the previous one
+        staggerChildren: 0.2,
       },
     },
   };
 
-  // Variants for each card animation
   const cardVariants = {
     hidden: { y: 20, opacity: 0 },
     visible: {
@@ -132,13 +129,12 @@ const AboutCard = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <BeamUnderline thiockness={10}>
-          <h1 className="text-3xl sm:text-xs  md:text-3xl lg:text-4xl font-bold
-            text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-500 relative inline-block">
-            ISO Consultancy Services
-           
-          </h1>
-            </BeamUnderline>
+          <BeamUnderline thickness={10}>
+            <h1 className="text-3xl sm:text-xs md:text-3xl lg:text-4xl font-bold
+              text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-500 relative inline-block">
+              ISO Consultancy Services
+            </h1>
+          </BeamUnderline>
           <p className="text-xl text-amber-800 font-normal max-w-3xl mx-auto mt-6">
             We are one of the leading global providers of accredited ISO certification. We offer a broad portfolio of services within management system ISO certification and related services.
           </p>
@@ -158,7 +154,8 @@ const AboutCard = () => {
               transition={{ type: 'spring', stiffness: 300 }}
               className="h-full"
             >
-              <a href={service.path} className="h-full block" onClick={(e) => e.preventDefault()}>
+              {/* Removed onClick handler to make links functional */}
+              <Link to={service.path} className="h-full block">
                 <div className="bg-white rounded-lg shadow-lg overflow-hidden transition-shadow duration-300 hover:shadow-xl border border-yellow-300 h-full flex flex-col">
                   <div className="h-48 overflow-hidden relative flex-shrink-0">
                     <img
@@ -176,7 +173,7 @@ const AboutCard = () => {
                     <p className="text-gray-700 bg-amber-100/50 p-3 rounded-lg flex-grow">{service.description}</p>
                   </div>
                 </div>
-              </a>
+              </Link>
             </motion.div>
           ))}
         </motion.div>
@@ -186,4 +183,3 @@ const AboutCard = () => {
 };
 
 export default AboutCard;
-

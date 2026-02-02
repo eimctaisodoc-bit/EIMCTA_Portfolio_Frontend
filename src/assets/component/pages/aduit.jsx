@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from "framer-motion";
 import image from '../../img/1.jpg';
+import InnerSidebar from '../utilities/innserSidebar';
 
 // --- BeamUnderline Component ---
 const BeamUnderline = ({ 
@@ -125,6 +126,11 @@ const ISOAuditGuide = () => {
     };
 
     return (
+        <>
+         <div className="flex flex-row gap-4" >
+               <aside className="hidden lg:block w-80 sticky top-16 self-start">
+                      <InnerSidebar />
+                    </aside>
         <div style={{ fontFamily: "'Arial Narrow', sans-serif" }} className="antialiased bg-gray-50 text-amber-800 font-bold">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
 
@@ -389,6 +395,8 @@ const ISOAuditGuide = () => {
 
             </div>
         </div>
+        </div>
+        </>
     );
 };
 

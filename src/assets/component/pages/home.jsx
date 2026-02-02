@@ -11,6 +11,8 @@ import AboutCard from '../utilities/global.jsx';
 import ISOShowcase from './Glob_rec.jsx';
 import CertificationProcess from './certificationProcess.jsx';
 import ConsultancyProcess from './ConsultancyProcess.jsx';
+import { useTheme } from '../utilities/themeprovider.jsx';
+
 
 // Lazy load components
 const ImageCarousel = lazy(() => import("../utilities/caro.jsx"));
@@ -46,7 +48,7 @@ const FeatureCard = ({ item }) => (
 const Home = () => {
   const [isMobile, setIsMobile] = useState(false);
   const { scrollYProgress } = useScroll();
-
+  
   const y1 = useTransform(scrollYProgress, [0, 1], [0, isMobile ? 30 : 60]);
   const y2 = useTransform(scrollYProgress, [0, 1], [0, isMobile ? 40 : 80]);
 
@@ -58,7 +60,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="bg-white overflow-hidden" style={{ fontFamily: "'Arial Narrow', Arial, sans-serif" }}>
+    <div className="bg-white  overflow-hidden" style={{ fontFamily: "'Arial Narrow', Arial, sans-serif" }}>
       {/* ===== HERO SECTION ===== */}
       <Suspense fallback={<LoadingPlaceholder />}>
         <section className="relative w-full">

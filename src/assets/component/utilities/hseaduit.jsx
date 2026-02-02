@@ -15,6 +15,7 @@ import {
   CheckCircle
 } from 'lucide-react';
 import img from '../../img/hseaudit (1).jpg'
+import InnerSidebar from './innserSidebar';
 
 /* ---------------- Animation Variants ---------------- */
 const animationVariants = {
@@ -218,6 +219,11 @@ const AuditStep = ({ number, title, description }) => (
 /* ---------------- Main Page ---------------- */
 const HSEAudits = () => {
   return (
+    <>
+     <div className="flex flex-row gap-4" >
+           <aside className="hidden lg:block w-80 sticky top-16 self-start">
+                  <InnerSidebar />
+                </aside>
     <div className="bg-transparent text-amber-900 font-['Arial_Narrow']">
      <header className="relative h-[480px] sm:h-[500px] flex items-center justify-center text-center text-white overflow-hidden">
 
@@ -316,6 +322,8 @@ const HSEAudits = () => {
         </section>
       </main>
     </div>
+    </div>
+    </>
   );
 };
 

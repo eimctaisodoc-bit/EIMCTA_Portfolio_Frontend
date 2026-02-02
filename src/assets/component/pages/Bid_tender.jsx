@@ -30,6 +30,7 @@ import {
   Thermometer,
   Filter
 } from "lucide-react";
+import InnerSidebar from "../utilities/innserSidebar";
 
 // A wrapper component to handle scroll-triggered animations
 const AnimateOnScroll = ({ children, animation, delay, threshold = 0.1, as = 'div', className: wrapperClassName, style: wrapperStyle }) => {
@@ -181,6 +182,11 @@ const TechnicalBidComponent = () => {
   );
 
   return (
+    <>
+     <div className="flex flex-row gap-4" >
+           <aside className="hidden lg:block w-80 sticky top-16 self-start">
+                  <InnerSidebar />
+                </aside>
     <div className="min-h-screen w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 eimcta-font bg-gray-50 overflow-hidden">
       <style>
         {`
@@ -448,6 +454,8 @@ const TechnicalBidComponent = () => {
         </div>
       </div>
     </div>
+    </div>
+    </>
   );
 };
 

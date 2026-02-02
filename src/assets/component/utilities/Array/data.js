@@ -242,7 +242,7 @@ export const menuitems = [
           icon: icon
         }, {
           id: 2,
-          title: 'ISO 2200:20189(FSMS)',
+          title: 'ISO 22000:2018(FSMS)',
           path: '/service/iso/2200',
           icon: icon
         }, {
@@ -305,8 +305,8 @@ export const menuitems = [
         icon: icon
       }, {
         title: 'Environmental Services,EIA,Env.Monitoring(Air,Water,Soil etc)',
+        path: '/services/environmental-services-eta-env-monitoring-air-water-soil-etc',
         icon: icon,
-        path: '/services/environmental-services-eta-env-monitoring-air-water-soil-etc'
       }, {
         title: 'Supply of Sign (Quality,safety,Env.,Companies )',
         path: '/services/supply-of-sign-quality-safety-env-companies',

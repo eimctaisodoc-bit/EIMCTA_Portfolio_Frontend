@@ -6,4 +6,6 @@ export default defineConfig({
     tailwindcss(),
   ],
    assetsInclude: ["**/*.rar"],
+   darkMode: "class",
+   content: ["./index.html", "./src/**/*.{js,jsx}"],
 })
