@@ -3,7 +3,7 @@ import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Image from '../utilities/image';
 import VideoPlayer from '../utilities/Video';
-import image21 from "../../img/21.jpg";
+import image21 from "../../img/iso/health.jpg";
 import isoIcon from "../../img/iso_.png";
 import InnerSidebar from '../utilities/innserSidebar';
 

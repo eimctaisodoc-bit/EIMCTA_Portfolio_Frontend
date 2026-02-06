@@ -2,7 +2,7 @@ import React from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 import Image from "../utilities/image";
 import VideoPlayer from "../utilities/Video";
-import image16 from "../../img/16.jpg";
+import image16 from "../../img/iso/11.jpg";
 import isoIcon from "../../img/iso_.png";
 import {
   BookOpen,

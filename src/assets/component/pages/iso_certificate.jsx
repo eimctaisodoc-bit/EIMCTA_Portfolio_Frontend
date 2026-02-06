@@ -119,7 +119,7 @@ const ISO_certification = () => {
               className="text-xl sm:text-2xl md:text-3xl font-bold text-amber-600 mb-6"
               variants={sectionHeaderVariants}
             >
-              <BeamUnderline thickness={6} className="pb-2">Understanding ISO Certification</BeamUnderline>
+              <BeamUnderline thickness={6} className="">Understanding ISO Certification</BeamUnderline>
             </motion.h2>
             <motion.div variants={cardVariants} className="text-gray-700 text-base sm:text-lg leading-relaxed space-y-4">
               <p>
@@ -137,7 +137,7 @@ const ISO_certification = () => {
               className="text-xl sm:text-2xl md:text-3xl font-bold text-amber-600 mb-8"
               variants={sectionHeaderVariants}
             >
-              <BeamUnderline thickness={6} className="pb-2">Strategic Benefits</BeamUnderline>
+              <BeamUnderline thickness={6} className="">Strategic Benefits</BeamUnderline>
             </motion.h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
@@ -163,7 +163,7 @@ const ISO_certification = () => {
               className="text-xl sm:text-2xl md:text-3xl font-bold text-amber-600 mb-8"
               variants={sectionHeaderVariants}
             >
-              <BeamUnderline thickness={6} className="pb-2">Requirements and Implementation</BeamUnderline>
+              <BeamUnderline thickness={6} className="">Requirements and Implementation</BeamUnderline>
             </motion.h2>
             <div className="space-y-4">
               {[
@@ -189,7 +189,7 @@ const ISO_certification = () => {
           {/* Section 4: Why EIMCTA */}
           <section className="p-8 bg-amber-600 text-white">
             <motion.h2 
-              className="text-xl sm:text-2xl md:text-3xl font-bold mb-8"
+              className="text-xl sm:text-2xl md:text-3xl text-center font-bold mb-8"
               variants={sectionHeaderVariants}
             >
               Why Partner with EIMCTA?

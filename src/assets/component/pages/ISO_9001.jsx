@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "../utilities/image";
 import VideoPlayer from "../utilities/Video";
-import image14 from "../../img/14.jpg";
+import image14 from "../../img/iso/12.jpg";
 import isoIcon from "../../img/iso_.png";
 import InnerSidebar from "../utilities/innserSidebar";
 

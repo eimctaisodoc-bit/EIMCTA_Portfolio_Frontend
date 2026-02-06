@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import VideoPlayer from "../utilities/Video";
 import Image from "../utilities/image";
 import { Link } from "react-router-dom";
-import imag20 from "../../img/20.jpg";
+import imag20 from "../../img/iso/10.jpg";
 import isoIcon from "../../img/iso_.png";
 
 // ✅ Added icons (use any you like)

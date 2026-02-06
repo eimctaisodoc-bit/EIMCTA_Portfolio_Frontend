@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "../utilities/image";
-import img1 from "../../img/eia.png";
+import img1 from "../../img/iso/9.jpg";
 import InnerSidebar from "../utilities/innserSidebar";
 
 // --- SVG Icon Components (Keep existing icons) ---
@@ -47,13 +47,26 @@ const FaCertificate = (props) => (
 
 // Pattern background component
 const PatternBackground = () => (
-  <div className="absolute inset-0 opacity-10" 
+  <div
+    className="absolute inset-0 opacity-10"
     style={{
-      backgroundImage: 'linear-gradient(135deg, #fef3c7 10%, transparent 10%, transparent 50%, #fef3c7 50%, #fef3c7 60%, transparent 60%, transparent 100%)',
-      backgroundSize: '20px 20px'
+      backgroundImage: `
+        linear-gradient(
+          135deg,
+          #f59e0b 10%,
+          transparent 10%,
+          transparent 50%,
+          #f59e0b 50%,
+          #f59e0b 60%,
+          transparent 60%,
+          transparent 100%
+        )
+      `,
+      backgroundSize: '20px 20px',
     }}
   ></div>
 );
+
 
 // BeamUnderline Component
 const BeamUnderline = ({ 
@@ -151,20 +164,23 @@ const EnvironmentalServices = () => {
     <div className="bg-gray-50 text-gray-800 px-4 py-8 md:px-8 lg:px-20 max-w-7xl mx-auto font-['Inter',_sans-serif]">
       
       {/* 1. Hero: What is ISO EIA? */}
-      <section className="text-center mb-12 relative overflow-hidden rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 p-8 md:p-12 text-white shadow-xl animate-on-scroll">
+
+      <section className="text-center mb-12 relative
+       overflow-hidden rounded-xl bg-tranparent
+       p-8 md:p-12 animate-on-scroll">
         <PatternBackground />
         <div className="relative z-10">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 animate-slideInRight">
-              <span className="text-white drop-shadow-md">
+              <span className="text-amber-800 drop-shadow-md">
                 ISO Environmental Impact Assessment (EIA)
               </span>
           </h1>
-          <p className="text-lg md:text-xl text-amber-500 bg-white/95 p-6 rounded-lg shadow-inner max-w-4xl mx-auto leading-relaxed animate-slideInLeft text-justify">
+          <p className="text-lg md:text-xl text-amber-800 bg-transparent
+           p-6  max-w-4xl mx-auto leading-relaxed animate-slideInLeft text-justify">
             An ISO-aligned Environmental Impact Assessment is a systematic process used to identify, predict, and evaluate the environmental effects of proposed projects. Guided by international standards like <strong>ISO 14001</strong>, it integrates environmental considerations into the decision-making process to ensure sustainable and compliant project development.
           </p>
         </div>
       </section>
-
       <Image 
         src={img1} 
         alt='ISO EIA Process Flow'

@@ -400,195 +400,224 @@ export const features = [
 // -----------------------------------------------------------------------
 
 
-export const faqData = [
+ // Assuming you are using lucide-react or similar
+
+
+
+const servicesData = [
   {
+    type: "service",
+    parent: "ISO (International Standards) Services",
+    children: [
+      "ISO Consultancy",
+      "ISO Audit",
+      "ISO Lead Auditor Training",
+      "ISO Internal Auditor Training",
+      "ISO Certification",
+    ],
+  },
+  {
+    type: "service",
+    parent: "Environmental Services",
+    children: [
+      "Environmental Impact Assessment (EIA)",
+      "ISO 14001 Consultancy",
+      "ISO 14001 Audit",
+      "ISO 14001 Certification",
+      "Waste Reduction Plan",
+      "Environmental Testing / Calibration / Monitoring",
+    ],
+  },
+  {
+    type: "service",
+    parent: "Occupational Health & Safety Services",
+    children: [
+      "ISO 45001",
+      "OSHS Management System Plan",
+      "OHS Expert / Engineer / Office Sourcing",
+      "OHS Trainings", 
+      "Emergency Drill",
+      "PPE Sourcing / Supplies",
+      "OHS Incident Investigation",
+      "OHS Risk Assessment / Management",
+    ],
+  },
+  {
+    type: "service",
+    parent: "Audit, Gap Analysis, Training & Development",
+    children: [
+      "Training Need Analysis",
+      "Post Training Evaluation",
+      "Training & Development / HRD / HRM Consultancy",
+      "HRD Trainings",
+      "Training Business Risk Management",
+      "HR & Functional Gap Analysis",
+      "Process Gap Analysis",
+      "Lean Management",
+      "Lean Six Sigma",
+      "5S Implementation",
+      "Documentation & Data Transformation",
+      "MIS Consultancy",
+    ],
+  },
+  {
+    type: "service",
+    parent: "Sales & Supplies",
+    children: [
+      "Personal Protective Equipment (PPE)",
+      "Emergency Aids",
+      "Safety Signage Supplies",
+    ],
+  },
+];
+
+const faqData = [
+  // --- General Company Info ---
+  {
+    type: "faq",
     icon: BookText,
     question: "What is EIMCTA?",
     answer:
       "EIMCTA stands for Everest International Management Consultancy & Training Agency Pvt. Ltd. We help businesses get certified, trained, and compliant with international standards like ISO.",
   },
+ 
   {
-    icon: ClipboardList,
-    question: "What does EIMCTA do?",
-    answer:
-      "We provide ISO consultancy, safety and food training, environmental services, safety equipment, technical documentation, and placement services.",
-  },
-  {
-    icon: CheckCircle,
-    question: "What is ISO certification?",
-    answer:
-      "ISO certification means your business follows international standards for quality, safety, or environment. It helps gain trust, improve performance, and enhance efficiency.",
-  },
-  {
-    icon: FileText,
-    question: "What are the different ISO certificates EIMCTA helps with?",
-    answer:
-      "We support ISO 9001 (quality), ISO 45001 (health & safety), ISO 14001 (environment), ISO 22000 (food safety), ISO 21001 (education), ISO 27001 (information security), ISO 39001 (road safety), and many more.",
-  },
-  {
-    icon: Users,
-    question: "Does EIMCTA provide training?",
-    answer:
-      "Yes, we offer training in workplace safety, food hygiene, ISO auditing, first aid, fire safety, and more. Our training is practical and beginner-friendly.",
-  },
-  {
-    icon: BookText,
-    question: "What is ISO 21001?",
-    answer:
-      "ISO 21001 is for schools and training institutes. It helps improve teaching quality, student satisfaction, and educational management systems.",
-  },
-  {
-    icon: ShieldCheck,
-    question: "What is Occupational Health & Safety (OHS)?",
-    answer:
-      "OHS ensures a safe and healthy workplace for employees. We help develop safety plans, train staff, and prepare for emergencies.",
-  },
-  {
-    icon: Leaf,
-    question: "What environmental services do you offer?",
-    answer:
-      "We provide Environmental Impact Assessments (EIA), air and water testing, and waste management planning for eco-friendly operations.",
-  },
-  {
-    icon: CheckCircle,
-    question: "What is HACCP and ISO 22000?",
-    answer:
-      "HACCP and ISO 22000 are food safety standards that help food businesses maintain cleanliness, safety, and quality.",
-  },
-  {
-    icon: Flame,
-    question: "Can I learn fire safety or first aid at EIMCTA?",
-    answer:
-      "Yes, we provide hands-on training for fire safety, emergency drills, and first aid, applicable at homes, schools, and workplaces.",
-  },
-  {
-    icon: ShieldCheck,
-    question: "What safety tools or signs does EIMCTA provide?",
-    answer:
-      "We supply PPE kits, safety signs, fire extinguishers, rescue kits, and other workplace safety equipment.",
-  },
-  {
-    icon: FileText,
-    question: "Can EIMCTA help with writing technical documents or tenders?",
-    answer:
-      "Yes, we assist with technical reports, tenders, SOPs, feasibility studies, and project proposals.",
-  },
-  {
-    icon: ClipboardList,
-    question: "What is Lead Auditor Training?",
-    answer:
-      "It’s a course to become certified to audit companies and ensure they comply with ISO standards like ISO 9001 or ISO 22000.",
-  },
-  {
-    icon: Megaphone,
-    question: "What makes EIMCTA’s training special?",
-    answer:
-      "Our training is practical, beginner-friendly, results-focused, and includes certification. We customize it to your needs.",
-  },
-  {
-    icon: Globe,
-    question: "What is CE Marking and can you help with it?",
-    answer:
-      "CE Marking indicates a product meets European safety standards. We help companies obtain CE Marking to sell in Europe.",
-  },
-  {
-    icon: CheckCircle,
-    question: "What is ISO 9001 and why is it useful?",
-    answer:
-      "ISO 9001 helps improve product and service quality, reduce errors, increase efficiency, and build customer trust.",
-  },
-  {
-    icon: FileCheck2,
-    question: "What are audits, and do you provide them?",
-    answer:
-      "Audits check whether a company follows safety and ISO standards. We provide internal, third-party, and gap audits.",
-  },
-  {
-    icon: UserCheck,
-    question: "What is ISO 26000?",
-    answer:
-      "ISO 26000 guides businesses on social responsibility—treating workers fairly, supporting communities, and protecting the environment.",
-  },
-  {
-    icon: Lock,
-    question: "What is ISO 27001?",
-    answer:
-      "ISO 27001 is a standard for information security, helping organizations protect data from hacking, leaks, or misuse.",
-  },
-  {
+    type: "faq",
     icon: HelpCircle,
     question: "Why should I choose EIMCTA?",
     answer:
       "We are experienced, friendly, and provide all services in one place: training, documentation, certification, equipment, and support.",
   },
-  // --- New ISO-related FAQs ---
+
+  // --- ISO General & Specifics ---
   {
-    icon: FileText,
-    question: "What is ISO 9001:2015 Quality Management System?",
-    answer:
-      "ISO 9001:2015 is an international standard for Quality Management Systems (QMS), helping businesses consistently meet customer requirements and improve efficiency.",
-  },
-  {
+    type: "faq",
     icon: CheckCircle,
-    question: "What are the benefits of ISO certification for my business?",
+    question: "What is ISO certification and its benefits?",
     answer:
-      "ISO certification improves customer trust, enhances process efficiency, reduces risks, ensures legal compliance, and provides a competitive advantage.",
+      "ISO certification proves your business follows international standards. It helps gain customer trust, improve efficiency, ensure legal compliance, and reduce risks.",
   },
   {
-    icon: ClipboardList,
-    question: "Are there other ISO certifications relevant to my business?",
-    answer:
-      "Yes. Depending on your needs, ISO 14001 (environment), ISO 45001 (OHS), ISO 27001 (information security), ISO 22000 (food safety), and ISO 50001 (energy management) may be relevant.",
-  },
-  {
-    icon: ShieldCheck,
-    question: "What services are included in ISO consultancy?",
-    answer:
-      "Consultancy services include gap analysis, documentation, system implementation, internal auditor training, and pre-certification audit support.",
-  },
-  {
+    type: "faq",
     icon: FileText,
-    question: "What services are included in ISO certification only?",
+    question: "What ISO certificates does EIMCTA support?",
     answer:
-      "Certification services include the audit by an accredited body and issuance of ISO certificate upon successful audit, with periodic surveillance checks.",
+      "We support ISO 9001 (Quality), ISO 14001 (Environment), ISO 45001 (OHS), ISO 22000 (Food Safety), ISO 27001 (Info Security), ISO 21001 (Education), ISO 50001 (Energy), and many more.",
   },
   {
+    type: "faq",
+    icon: CheckCircle,
+    question: "What is ISO 9001 (Quality Management)?",
+    answer:
+      "ISO 9001:2015 is the standard for Quality Management Systems (QMS). It helps businesses reduce errors, ensure consistent quality, and increase customer satisfaction.",
+  },
+  {
+    type: "faq",
+    icon: Leaf,
+    question: "What is ISO 14001 and Environmental Services?",
+    answer:
+      "ISO 14001 focuses on environmental management. We also provide Environmental Impact Assessments (EIA), waste reduction planning, and eco-friendly operational testing.",
+  },
+  {
+    type: "faq",
+    icon: ShieldCheck,
+    question: "What is ISO 45001 (Occupational Health & Safety)?",
+    answer:
+      "ISO 45001 ensures a safe workplace. We help develop safety plans, conduct risk assessments, and train staff to prevent accidents and injuries.",
+  },
+  {
+    type: "faq",
+    icon: Lock,
+    question: "What is ISO 27001 (Information Security)?",
+    answer:
+      "ISO 27001 helps organizations protect sensitive data from hacking, leaks, or misuse by establishing a robust Information Security Management System.",
+  },
+  {
+    type: "faq",
+    icon: CheckCircle,
+    question: "What is HACCP and ISO 22000?",
+    answer:
+      "These are food safety standards that ensure hygiene and safety throughout the food supply chain, essential for restaurants, factories, and catering businesses.",
+  },
+  
+  // --- Process, Timeline & Cost (Merged & Cleaned) ---
+  {
+    type: "faq",
+    icon: FileCheck2,
+    question: "What is the process for ISO Certification?",
+    answer:
+      "We offer two paths: 1) **Certification Only**: For audit-ready firms (Review → Audit → Certificate). 2) **With Consultancy**: We handle everything (Gap Analysis → Documentation → Training → Implementation → Final Audit).",
+  },
+  {
+    type: "faq",
+    icon: Clock,
+    question: "How long does the ISO certification process take?",
+    answer:
+      "It depends on your readiness. **Certification Only** typically takes 2–4 weeks. **Full Consultancy** projects usually take 6–12 weeks to ensure your team is fully trained and compliant.",
+  },
+  {
+    type: "faq",
+    icon: ShieldCheck,
+    question: "What is the difference between Consultancy and Certification services?",
+    answer:
+      "**Consultancy** includes preparation: gap analysis, creating documents, and training staff. **Certification** is the final step: an official audit by an accredited body to issue your certificate.",
+  },
+  {
+    type: "faq",
     icon: Globe,
     question: "How much does ISO certification cost?",
     answer:
-      "Cost depends on ISO standard, organization size, complexity, and whether consultancy support is included. Option 1 (certification only) is cheaper; Option 2 (with consultancy) is higher.",
+      "Cost varies by standard, company size, and service type. 'Certification Only' is more affordable, while 'Full Consultancy' is a higher investment due to the extensive support provided.",
   },
+  
+
+  // --- Training & Other Services ---
   {
-    icon: Clock,
-    question: "How long does it take to get ISO certification without consultancy?",
+    type: "faq",
+    icon: Users,
+    question: "What training programs do you offer?",
     answer:
-      "Typically 2–4 weeks, depending on document readiness and audit scheduling.",
+      "We offer ISO Lead Auditor training, First Aid, Fire Safety, OHS awareness, Food Hygiene, and HR development. Our training is practical, beginner-friendly, and certified.",
   },
   {
-    icon: Clock,
-    question: "How long does it take to get ISO certification with consultancy?",
+    type: "faq",
+    icon: ClipboardList,
+    question: "What is Lead Auditor Training?",
     answer:
-      "Usually 6–12 weeks, depending on organization size, complexity, and staff readiness.",
+      "It is a professional course that certifies individuals to audit companies against ISO standards. It is excellent for career advancement in quality and safety sectors.",
   },
   {
-    icon: FileCheck2,
-    question: "What is the process of ISO certification without consultancy (Option 1)?",
+    type: "faq",
+    icon: FileText,
+    question: "Do you help with technical documentation and tenders?",
     answer:
-      "Submit application → Documentation review → Certification audit → Address non-conformities → ISO certificate issued.",
+      "Yes, we assist with writing technical reports, SOPs, tender proposals, feasibility studies, and other business documentation.",
   },
   {
-    icon: FileCheck2,
-    question: "What is the process of ISO certification with consultancy (Option 2)?",
+    type: "faq",
+    icon: Globe,
+    question: "What is CE Marking?",
     answer:
-      "Gap analysis → Documentation → Staff training → Implementation support → Internal audit → Certification audit → ISO certificate issued.",
+      "CE Marking indicates a product meets European safety, health, and environmental protection requirements. We assist companies in obtaining this mark for export.",
   },
   {
+    type: "faq",
+    icon: ShieldCheck,
+    question: "What safety supplies do you sell?",
+    answer:
+      "We supply Personal Protective Equipment (PPE), safety signage, fire extinguishers, emergency rescue kits, and first aid supplies.",
+  },
+  {
+    type: "faq",
     icon: CreditCard,
-    question: "What are the payment terms for ISO services?",
+    question: "What are the payment terms?",
     answer:
-      "Option 1: Payment after submission, before audit. Option 2: Payment in milestones – initial, mid-project, and final after certification.",
+      "For Certification Only: Payment is due after application submission. For Consultancy: Payment is split into milestones (Initial, Mid-project, and Final).",
   },
 ];
+
+// Merged Export
+export const combinedData = [...servicesData, ...faqData];
 // ------------------------------------------------------------------------------------------------------------------
 
 

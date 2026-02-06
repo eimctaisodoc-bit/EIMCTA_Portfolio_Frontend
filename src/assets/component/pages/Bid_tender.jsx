@@ -416,14 +416,14 @@ const TechnicalBidComponent = () => {
         <ParticleBackground count={30} color="amber" />
 
         <div className="relative z-10">
-          <AnimateOnScroll as="h2" animation="animate-itemVariants" delay="0.1s" className="text-4xl font-bold mb-2 text-center text-amber-100">
+          <AnimateOnScroll as="h2" animation="animate-itemVariants" delay="0.1s" className="lg:text-4xl md:text-2xl font-bold mb-2 text-center text-amber-100">
             <BeamUnderline className="text-amber-200">
               Industry Applications of Environmental Monitoring
             </BeamUnderline> 
           </AnimateOnScroll>
           <AnimateOnScroll animation="animate-underlineVariant" delay="0.3s" className="w-[80px] h-[4px] bg-amber-400 rounded-full mx-auto mt-2" wrapperStyle={{ transformOrigin: 'center' }} />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mt-12 [perspective:1000px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  md:grid-cols-3 gap-6 mt-12 [perspective:1000px]">
             {[
               { icon: <Factory className="w-12 h-12 text-amber-300" />, title: "Industrial", description: "Manufacturing, Processing", stats: "87% compliance rate" },
               { icon: <Droplets className="w-12 h-12 text-amber-300" />, title: "Water Resources", description: "Drinking Water, Wastewater", stats: "92% accuracy" },

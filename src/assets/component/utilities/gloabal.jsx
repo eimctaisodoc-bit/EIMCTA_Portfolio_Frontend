@@ -647,6 +647,45 @@ const ISOCertificationForm = () => {
             letter-spacing: -0.01em;
         }
     `;
+    const BeamUnderline = ({ 
+  children, 
+  thickness = 8, 
+  className = "" 
+}) => {
+  const gradientId = "formalBeamGradient";
+  return (
+    <span className={`relative inline-block group ${className}`}>
+      {children}
+      <span 
+        className="absolute left-0 right-0 -bottom-2 block overflow-visible pointer-events-none"
+        style={{ height: `${thickness * 1.5}px` }}
+      >
+        <svg 
+          width="100%" 
+          height="100%" 
+          viewBox="0 0 100 20" 
+          preserveAspectRatio="none"
+          className="block"
+        >
+          <defs>
+            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#f59e0b" />
+              <stop offset="48%" stopColor="#b45309" />
+              <stop offset="50%" stopColor="#fde68a" />
+              <stop offset="52%" stopColor="#b45309" />
+              <stop offset="100%" stopColor="#f59e0b" />
+            </linearGradient>
+          </defs>
+          <path 
+            d="M 0 10 Q 25 10, 50 4 Q 75 10, 100 10 Q 75 10, 50 16 Q 25 10, 0 10 Z" 
+            fill={`url(#${gradientId})`}
+          />
+          <circle cx="50" cy="10" r="0.6" fill="#fef3c7" opacity="0.8" />
+        </svg>
+      </span>
+    </span>
+  );
+};
 
     return (
         <>
@@ -670,7 +709,7 @@ const ISOCertificationForm = () => {
                         </p>
                     </motion.header>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-1 md:grid-cols-1 gap-10">
                         {/* LEFT COLUMN: FORM */}
                         <motion.div 
                             className="lg:border-r lg:border-gray-200 lg:pr-10"
@@ -678,9 +717,11 @@ const ISOCertificationForm = () => {
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.6 }}
                         >
-                            <AnimatedHeader className="text-2xl font-bold text-amber-700" icon={<Navigation size={24} />}>
-                                Contact & Requirement Details
-                            </AnimatedHeader>
+
+                            
+                               
+                            
+                            
                             
                             <form onSubmit={handleSubmit}>
                                 {/* Basic Fields Grid Layout */}

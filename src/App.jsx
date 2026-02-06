@@ -40,6 +40,7 @@ import ScrollToTop from './assets/component/utilities/scroltotop.jsx';
 import BusinessQuoteForm from './assets/component/pages/form.jsx';
 import Admin_Form from './assets/component/utilities/AdminForm.jsx';
 import AdminFeature from './assets/component/utilities/AdminFeature.jsx';
+import ServicesModal from './assets/component/utilities/serviceModal.jsx';
 // import ISO22000Certification from './assets/component/pages/ISO_2200';
 
 function App() {
@@ -62,7 +63,7 @@ function App() {
 
         <TopContactBar />
         <Navbar />
-      
+      <ServicesModal/>
         <Routes>
           <Route path="/" element={
             <PageTransitionWrapper> <Home /></PageTransitionWrapper>} />

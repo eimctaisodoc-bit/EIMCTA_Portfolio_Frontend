@@ -227,6 +227,57 @@ const categories = [
   },
 ];
 
+const BeamUnderline = ({ 
+  children, 
+  thickness = 8, 
+  className = "" 
+}) => {
+  const gradientId = "formalBeamGradient";
+
+  return (
+    <span className={`relative inline-block group ${className}`}>
+      {children}
+      <span 
+        className="absolute left-0 right-0 -bottom-2 block overflow-visible pointer-events-none"
+        style={{ height: `${thickness * 1.5}px` }}
+      >
+        <svg 
+          width="100%" 
+          height="100%" 
+          viewBox="0 0 100 20" 
+          preserveAspectRatio="none"
+          className="block"
+        >
+          <defs>
+            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#f59e0b" />
+              <stop offset="48%" stopColor="#b45309" />
+              <stop offset="50%" stopColor="#fde68a" />
+              <stop offset="52%" stopColor="#b45309" />
+              <stop offset="100%" stopColor="#f59e0b" />
+            </linearGradient>
+          </defs>
+          
+          {/* The Formal Beam Path */}
+          <path 
+            d="
+              M 0 10 
+              Q 25 10, 50 4
+              Q 75 10, 100 10
+              Q 75 10, 50 16
+              Q 25 10, 0 10
+              Z
+            " 
+            fill={`url(#${gradientId})`}
+          />
+          
+          {/* Minimalist Central Pivot Point */}
+          <circle cx="50" cy="10" r="0.6" fill="#fef3c7" opacity="0.8" />
+        </svg>
+      </span>
+    </span>
+  );
+};
 const ISOShowcase = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
@@ -238,13 +289,16 @@ const ISOShowcase = () => {
         <div className="max-w-6xl mx-auto">
           {/* Heading (text size fixed across breakpoints) */}
           <header className="text-center mb-16">
-            <h1 className="lg:text-4xl  md:text-3xl text-lg font-black tracking-tight mb-4">
+            <BeamUnderline thickness={10}>
+
+            <h1 className="lg:text-4xl  md:text-3xl text-lg font-black tracking-tight">
               OPERATE WITH <br />
               <span className="bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent uppercase">
                 Global Recognition
               </span>
             </h1>
-            <p className="text-sm text-zinc-500">
+            </BeamUnderline>
+            <p className="text-sm pt-2 text-zinc-500">
               Professional ISO Certification & Implementation Services
             </p>
           </header>
