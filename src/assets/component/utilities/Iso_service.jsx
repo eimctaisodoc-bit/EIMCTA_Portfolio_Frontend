@@ -165,10 +165,10 @@ export const ISO_CREDENTIALS = () => {
           className="text-center mb-16"
         >
           <BeamUnderline thickness={10}>
-          <h2 className="text-2xl sm:text-xs  md:text-3xl lg:text-4xl  
-          font-bold  text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-500 font-['Arial Narrow']">
+          <h3 className="text-xl lg:text-3xl md:text-3xl
+          font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent uppercase font-['Arial Narrow']">
             Our Achievements & Accreditations
-          </h2>
+          </h3>
             </BeamUnderline>
           <p className="text-lg text-gray-600">
             Recognized excellence in quality, security, and innovation

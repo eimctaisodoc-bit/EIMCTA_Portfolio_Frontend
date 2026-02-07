@@ -9,7 +9,7 @@ const VideoPlayer = ({
   autoPlay = true,
   showTitle = true,
   showSourceInfo = true,
-  containerWidth = "80%",
+  containerWidth = "95%",
   borderColor = "amber-700",
   bgColor = "amber-200",
   iconColor = "text-amber-800",
@@ -59,7 +59,7 @@ const VideoPlayer = ({
       {/* Header with title */}
       {showTitle && title && (
         <div className="mb-4 text-center">
-          <h2 className="text-2xl text-amber-800 dark:text-white font-bold">
+          <h2 className="text-xl text-amber-800 dark:text-white font-bold">
             {title}
           </h2>
         </div>
@@ -69,7 +69,7 @@ const VideoPlayer = ({
       <motion.div className="space-y-6">
         <div className="space-y-4">
           <div className="flex items-center justify-center md:justify-start">
-            <h3 className={`text-lg font-bold ${textColor}`}>Our Videos</h3>
+            
           </div>
 
           <motion.div
@@ -106,18 +106,8 @@ const VideoPlayer = ({
 
       {/* Video URL info with link to original source */}
       {showSourceInfo && (
-        <div className="mt-3 p-3 bg-amber-100 dark:bg-amber-800 rounded-lg">
-          <p className="text-sm text-gray-600 dark:text-gray-400 break-all font-bold">
-            <span className="font-semibold">Source:</span>{' '}
-            <a
-              href={src}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-amber-600 dark:text-amber-300 hover:underline"
-            >
-              {src}
-            </a>
-          </p>
+        <div className="mt-3 p-3  dark:bg-amber-800 rounded-lg">
+        
         
 
           {/* Link to original page */}

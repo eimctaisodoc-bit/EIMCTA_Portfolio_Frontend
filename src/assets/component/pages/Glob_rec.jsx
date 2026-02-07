@@ -291,12 +291,12 @@ const ISOShowcase = () => {
           <header className="text-center mb-16">
             <BeamUnderline thickness={10}>
 
-            <h1 className="lg:text-4xl  md:text-3xl text-lg font-black tracking-tight">
+            <h3 className="text-xl lg:text-3xl md:text-3xl font-black tracking-tight">
               OPERATE WITH <br />
               <span className="bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent uppercase">
                 Global Recognition
               </span>
-            </h1>
+            </h3>
             </BeamUnderline>
             <p className="text-sm pt-2 text-zinc-500">
               Professional ISO Certification & Implementation Services

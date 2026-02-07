@@ -141,32 +141,32 @@ const ISO21001Guide = () => {
     {
       title: "Enhanced Learner Satisfaction",
       description: "Create a more effective and personalized learning environment by aligning educational delivery with learner needs and expectations.",
-      icon: <GraduationCap className="w-5 h-5" />,
+      icon: <GraduationCap className="w-5 h-5 text-amber-500" />,
     },
     {
       title: "Global Recognition",
       description: "Align with international best practices to strengthen prestige and competitiveness on a global scale.",
-      icon: <Globe className="w-5 h-5" />,
+      icon: <Globe className="w-5 h-5 text-amber-500" />,
     },
     {
       title: "Improved Process Consistency",
       description: "Streamline operations from curriculum development to admissions and assessments, reducing errors and inefficiency.",
-      icon: <Zap className="w-5 h-5" />,
+      icon: <Zap className="w-5 h-5 text-amber-500" />,
     },
     {
       title: "Inclusive Education",
       description: "Emphasize accessibility and equity so all learners—regardless of background or abilities—have equal opportunities.",
-      icon: <Users className="w-5 h-5" />,
+      icon: <Users className="w-5 h-5 text-amber-500" />,
     },
     {
       title: "Evidence-Based Growth",
       description: "Use data-driven insights and KPIs to continually improve educational outcomes and institutional performance.",
-      icon: <Award className="w-5 h-5" />,
+      icon: <Award className="w-5 h-5 text-amber-500" />,
     },
     {
       title: "Stakeholder Trust",
       description: "Build stronger relationships with parents, government bodies, and employers via transparent, accountable management practices.",
-      icon: <Trophy className="w-5 h-5" />,
+      icon: <Trophy className="w-5 h-5 text-amber-500" />,
     },
   ];
 
@@ -174,32 +174,32 @@ const ISO21001Guide = () => {
     {
       title: "Leadership & Commitment",
       description: "Top management must take responsibility for the EOMS and ensure educational policies align with the institution’s strategic direction.",
-      icon: <Star className="w-5 h-5" />,
+      icon: <Star className="w-5 h-5 text-amber-500" />,
     },
     {
       title: "Context Analysis",
       description: "Identify internal and external factors affecting educational delivery, including beneficiary needs (learners, parents, staff, and stakeholders).",
-      icon: <Target className="w-5 h-5" />,
+      icon: <Target className="w-5 h-5 text-amber-500" />,
     },
     {
       title: "Resource Management",
       description: "Ensure adequate facilities, technology, and competent human resources to support effective learning environments.",
-      icon: <Building className="w-5 h-5" />,
+      icon: <Building className="w-5 h-5 text-amber-500" />,
     },
     {
       title: "Operational Planning",
       description: "Define how curriculum is designed, developed, and delivered, including effective management of learner assessments.",
-      icon: <BookOpen className="w-5 h-5" />,
+      icon: <BookOpen className="w-5 h-5 text-amber-500" />,
     },
     {
       title: "Performance Evaluation",
       description: "Implement internal audits, management reviews, monitoring, and feedback mechanisms to measure performance and improve outcomes.",
-      icon: <Trophy className="w-5 h-5" />,
+      icon: <Trophy className="w-5 h-5 text-amber-500" />,
     },
     {
       title: "Continuous Improvement",
       description: "Maintain a formal process to address nonconformities, apply corrective actions, and prevent recurrence through continual improvement.",
-      icon: <Zap className="w-5 h-5" />,
+      icon: <Zap className="w-5 h-5 text-amber-500" />,
     },
   ];
 
@@ -207,27 +207,27 @@ const ISO21001Guide = () => {
     {
       title: "Sector-Specific Expertise",
       description: "EIMCTA specializes in education—understanding pedagogy, curriculum compliance, and learner-centered requirements beyond generic consulting.",
-      icon: <GraduationCap className="w-5 h-5" />,
+      icon: <GraduationCap className="w-5 h-5 text-amber-500" />,
     },
     {
       title: "Tailored Methodology",
       description: "We customize the ISO 21001:2025 framework to match your institution’s size, culture, and educational goals—no one-size-fits-all templates.",
-      icon: <Target className="w-5 h-5" />,
+      icon: <Target className="w-5 h-5 text-amber-500" />,
     },
     {
       title: "Seamless Digital Integration",
       description: "We help integrate EOMS requirements into your LMS and administrative tools for a paperless, efficient, and modern transition.",
-      icon: <Zap className="w-5 h-5" />,
+      icon: <Zap className="w-5 h-5 text-amber-500" />,
     },
     {
       title: "End-to-End Support",
       description: "From gap analysis and staff training to audit readiness, our team stays with you through every step of your certification journey.",
-      icon: <Users className="w-5 h-5" />,
+      icon: <Users className="w-5 h-5 text-amber-500" />,
     },
     {
       title: "Proven Track Record",
       description: "Trusted by schools, colleges, and corporate training centers—EIMCTA has a strong history of successful certifications and real-world results.",
-      icon: <Award className="w-5 h-5" />,
+      icon: <Award className="w-5 h-5 text-amber-500" />,
     },
   ];
 
@@ -241,7 +241,7 @@ const ISO21001Guide = () => {
     }, [inView, controls]);
 
     return (
-      <div ref={ref} className="mb-8 text-center w-full max-w-4xl mx-auto">
+      <div ref={ref} className="mb-8 text-center w-full  max-w-4xl mx-auto">
         <motion.div
           animate={controls}
           initial="hidden"
@@ -253,14 +253,14 @@ const ISO21001Guide = () => {
           </div>
         </motion.div>
 
-        <motion.h2
+        <motion.h3
           animate={controls}
           initial="hidden"
           variants={animationVariants.sectionHeader}
-          className="text-2xl md:text-3xl lg:text-4xl font-bold text-amber-900 mb-3 tracking-tight relative inline-block"
+          className="text-xl lg:text-3xl md:text-3xl font-bold text-amber-900 mb-3 tracking-tight relative inline-block"
         >
           <BeamUnderline>{children}</BeamUnderline>
-        </motion.h2>
+        </motion.h3>
 
         {subtitle && (
           <motion.p
@@ -277,7 +277,7 @@ const ISO21001Guide = () => {
   };
 
   return (
-    <div className="bg-white w-full min-h-screen py-12 font-sans px-4 sm:px-6">
+    <div className=" w-full min-h-screen py-12 font-sans px-4 sm:px-6">
       {/* Outer Article Container: uses flex to enable parallel columns */}
       <article className="relative w-full max-w-7xl mx-auto bg-white flex flex-col lg:flex-row gap-8 items-start">
         
@@ -287,7 +287,7 @@ const ISO21001Guide = () => {
         </aside>
 
         {/* Main Content Area */}
-        <div className="flex-1 w-full">
+        <div className="flex-1 w-full ">
           {/* Hero Section */}
           <section className="pb-12 text-center w-full relative">
             <motion.div variants={slideInRight} initial="hidden" animate="visible">
@@ -303,7 +303,7 @@ const ISO21001Guide = () => {
               className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-amber-900 tracking-tight relative inline-block"
             >
               <BeamUnderline thickness={8} className="pb-2">
-                <span className="flex items-center justify-center gap-3">
+                <span className="flex bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent uppercase items-center justify-center gap-3">
                   ISO 21001:2025 EOMS 
                 </span>
               </BeamUnderline>
@@ -381,7 +381,7 @@ const ISO21001Guide = () => {
                         {benefit.title}
                       </h3>
                     </div>
-                    <p className="text-slate-700 text-sm md:text-base leading-relaxed">
+                    <p className="text-slate-700 text-justify text-sm md:text-base leading-relaxed">
                       {benefit.description}
                     </p>
                   </motion.div>
@@ -417,7 +417,7 @@ const ISO21001Guide = () => {
                         {item.title}
                       </h3>
                     </div>
-                    <p className="text-slate-700 text-sm md:text-base">
+                    <p className="text-slate-700 text-sm text-justify md:text-base">
                       {item.description}
                     </p>
                   </motion.div>

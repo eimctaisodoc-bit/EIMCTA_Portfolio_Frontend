@@ -194,12 +194,11 @@ const BeamUnderline = ({
           viewport={{ once: true }}
         >
           <BeamUnderline thickness={10}>
-          <h2 className="text-2xl sm:text-3xl 
-          md:text-4xl font-bold text-gray-900  
-          text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-500
+          <h3 className=" text-xl lg:text-3xl md:text-3xl font-bold   
+          bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent uppercase
           " style={{ fontFamily: "'Arial Narrow', Arial, sans-serif" }}>
             Trusted by Leading Organizations
-          </h2>
+          </h3>
             </BeamUnderline>
           <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base md:text-lg" style={{ fontFamily: "'Arial Narrow', Arial, sans-serif" }}>
             Don't just take our word for it - hear what our clients say

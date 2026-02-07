@@ -20,12 +20,18 @@ const ModalPage = () => {
     offerDescription: "",
     offerDate: "",
   });
+const toKtmTime = (date) =>
+  new Date(date).toLocaleString("en-US", {
+    timeZone: "Asia/Kathmandu",
+    dateStyle: "long",
+   
+  });
 
   const getData = async () => {
     try {
       const response = await axios.get("http://localhost:5000/adv");
       const data = response.data.data[0];
-
+      setShowModal(data.isPublic)
       setFormData({
         id: data._id,
         title: data.title,
@@ -35,7 +41,7 @@ const ModalPage = () => {
         highlightsList: data.highlightsList?.map((list) => list) || ["", "", ""],
         offerTitle: data.offerTitle,
         offerDescription: data.offerDescription,
-        offerDate: data.offerDate,
+        offerDate: toKtmTime(data.offerDate),
       });
     } catch (err) {
       console.log(err);

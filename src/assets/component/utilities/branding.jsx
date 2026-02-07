@@ -121,9 +121,9 @@ export const Branding = () => {
         {/* Title with underline effect - Centered */}
         <div className="flex justify-center mb-8 md:mb-12">
           <BeamUnderline thickness={10} className="text-center">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 font-['Arial Narrow',Arial,sans-serif]">
-              <span className="text-transparent bg-clip-text bg-linear-to-r from-orange-600 to-amber-500">Clientele</span>
-            </h2>
+            <h3 className="text-xl lg:text-3xl md:text-3xl not-last:font-bold text-gray-900 font-['Arial Narrow',Arial,sans-serif]">
+              <span className="bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent uppercase">Clientele</span>
+            </h3>
           </BeamUnderline>
         </div>
         {/* Logo Grid */}
