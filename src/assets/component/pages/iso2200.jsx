@@ -334,7 +334,7 @@ const ISO22000Certification = () => {
                       whileHover={cardHover}
                       viewport={{ once: true, amount: 0.3 }}
                     >
-                      <div className="flex items-start mb-4">
+                      <div className="flex items-center mb-4">
                         <div className="bg-amber-100 rounded-lg p-3 mr-4 shrink-0 border border-amber-300">
                           <Icon className="w-6 h-6 text-amber-500" />
                         </div>
@@ -377,7 +377,7 @@ const ISO22000Certification = () => {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.3 }}
               >
-                <p className="text-gray-700 leading-relaxed text-justify text-base md:text-lg">
+                <p className="text-gray-700 text-justify leading-relaxed text-justify text-base md:text-lg">
                   Implementing ISO 22000 and HACCP isn't just about checking a box; it's a strategic investment in your brand's future.
                 </p>
               </motion.div>
@@ -395,9 +395,9 @@ const ISO22000Certification = () => {
                       whileHover={cardHover}
                       viewport={{ once: true, amount: 0.3 }}
                     >
-                      <div className="flex items-start mb-4">
-                        <div className="bg-amber-100 rounded-lg p-3 mr-4 shrink-0 border border-amber-300">
-                          <Icon className="w-6 h-6 text-amber-500" />
+                      <div className="flex items-center align-middle mb-4">
+                        <div className="bg-amber-100 rounded-lg lg:p-3 md:p-3 p-2 mr-4 shrink-0 border border-amber-300">
+                          <Icon className="w-5 h-5 text-amber-500" />
                         </div>
                         <h3 className="text-lg md:text-xl font-semibold text-amber-900">
                           {benefit.title}
@@ -441,9 +441,9 @@ const ISO22000Certification = () => {
                       whileHover={cardHover}
                       viewport={{ once: true, amount: 0.3 }}
                     >
-                      <div className="flex items-start mb-4">
-                        <div className="bg-amber-100 rounded-lg p-3 mr-4 shrink-0 border border-amber-300">
-                          <Icon className="w-6 h-6 text-amber-500" />
+                      <div className="flex items-center align-center mb-4">
+                        <div className="bg-amber-100 rounded-lg lg:p-3  md:p-3 p-2 mr-4 shrink-0 border border-amber-300">
+                          <Icon className="w-5 h-5 text-amber-500" />
                         </div>
                         <h3 className="text-lg md:text-xl font-semibold text-amber-900">
                           {step.title}
@@ -489,9 +489,9 @@ const ISO22000Certification = () => {
                       whileHover={cardHover}
                       viewport={{ once: true, amount: 0.3 }}
                     >
-                      <div className="flex items-start mb-4">
-                        <div className="bg-amber-100 rounded-lg p-3 mr-4 shrink-0 border border-amber-300">
-                          <Icon className="w-6 h-6 text-amber-500" />
+                      <div className="flex  text-center items-center mb-4">
+                        <div className="bg-amber-100 rounded-lg lg:p-3 md:p-3 p-2 mr-4 shrink-0 border border-amber-300">
+                          <Icon className="w-5 h-5 text-amber-500" />
                         </div>
                         <h3 className="text-lg md:text-xl font-semibold text-amber-900">
                           {item.title}

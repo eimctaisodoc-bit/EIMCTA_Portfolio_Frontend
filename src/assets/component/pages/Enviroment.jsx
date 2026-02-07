@@ -161,7 +161,7 @@ const EnvironmentalServices = () => {
            <aside className="hidden lg:block w-80 sticky top-16 self-start">
                   <InnerSidebar />
                 </aside>
-    <div className="bg-gray-50 text-gray-800 px-4 py-8 md:px-8 lg:px-20 max-w-7xl mx-auto font-['Inter',_sans-serif]">
+    <div className="bg-white text-gray-800 px-4 py-8 md:px-8 lg:px-20 max-w-7xl mx-auto font-['Inter',_sans-serif]">
       
       {/* 1. Hero: What is ISO EIA? */}
 

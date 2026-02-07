@@ -82,7 +82,7 @@ const ConsultancyProcess = ({ zoomLevel = 2, magnifierSize = 150 }) => {
       </div>
 
       <p className="mt-4 text-gray-500 italic">
-        {isMobile ? "Tap/hover over the document to inspect the details" : "Open on mobile to zoom with magnifier"}
+        {isMobile ? "Tap/hover over the document to inspect the details" : ""}
       </p>
     </div>
   );

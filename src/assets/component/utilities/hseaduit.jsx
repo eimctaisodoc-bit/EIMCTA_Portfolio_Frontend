@@ -245,7 +245,7 @@ const HSEAudits = () => {
 </header>
 
 
-      <main className="max-w-7xl mx-auto px-6 py-16 sm:px-8 bg-white rounded-2xl shadow-xl -mt-20 relative z-10">
+      <main className="max-w-7xl mx-auto px-6 py-16 sm:px-8 bg-white rounded-2xl shadow -mt-20 relative z-10">
         {/* About the Standard */}
         <section className="py-12">
           <SectionHeader
@@ -292,7 +292,7 @@ const HSEAudits = () => {
         </section>
 
         {/* How to Apply */}
-        <section className="py-16 bg-amber-50 rounded-xl px-6 sm:px-8 shadow-inner">
+        <section className="py-16 bg-gradient-to-br from-amber-50 to-slate-50 border border-amber-100 rounded-xl px-6 sm:px-8 shadow-inner">
           <SectionHeader icon={ClipboardList} title="How Can You Apply?" subtitle="Key steps to implement an effective HSE audit" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {auditStepsData.map(step => (

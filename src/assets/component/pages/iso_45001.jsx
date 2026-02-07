@@ -192,93 +192,90 @@ const AnimatedGrid = ({ children, className }) => {
   );
 }
 
+
 const RequirementTable = () => {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+
   const tableVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
-      transition: { duration: 0.6 }
-    }
+      transition: { duration: 0.6 },
+    },
   };
 
   return (
-    <motion.div 
+    <motion.div
       ref={ref}
       variants={tableVariants}
       initial="hidden"
-      animate={inView ? 'visible' : 'hidden'}
+      animate={inView ? "visible" : "hidden"}
       className="overflow-x-auto rounded-xl border border-amber-200 shadow-sm bg-white"
     >
       <table className="min-w-full divide-y divide-amber-100">
-        <thead className="bg-amber-50">
+        <thead className="bg-amber-50 hidden md:table-header-group">
           <tr>
-            <th className="px-6 py-4 text-left text-base font-semibold text-amber-900">Phase</th>
-            <th className="px-6 py-4 text-left text-base font-semibold text-amber-900">Key Requirements</th>
+            <th className="px-6 py-4 text-left text-base font-semibold text-amber-900">
+              Phase
+            </th>
+            <th className="px-6 py-4 text-left text-base font-semibold text-amber-900">
+              Key Requirements
+            </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-amber-100 bg-white">
-          <tr className="hover:bg-amber-50 transition-colors">
-            <td className="px-6 py-4 whitespace-nowrap text-base font-bold text-amber-900">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                <span>Context & Leadership</span>
-              </div>
-            </td>
-            <td className="px-6 py-4 text-base text-gray-700 leading-relaxed">
-              Understanding internal/external issues and ensuring top management commitment.
-            </td>
-          </tr>
-          <tr className="hover:bg-amber-50 transition-colors">
-            <td className="px-6 py-4 whitespace-nowrap text-base font-bold text-amber-900">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                <span>Planning</span>
-              </div>
-            </td>
-            <td className="px-6 py-4 text-base text-gray-700 leading-relaxed">
-              Identifying hazards, assessing risks, and setting measurable OH&S objectives.
-            </td>
-          </tr>
-          <tr className="hover:bg-amber-50 transition-colors">
-            <td className="px-6 py-4 whitespace-nowrap text-base font-bold text-amber-900">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                <span>Support & Operation</span>
-              </div>
-            </td>
-            <td className="px-6 py-4 text-base text-gray-700 leading-relaxed">
-              Providing necessary resources, ensuring competence, and managing operational controls.
-            </td>
-          </tr>
-          <tr className="hover:bg-amber-50 transition-colors">
-            <td className="px-6 py-4 whitespace-nowrap text-base font-bold text-amber-900">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                <span>Performance Evaluation</span>
-              </div>
-            </td>
-            <td className="px-6 py-4 text-base text-gray-700 leading-relaxed">
-              Monitoring, measuring, and analyzing the OHSMS through internal audits.
-            </td>
-          </tr>
-          <tr className="hover:bg-amber-50 transition-colors">
-            <td className="px-6 py-4 whitespace-nowrap text-base font-bold text-amber-900">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                <span>Improvement</span>
-              </div>
-            </td>
-            <td className="px-6 py-4 text-base text-gray-700 leading-relaxed">
-              Reacting to nonconformities and taking corrective actions to enhance performance.
-            </td>
-          </tr>
+        <tbody className="bg-white divide-y divide-amber-100">
+          {[
+            {
+              phase: "Context & Leadership",
+              desc: "Understanding internal/external issues and ensuring top management commitment.",
+            },
+            {
+              phase: "Planning",
+              desc: "Identifying hazards, assessing risks, and setting measurable OH&S objectives.",
+            },
+            {
+              phase: "Support & Operation",
+              desc: "Providing necessary resources, ensuring competence, and managing operational controls.",
+            },
+            {
+              phase: "Performance Evaluation",
+              desc: "Monitoring, measuring, and analyzing the OHSMS through internal audits.",
+            },
+            {
+              phase: "Improvement",
+              desc: "Reacting to nonconformities and taking corrective actions to enhance performance.",
+            },
+          ].map((item, index) => (
+            <tr
+              key={index}
+              className="hover:bg-amber-50 transition-colors block md:table-row"
+            >
+              {/* Mobile view */}
+              <td className="px-6 py-4 text-base font-bold text-amber-900 block md:table-cell">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-yellow-400 rounded-full flex-shrink-0"></div>
+                  <span className="truncate">{item.phase}</span>
+                </div>
+                <p className="mt-2 text-base text-gray-700 leading-relaxed md:hidden">
+                  {item.desc}
+                </p>
+              </td>
+
+              {/* Desktop view */}
+              <td className="px-6 py-4 text-base text-gray-700 leading-relaxed hidden md:table-cell">
+                {item.desc}
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </motion.div>
   );
 };
+
+
+
 
 export default function ISO45001Certification() {
   const { ref: introRef, inView: introInView } = useInView({ triggerOnce: true, threshold: 0.2 });
@@ -316,7 +313,10 @@ export default function ISO45001Certification() {
             className="text-3xl md:text-5xl font-bold text-amber-800 leading-tight mt-6 relative z-10"
           >
             <BeamUnderline className="text-amber-800" thickness={6}>
+              <span className='bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent uppercase'>
+
                ISO 45001:2018
+              </span>
             </BeamUnderline>
           </motion.h1>
           <motion.p 
@@ -416,7 +416,10 @@ export default function ISO45001Certification() {
               icon={<Icon path={ICONS.how} />}
               subtitle="Getting certified involves a systematic approach to identifying and mitigating workplace hazards."
             >
+              <span className='text-xl lg:text-3xl md:text-3xl'>
+
               Requirements for Implementation & Certification
+              </span>
             </SectionTitle>
             
             <div className="mt-8">

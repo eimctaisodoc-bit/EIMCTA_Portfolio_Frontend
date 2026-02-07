@@ -108,7 +108,7 @@ export default function ISO9001Certification() {
            <aside className="hidden lg:block w-80 sticky top-16 self-start">
                   <InnerSidebar />
                 </aside>
-    <div className="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8 font-sans text-amber-800 overflow-x-hidden">
+    <div className="bg-white py-16 px-4 sm:px-6 lg:px-8 font-sans text-amber-800 overflow-x-hidden">
       <div className="max-w-7xl mx-auto">
         {/* --- Header Section with ISO Icon --- */}
         <header className="text-center mb-16">
@@ -130,9 +130,14 @@ export default function ISO9001Certification() {
             animate="visible"
             variants={heroVariants.slideInRight}
             className="text-4xl md:text-5xl font-extrabold
-             text-amber-900 tracking-tight mb-4"
+              tracking-tight mb-4 text-amber-900"
           >
-            <BeamUnderline thickness={8}> ISO 9001:2015 QMS</BeamUnderline>
+            <BeamUnderline thickness={8}>
+                <span className="flex bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent uppercase items-center justify-center gap-3">
+
+               ISO 9001:2015 QMS
+                </span>
+               </BeamUnderline>
           </motion.h1>
 
           <motion.p
@@ -178,7 +183,7 @@ export default function ISO9001Certification() {
         {/* --- Content Grid --- */}
         <motion.div
           ref={gridRef}
-          className="grid gap-8 md:grid-cols-2"
+          className="grid gap-8 md:grid-cols-1"
           initial="hidden"
           animate={isGridInView ? "visible" : "hidden"}
           variants={gridContainerVariants}
@@ -189,8 +194,8 @@ export default function ISO9001Certification() {
             title="1) What is ISO 9001:2015 (QMS)?"
             content={
               <>
-                <p className="text-gray-700 leading-relaxed mb-4">
-                  <strong className="text-amber-900">ISO 9001:2015</strong> is the international
+                <p className="text-gray-700 leading-relaxed mb-4 text-justify">
+                  <strong className=" ">ISO 9001:2015</strong> is the international
                   standard for <strong className="text-amber-900">Quality Management Systems (QMS)</strong>.
                   Published by the International Organization for Standardization, it provides a structured
                   framework to manage quality consistently across your organization.
@@ -385,11 +390,12 @@ const InfoCard = ({ icon, title, description, content, variants }) => (
   >
     <div className="flex items-center mb-4">
       <div className="bg-amber-100 p-3 rounded-full mr-4">{icon}</div>
-      <h2 className="text-xl font-bold text-amber-900">{title}</h2>
+      <h3 className="text-xl lg:text-3xl md:text-3xl
+ font-bold text-amber-900">{title}</h3>
     </div>
 
     <div className="flex flex-col flex-grow">
-      {description && <p className="text-gray-700 leading-relaxed flex-grow">{description}</p>}
+      {description && <p className="text-slate-700 text-sm text-justify md:text-base leading-relaxed flex-grow">{description}</p>}
       {content}
     </div>
   </motion.div>

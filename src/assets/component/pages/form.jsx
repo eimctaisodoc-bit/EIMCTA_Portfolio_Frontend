@@ -576,10 +576,10 @@ export default function BusinessQuoteForm() {
   const messageWordCount = formData.message.trim().split(/\s+/).filter(word => word.length > 0).length;
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 sm:p-6">
+    <div className="min-h-screen bg-white flex items-center justify-center p-4 sm:p-6">
       
     <div className="flex flex-col lg:flex-row max-w-7xl w-full h-full lg:min-h-[350px] lg:max-h-[650px]
-     bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200">
+     bg-white rounded-2xl shadow overflow-hidden border border-slate-200">
      <div className="hidden lg:block lg:w-1/2 relative">
       <img 
         src={ModalGirl} 

@@ -131,14 +131,14 @@ const ISOAuditGuide = () => {
                <aside className="hidden lg:block w-80 sticky top-16 self-start">
                       <InnerSidebar />
                     </aside>
-        <div style={{ fontFamily: "'Arial Narrow', sans-serif" }} className="antialiased bg-gray-50 text-amber-800 font-bold">
+        <div style={{ fontFamily: "'Arial Narrow', sans-serif" }} className="antialiased bg-white text-amber-800 font-bold">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
 
                 {/* Hero Section */}
                 <section className="text-center mb-24 overflow-hidden">
                     <AnimatedWrapper variants={slideInRight} transition={{ duration: 0.8, ease: easeCurve }}>
                         <h1 className="text-4xl md:text-6xl font-extrabold text-amber-900 mb-4 tracking-tight">
-                            The definitive Guide to <span className="text-amber-600">ISO Audits</span>
+                            The definitive Guide to <span className="bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent uppercase">ISO Audits</span>
                         </h1>
                     </AnimatedWrapper>
                     <AnimatedWrapper variants={slideInLeft} transition={{ duration: 0.8, ease: easeCurve }}>
@@ -166,7 +166,10 @@ const ISOAuditGuide = () => {
                                     </div>
                                     <h2 className="text-3xl font-bold text-amber-900">
                                         <BeamUnderline thickness={6} className="mr-2">
+                                            <span className='text-xl lg:text-3xl md:text-3xl'>
+
                                             Understanding ISO Audits
+                                            </span>
                                         </BeamUnderline>
                                     </h2>
                                 </div>
@@ -240,7 +243,10 @@ const ISOAuditGuide = () => {
                             <div className="relative inline-block">
                                 <h2 className="text-3xl md:text-4xl font-bold text-amber-900 mb-2">
                                     <BeamUnderline thickness={8} className="mr-2">
+                                        <span className='text-xl lg:text-3xl md:text-3xl'>
+
                                         The ISO Audit Process
+                                        </span>
                                     </BeamUnderline>
                                 </h2>
                             </div>
@@ -290,7 +296,10 @@ const ISOAuditGuide = () => {
                             <div className="relative inline-block">
                                 <h2 className="text-3xl md:text-4xl font-bold text-amber-900 mb-2">
                                     <BeamUnderline thickness={8} className="mr-2">
+                                        <span className='text-xl lg:text-3xl md:text-3xl'>
+
                                         Types of ISO Audits
+                                        </span>
                                     </BeamUnderline>
                                 </h2>
                             </div>
@@ -338,7 +347,7 @@ const ISOAuditGuide = () => {
                                 Industry Standards
                             </div>
                             <div className="relative inline-block">
-                                <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
+                                <h2 className="text-xl lg:text-3xl md:text-3xl font-bold text-white mb-2">
                                   
                                         Audit Frequency by Industry
                                 </h2>

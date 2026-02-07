@@ -100,20 +100,21 @@ const HealthSafety = () => {
   return (
     <div className=" font-['Arial_Narrow',_sans-serif] text-amber-800">
       {/* Hero Section */}
-      <div className="relative h-96 w-full">
+      <div className=" h-96 w-full bg-[#f9fafb] relative overflow-hidden">
         <img
           src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80"
           alt="Healthcare professionals"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-amber-900 bg-opacity-30 flex items-center justify-center">
-          <div className="text-center px-6">
-            <motion.div variants={animationVariants.slideInRight} initial="hidden" animate="visible" className="mb-4 drop-shadow-lg relative inline-block">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white">Ensuring Quality and Safety in Healthcare</h1>
+        {/* <div className="absolute inset-0 z-0 bg-gradient-to-br from-white/70 via-transparent to-slate-100/60" /> */}
+        <div className="absolute inset-0 bg-opacity-30 flex items-center justify-center" >
+          {/* <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.03)_100%)]" /> */}
+
+          <div className=" relative z-10 text-center px-6">
+            <motion.div variants={animationVariants.slideInRight} initial="hidden" animate="visible" className="mb-4 drop-shadow-lg relative inline-block text-amber-900">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold  bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent uppercase">Ensuring Quality and Safety in Healthcare</h1>
             </motion.div>
-            <motion.p variants={animationVariants.slideInLeft} initial="hidden" animate="visible" className="text-base md:text-lg lg:text-xl text-amber-100 max-w-3xl mx-auto drop-shadow-md mt-6 text-justify">
-              Implementing ISO Standards for Superior Patient Care and Operational Excellence
-            </motion.p>
+           
           </div>
         </div>
       </div>
@@ -121,7 +122,7 @@ const HealthSafety = () => {
       {/* Main Container with Sidebar Left and Content Right */}
       <div className=" mx-auto px-4 md:px-6 lg:px-8 py-16 -mt-20 relative z-10">
         <div className="flex flex-col lg:flex-row gap-8">
-          
+
           {/* Sidebar - Left Side */}
           <aside className="hidden lg:block  sticky top-20 self-start">
             <InnerSidebar />
@@ -129,7 +130,7 @@ const HealthSafety = () => {
 
           {/* Main Content - Right Side */}
           <div className="flex-1 bg-white rounded-2xl shadow-xl overflow-hidden border border-amber-200">
-            
+
             {/* Intro Section */}
             <section className="px-8 py-12 sm:px-12 text-center">
               <AnimatedComponent variants={animationVariants.paragraphVariant}>
@@ -140,7 +141,8 @@ const HealthSafety = () => {
             </section>
 
             {/* Why ISO Matters Section */}
-            <section className="px-8 py-12 sm:px-12 bg-amber-100/50">
+            <section className="px-8 py-12 sm:px-12 bg-gradient-to-br from-amber-50 to-slate-50 border border-amber-100
+ ">
               <SectionHeader icon={ShieldCheck} title="Why ISO Standards Matter in Healthcare?" />
               <AnimatedComponent variants={animationVariants.paragraphVariant}>
                 <p className="mb-8 text-lg text-amber-800">
@@ -189,7 +191,8 @@ const HealthSafety = () => {
             </section>
 
             {/* Who Can Apply Section */}
-            <section className="px-8 py-12 sm:px-12 bg-amber-100/50">
+            <section className="px-8 py-12 sm:px-12 bg-gradient-to-br from-amber-50 to-slate-50 border border-amber-100
+ ">
               <SectionHeader icon={Users} title="Who Can Apply ISO Standards?" />
               <p className="mb-8 text-sm md:text-base text-amber-800 text-justify">ISO certification is not limited to hospitals. Any healthcare-related organization can benefit, including:</p>
               <div className="flex flex-wrap gap-4 justify-center">
@@ -233,7 +236,7 @@ const HealthSafety = () => {
             </section>
 
             {/* Essential Documentation Section */}
-            <section className="px-8 py-12 sm:px-12 bg-amber-100/50">
+            <section className="px-8 py-12 sm:px-12  bg-gradient-to-br from-amber-50 to-slate-50 border border-amber-100">
               <SectionHeader icon={FileText} title="Essential Documentation" />
               <p className="mb-8 text-sm md:text-base text-amber-800 text-justify">
                 Proper documentation is the backbone of ISO certification. While specific requirements vary by standard, here are some common documents you'll need to prepare and maintain:

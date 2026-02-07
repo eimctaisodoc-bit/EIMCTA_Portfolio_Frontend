@@ -205,7 +205,7 @@ const Training = () => {
            <aside className="hidden lg:block w-80 sticky top-16 self-start">
                   <InnerSidebar />
                 </aside>
-    <div className="min-h-screen bg-gray-50 font-['Arial_Narrow']">
+    <div className="min-h-screen bg-white font-['Arial_Narrow']">
       {/* Hero section */}
       <header className="relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 py-24 sm:px-6 lg:px-8 relative z-10">

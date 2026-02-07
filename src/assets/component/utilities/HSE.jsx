@@ -105,10 +105,10 @@ const HSEAwarenessTraining = () => {
              <aside className="hidden lg:block w-80 sticky top-16 self-start">
                     <InnerSidebar />
                   </aside>
-      <div className="w-full px-4 py-8 bg-gray-50 font-['Arial_Narrow'] overflow-x-hidden">
+      <div className="w-full px-4 py-8 bg-white font-['Arial_Narrow'] overflow-x-hidden">
 
         {/* ================= HERO ================= */}
-        <motion.div
+        {/* <motion.div
           className="max-w-7xl mx-auto mb-16 overflow-hidden rounded-lg shadow-md"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -119,7 +119,7 @@ const HSEAwarenessTraining = () => {
             alt="HSE Awareness Training ISO 14001 ISO 45001"
             className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500"
           />
-        </motion.div>
+        </motion.div> */}
 
         {/* ================= INTRO ================= */}
         <motion.section
@@ -324,7 +324,7 @@ const HSEAwarenessTraining = () => {
         </section>
 
         {/* ================= HOW TO APPLY ================= */}
-        <section className="max-w-6xl mx-auto mb-20 bg-white p-8 rounded-xl shadow-lg border border-amber-200">
+        <section className="max-w-6xl mx-auto mb-20 bg-white p-8 rounded-xl shadow border border-amber-200">
           <motion.h2
             className="text-3xl font-bold text-amber-900 mb-8 text-center"
             variants={sectionHeaderVariant}

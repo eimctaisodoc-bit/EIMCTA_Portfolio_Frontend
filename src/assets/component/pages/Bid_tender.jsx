@@ -187,7 +187,7 @@ const TechnicalBidComponent = () => {
            <aside className="hidden lg:block w-80 sticky top-16 self-start">
                   <InnerSidebar />
                 </aside>
-    <div className="min-h-screen w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 eimcta-font bg-gray-50 overflow-hidden">
+    <div className="min-h-screen w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 eimcta-font bg-white overflow-hidden">
       <style>
         {`
           @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
