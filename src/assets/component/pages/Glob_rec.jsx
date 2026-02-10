@@ -285,7 +285,7 @@ const ISOShowcase = () => {
     <>
       <style>{scrollbarStyles}</style>
 
-      <div className="min-h-screen bg-[#FAFAFA] p-6 md:p-16 text-zinc-900">
+      <div className="min-h-screen bg-white p-6 md:p-16 text-zinc-900">
         <div className="max-w-6xl mx-auto">
           {/* Heading (text size fixed across breakpoints) */}
           <header className="text-center mb-16">

@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "../utilities/image";
 import VideoPlayer from "../utilities/Video";
-import image14 from "../../img/iso/12.jpg";
+import image14 from "../../img/banner/8.jpg";
 import isoIcon from "../../img/iso_.png";
 import InnerSidebar from "../utilities/innserSidebar";
 
@@ -104,6 +104,7 @@ export default function ISO9001Certification() {
 
   return (
     <>
+       <Image src={image14} alt={image14} caption="" />
      <div className="flex flex-row gap-4" >
            <aside className="hidden lg:block w-80 sticky top-16 self-start">
                   <InnerSidebar />
@@ -151,7 +152,7 @@ export default function ISO9001Certification() {
         </header>
 
         {/* --- Top Banner Image --- */}
-        <Image src={image14} alt={image14} caption="" />
+       
 
         {/* --- Introduction Text --- */}
         <motion.div
@@ -169,16 +170,7 @@ export default function ISO9001Certification() {
         </motion.div>
 
         {/* --- Grid Header --- */}
-        <div ref={gridHeaderRef} className="text-center mb-12">
-          <motion.h2
-            initial="hidden"
-            animate={isGridHeaderInView ? "visible" : "hidden"}
-            variants={sectionHeaderVariants}
-            className="text-3xl md:text-4xl font-bold text-amber-900 mb-4"
-          >
-            <BeamUnderline thickness={6}>ISO 9001:2015 Overview</BeamUnderline>
-          </motion.h2>
-        </div>
+       
 
         {/* --- Content Grid --- */}
         <motion.div

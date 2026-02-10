@@ -41,6 +41,7 @@ import BusinessQuoteForm from './assets/component/pages/form.jsx';
 import Admin_Form from './assets/component/utilities/AdminForm.jsx';
 import AdminFeature from './assets/component/utilities/AdminFeature.jsx';
 import ServicesModal from './assets/component/utilities/serviceModal.jsx';
+import ModalPage from './assets/component/utilities/modal.jsx';
 // import ISO22000Certification from './assets/component/pages/ISO_2200';
 
 function App() {
@@ -58,11 +59,12 @@ function App() {
     <div>
       <AnimatePresence mode="wait">
         <ScrollToTop />
-
         <TopHeader />
-
         <TopContactBar />
+        
         <Navbar />
+        <ModalPage />
+
       <ServicesModal/>
         <Routes>
           <Route path="/" element={

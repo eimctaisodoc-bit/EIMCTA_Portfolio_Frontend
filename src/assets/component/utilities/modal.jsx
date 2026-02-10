@@ -32,6 +32,7 @@ const toKtmTime = (date) =>
       const response = await axios.get("http://localhost:5000/adv");
       const data = response.data.data[0];
       setShowModal(data.isPublic)
+      // console.log(response.data)
       setFormData({
         id: data._id,
         title: data.title,

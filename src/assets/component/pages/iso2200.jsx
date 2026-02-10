@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import VideoPlayer from "../utilities/Video";
 import Image from "../utilities/image";
 import { Link } from "react-router-dom";
-import imag20 from "../../img/iso/10.jpg";
+import imag20 from "../../img/banner/5.jpg";
 import isoIcon from "../../img/iso_.png";
 
 // ✅ Added icons for all sections
@@ -259,6 +259,8 @@ const ISO22000Certification = () => {
 
   return (
     <>
+            <Image src={imag20} caption="" alt="ISO 22000 & HACCP Food Safety" />
+
       <div className="flex flex-row gap-4">
         <aside className="hidden lg:block w-80 sticky top-16 self-start">
           <InnerSidebar />
@@ -300,7 +302,6 @@ const ISO22000Certification = () => {
               </motion.p>
             </div>
 
-            <Image src={imag20} caption="" alt="ISO 22000 & HACCP Food Safety" />
 
             {/* Intro */}
             <motion.div

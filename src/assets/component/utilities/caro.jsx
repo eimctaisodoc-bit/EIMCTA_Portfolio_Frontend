@@ -3,9 +3,9 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Import images
 import img7 from '../../img/banner/1.jpg';
-import img12 from '../../img/banner/2.jpg';
+import img12 from '../../img/banner/7.jpg';
 // import img3 from '../../img/banner/ISO.jpg';
-import img3 from '../../img/banner/3.jpg';
+import img3 from '../../img/banner/9.jpg';
 
 const ImageCarousel = () => {
   const slides = [

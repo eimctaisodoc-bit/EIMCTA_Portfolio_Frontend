@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "../utilities/image";
-import img1 from "../../img/iso/9.jpg";
+import img1 from "../../img/banner/6.jpg";
 import InnerSidebar from "../utilities/innserSidebar";
 
 // --- SVG Icon Components (Keep existing icons) ---
@@ -157,6 +157,11 @@ const EnvironmentalServices = () => {
 
   return (
     <>
+     <Image 
+        src={img1} 
+        alt='ISO EIA Process Flow'
+        className="w-full rounded-lg shadow-md mb-12 border-4 border-amber-100"
+      />
      <div className="flex flex-row gap-4" >
            <aside className="hidden lg:block w-80 sticky top-16 self-start">
                   <InnerSidebar />
@@ -168,10 +173,10 @@ const EnvironmentalServices = () => {
       <section className="text-center mb-12 relative
        overflow-hidden rounded-xl bg-tranparent
        p-8 md:p-12 animate-on-scroll">
-        <PatternBackground />
+        {/* <PatternBackground /> */}
         <div className="relative z-10">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 animate-slideInRight">
-              <span className="text-amber-800 drop-shadow-md">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 animate-slideInRight text-amber-800">
+              <span className=" drop-shadow-md bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent uppercase">
                 ISO Environmental Impact Assessment (EIA)
               </span>
           </h1>
@@ -181,11 +186,7 @@ const EnvironmentalServices = () => {
           </p>
         </div>
       </section>
-      <Image 
-        src={img1} 
-        alt='ISO EIA Process Flow'
-        className="w-full rounded-lg shadow-md mb-12 border-4 border-amber-100"
-      />
+     
 
       {/* 2. Benefits of this Standard */}
       <section className="mb-16 bg-white rounded-xl p-8 shadow-lg border border-amber-200 animate-on-scroll">

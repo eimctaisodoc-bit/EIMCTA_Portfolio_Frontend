@@ -19,14 +19,14 @@ const Image = ({ src, alt, caption, rotate = 0 }) => {
     return (
         <motion.div
             ref={ref}
-            className="w-full px-4 py-8"
+            className="w-full  py-2"
             initial={{ scale: 0.95, opacity: 0, rotate: rotate }}
             animate={controls}
             transition={{ duration: 0.8, delay: 0.5 }}
         >
             <figure className="bg-white rounded-lg shadow-lg overflow-hidden w-full">
                 {caption && (
-                    <figcaption className="text-center text-gray-700 p-4 text-lg font-medium border-b border-gray-200 bg-gray-50">
+                    <figcaption className="text-center text-gray-700 p-4 text-lg font-medium   ">
                         {caption}
                     </figcaption>
                 )}

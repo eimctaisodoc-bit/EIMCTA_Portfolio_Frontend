@@ -154,7 +154,7 @@ export const ISO_CREDENTIALS = () => {
   }, []);
 
   return (
-    <div className="w-full bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
+    <div className="w-full bg-white py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
 
         {/* ---------------- Title ---------------- */}

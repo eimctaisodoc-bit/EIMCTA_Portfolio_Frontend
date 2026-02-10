@@ -11,6 +11,7 @@ const useEmailAPI = () => {
   const [status, setStatus] = useState("");
 // console.log('mail sending ,,,,,,,,,,',status)
   const sendEmail = async (formData) => {
+    console.log(formData)
     setStatus("Sending...");
     // console.log("Incoming formData:", formData);
 

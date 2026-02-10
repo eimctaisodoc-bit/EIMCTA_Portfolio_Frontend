@@ -89,7 +89,7 @@ const Home = () => {
       {/* ===== BRANDING ===== */}
       
       {/* ===== MODAL ===== */}
-      <ModalPage />
+      {/* <ModalPage /> */}
       <Branding />
     </div>
   );

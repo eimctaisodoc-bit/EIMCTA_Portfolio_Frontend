@@ -8,7 +8,6 @@ import { User, Briefcase, Mail, Phone, Home, Globe, MessageSquare, Check, X, Che
 const ConfettiEffect = ({ isActive }) => {
     if (!isActive) return null;
 
-    // Simple visual indicator for mock confetti using motion
     const confettiVariants = {
         initial: { y: 0, opacity: 1, scale: 1 },
         animate: {
@@ -19,7 +18,7 @@ const ConfettiEffect = ({ isActive }) => {
         }
     };
 
-    const colors = ['#f59e0b', '#fbbf24', '#fcd34d', '#fed7aa']; // Amber shades
+    const colors = ['#f59e0b', '#fbbf24', '#fcd34d', '#fed7aa'];
     
     return (
         <motion.div
@@ -55,7 +54,6 @@ const ConfettiEffect = ({ isActive }) => {
         </motion.div>
     );
 };
-
 
 // =================================================================
 // 2. DATA CONSTANTS 
@@ -178,7 +176,6 @@ const AnimatedHeader = ({ children, className, icon }) => (
         {icon && <div className="mr-2 text-amber-500">{icon}</div>}
         <span className="relative pb-1">
             {children}
-            {/* Animated Underline */}
             <motion.span
                 className="absolute left-1/2 bottom-0 h-1 bg-amber-500 rounded-full"
                 initial={{ width: 0, x: '-50%' }}
@@ -330,7 +327,6 @@ const SelectInput = ({ label, items, selectedItems, onSelect, onRemove, onAddMan
     );
 };
 
-
 // =================================================================
 // 4. MAIN APPLICATION COMPONENT
 // =================================================================
@@ -383,7 +379,6 @@ const ISOCertificationForm = () => {
             return () => clearTimeout(timer); 
         }
     }, [success, errorMsg]);
-
 
     // Handlers for Form Fields
     const handleChange = useCallback((e) => {
@@ -576,13 +571,13 @@ const ISOCertificationForm = () => {
     };
 
     // Helper for rendering form fields (updated to handle textarea)
-    const renderFormField = (field) => (
+    const renderFormField = (field, index) => (
         <motion.div 
             key={field.name} 
             className="mb-6"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.3, delay: 0.1 * FORM_FIELDS.indexOf(field) }}
+            transition={{ duration: 0.3, delay: 0.1 * index }}
         >
             <label htmlFor={field.name} className="block text-sm font-semibold text-amber-700 mb-2">
                 {field.label}
@@ -617,8 +612,8 @@ const ISOCertificationForm = () => {
             
             {/* Word counter for textarea fields */}
             {field.type === 'textarea' && (
-                <div className="p-3 w-full flex justify-end">
-                    <p className="text-xs text-slate-400 mt-1">
+                <div className="flex justify-end mt-1">
+                    <p className="text-xs text-slate-400">
                         {countWords(formData[field.name])}/{field.maxWords || 250} words
                     </p>
                 </div>
@@ -636,10 +631,6 @@ const ISOCertificationForm = () => {
         </motion.div>
     );
 
-    // Filter fields for rendering
-    const contactFields = FORM_FIELDS.filter(f => f.name !== 'description');
-    const messageField = FORM_FIELDS.find(f => f.name === 'description');
-
     // Apply custom font simulation globally via style tag
     const customStyles = `
         .font-arial-narrow {
@@ -647,45 +638,6 @@ const ISOCertificationForm = () => {
             letter-spacing: -0.01em;
         }
     `;
-    const BeamUnderline = ({ 
-  children, 
-  thickness = 8, 
-  className = "" 
-}) => {
-  const gradientId = "formalBeamGradient";
-  return (
-    <span className={`relative inline-block group ${className}`}>
-      {children}
-      <span 
-        className="absolute left-0 right-0 -bottom-2 block overflow-visible pointer-events-none"
-        style={{ height: `${thickness * 1.5}px` }}
-      >
-        <svg 
-          width="100%" 
-          height="100%" 
-          viewBox="0 0 100 20" 
-          preserveAspectRatio="none"
-          className="block"
-        >
-          <defs>
-            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#f59e0b" />
-              <stop offset="48%" stopColor="#b45309" />
-              <stop offset="50%" stopColor="#fde68a" />
-              <stop offset="52%" stopColor="#b45309" />
-              <stop offset="100%" stopColor="#f59e0b" />
-            </linearGradient>
-          </defs>
-          <path 
-            d="M 0 10 Q 25 10, 50 4 Q 75 10, 100 10 Q 75 10, 50 16 Q 25 10, 0 10 Z" 
-            fill={`url(#${gradientId})`}
-          />
-          <circle cx="50" cy="10" r="0.6" fill="#fef3c7" opacity="0.8" />
-        </svg>
-      </span>
-    </span>
-  );
-};
 
     return (
         <>
@@ -709,7 +661,7 @@ const ISOCertificationForm = () => {
                         </p>
                     </motion.header>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-1 md:grid-cols-1 gap-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-1 gap-10">
                         {/* LEFT COLUMN: FORM */}
                         <motion.div 
                             className="lg:border-r lg:border-gray-200 lg:pr-10"
@@ -717,48 +669,93 @@ const ISOCertificationForm = () => {
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.6 }}
                         >
-
-                            
-                               
-                            
-                            
-                            
                             <form onSubmit={handleSubmit}>
-                                {/* Basic Fields Grid Layout */}
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
-                                    {contactFields.slice(0, 6).map(renderFormField)}
-                                    {contactFields.slice(6, 8).map(renderFormField)}
-                                </div>
+                                {/* Section: Organization Information */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.5 }}
+                                >
+                                    <AnimatedHeader className="text-2xl font-bold text-amber-700" icon={<Briefcase size={24} />}>
+                                        Organization Information
+                                    </AnimatedHeader>
+                                    
+                                    {/* Organization Fields Grid */}
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                                        {FORM_FIELDS.slice(0, 6).map((field, index) => renderFormField(field, index))}
+                                    </div>
+                                </motion.div>
 
-                                {/* Category Selection */}
-                                <SelectInput
-                                    label="Select Industry Categories*"
-                                    items={CATEGORIES}
-                                    selectedItems={selectedCategories}
-                                    onSelect={handleCategorySelect}
-                                    onRemove={handleCategoryRemove}
-                                    onAddManual={handleCategoryAddManual}
-                                    placeholder="Select your industry or add manually..."
-                                    error={errors.categories}
-                                />
+                                {/* Section: Contact Information */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.5, delay: 0.1 }}
+                                    className="mt-8"
+                                >
+                                    <AnimatedHeader className="text-2xl font-bold text-amber-700" icon={<User size={24} />}>
+                                        Contact Information
+                                    </AnimatedHeader>
+                                    
+                                    {/* Contact Fields Grid */}
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                                        {FORM_FIELDS.slice(6, 10).map((field, index) => renderFormField(field, index + 6))}
+                                    </div>
+                                </motion.div>
 
-                                {/* Standards Selection */}
-                                <SelectInput
-                                    label="Select ISO Standards*"
-                                    items={allAvailableStandards}
-                                    selectedItems={selectedStandards}
-                                    onSelect={handleStandardSelect}
-                                    onRemove={handleStandardRemove}
-                                    onAddManual={handleStandardAddManual}
-                                    placeholder="Select applicable standards or add manually..."
-                                    error={errors.standards}
-                                />
-                                
-                                {/* Message Field (Description) */}
-                                {messageField && renderFormField(messageField)}
+                                {/* Section: Industry & Standards */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.5, delay: 0.2 }}
+                                    className="mt-8"
+                                >
+                                    <AnimatedHeader className="text-2xl font-bold text-amber-700" icon={<Layers size={24} />}>
+                                        Industry & Standards
+                                    </AnimatedHeader>
+                                    
+                                    {/* Category Selection */}
+                                    <SelectInput
+                                        label="Select Industry Categories*"
+                                        items={CATEGORIES}
+                                        selectedItems={selectedCategories}
+                                        onSelect={handleCategorySelect}
+                                        onRemove={handleCategoryRemove}
+                                        onAddManual={handleCategoryAddManual}
+                                        placeholder="Select your industry or add manually..."
+                                        error={errors.categories}
+                                    />
+
+                                    {/* Standards Selection */}
+                                    <SelectInput
+                                        label="Select ISO Standards*"
+                                        items={allAvailableStandards}
+                                        selectedItems={selectedStandards}
+                                        onSelect={handleStandardSelect}
+                                        onRemove={handleStandardRemove}
+                                        onAddManual={handleStandardAddManual}
+                                        placeholder="Select applicable standards or add manually..."
+                                        error={errors.standards}
+                                    />
+                                </motion.div>
+
+                                {/* Section: Additional Information */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.5, delay: 0.3 }}
+                                    className="mt-8"
+                                >
+                                    <AnimatedHeader className="text-2xl font-bold text-amber-700" icon={<MessageSquare size={24} />}>
+                                        Additional Information
+                                    </AnimatedHeader>
+                                    
+                                    {/* Description Field */}
+                                    {FORM_FIELDS.slice(10, 11).map((field, index) => renderFormField(field, index + 10))}
+                                </motion.div>
 
                                 {/* Submission Status Messages */}
-                                <div className="mt-4 min-h-12">
+                                <div className="mt-8 min-h-12">
                                     <AnimatePresence mode="wait">
                                         {success ? (
                                             <motion.div
@@ -789,7 +786,7 @@ const ISOCertificationForm = () => {
                                 {/* Submit Button */}
                                 <motion.button
                                     type="submit"
-                                    className={`w-full flex items-center justify-center py-4 mt-6 text-white font-extrabold rounded-xl shadow-lg transition duration-300 ease-in-out ${loading ? 'bg-amber-400 cursor-not-allowed' : 'bg-amber-600 hover:bg-amber-700 hover:shadow-xl'}`}
+                                    className={`w-full flex items-center justify-center py-4 mt-8 text-white font-extrabold rounded-xl shadow-lg transition duration-300 ease-in-out ${loading ? 'bg-amber-400 cursor-not-allowed' : 'bg-amber-600 hover:bg-amber-700 hover:shadow-xl'}`}
                                     disabled={loading || success}
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
@@ -851,20 +848,51 @@ const ISOCertificationForm = () => {
                                     </motion.li>
                                 ))}
                             </ul>
+                            
+                            {/* Additional Information Section */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: 0.4 }}
+                                className="mt-10"
+                            >
+                                <AnimatedHeader className="text-2xl font-bold text-amber-700" icon={<Navigation size={24} />}>
+                                    Why Choose ISO Certification?
+                                </AnimatedHeader>
+                                <div className="bg-amber-50 border border-amber-200 rounded-xl p-6 shadow-md">
+                                    <p className="text-amber-700 mb-4">
+                                        ISO certification demonstrates that your organization follows international best practices and is committed to quality, safety, and efficiency.
+                                    </p>
+                                    <ul className="space-y-3">
+                                        <li className="flex items-start">
+                                            <Check size={18} className="text-amber-600 mr-2 mt-1" />
+                                            <span className="text-amber-700">Global recognition and credibility</span>
+                                        </li>
+                                        <li className="flex items-start">
+                                            <Check size={18} className="text-amber-600 mr-2 mt-1" />
+                                            <span className="text-amber-700">Improved operational efficiency</span>
+                                        </li>
+                                        <li className="flex items-start">
+                                            <Check size={18} className="text-amber-600 mr-2 mt-1" />
+                                            <span className="text-amber-700">Enhanced customer satisfaction</span>
+                                        </li>
+                                        <li className="flex items-start">
+                                            <Check size={18} className="text-amber-600 mr-2 mt-1" />
+                                            <span className="text-amber-700">Better risk management</span>
+                                        </li>
+                                        <li className="flex items-start">
+                                            <Check size={18} className="text-amber-600 mr-2 mt-1" />
+                                            <span className="text-amber-700">Competitive advantage in the market</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </motion.div>
                         </motion.div>
                     </div> 
                 </div> 
 
                 {/* Footer / Disclaimer */}
-                <motion.footer
-                    className="mt-10 text-center text-amber-600 text-sm"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 1 }}
-                >
-                    <p>© {new Date().getFullYear()} ISO Certification Service. All rights reserved.</p>
-                </motion.footer>
-
+               
             </div>
         </>
     );

@@ -2,7 +2,7 @@ import React from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 import Image from "../utilities/image";
 import VideoPlayer from "../utilities/Video";
-import image16 from "../../img/iso/11.jpg";
+import image16 from "../../img/banner/2.jpg";
 import isoIcon from "../../img/iso_.png";
 import {
   BookOpen,
@@ -277,7 +277,17 @@ const ISO21001Guide = () => {
   };
 
   return (
-    <div className=" w-full min-h-screen py-12 font-sans px-4 sm:px-6">
+    <div className=" w-full min-h-screen  font-sans ">
+        <div className="w-full mb-16">
+            <div className="rounded-2xl overflow-hidden  ">
+              <Image
+                src={image16}
+                alt="ISO 21001 Certification"
+                caption=""
+                className="w-full h-auto"
+              />
+            </div>
+          </div>
       {/* Outer Article Container: uses flex to enable parallel columns */}
       <article className="relative w-full max-w-7xl mx-auto bg-white flex flex-col lg:flex-row gap-8 items-start">
         
@@ -320,16 +330,7 @@ const ISO21001Guide = () => {
           </section>
 
           {/* Featured Image */}
-          <div className="w-full mb-16">
-            <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
-              <Image
-                src={image16}
-                alt="ISO 21001 Certification"
-                caption=""
-                className="w-full h-auto"
-              />
-            </div>
-          </div>
+        
 
           {/* Content Blocks */}
           <main className="space-y-20">

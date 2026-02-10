@@ -85,7 +85,7 @@ const ISO_certification = () => {
            <aside className="hidden lg:block w-80 sticky top-16 self-start">
                   <InnerSidebar />
                 </aside>
-    <div className="bg-gray-50 min-h-screen font-sans">
+    <div className="bg-white  min-h-screen font-sans">
       <div className="py-12 px-4 sm:px-6 lg:px-8">
         <motion.article
           className="bg-white shadow rounded-2xl overflow-hidden max-w-7xl mx-auto"

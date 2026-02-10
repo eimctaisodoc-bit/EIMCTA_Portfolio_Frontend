@@ -7,7 +7,7 @@ const ContentBoosting = () => {
   return (
     <>
       <YouTubePlaylists />
-      <Fbcontent/>
+      {/* <Fbcontent/> */}
     </>
   )
 }

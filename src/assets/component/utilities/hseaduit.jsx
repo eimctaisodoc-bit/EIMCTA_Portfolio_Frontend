@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import img from '../../img/hseaudit (1).jpg'
 import InnerSidebar from './innserSidebar';
+import Image from './image';
 
 /* ---------------- Animation Variants ---------------- */
 const animationVariants = {
@@ -220,32 +221,16 @@ const AuditStep = ({ number, title, description }) => (
 const HSEAudits = () => {
   return (
     <>
+   <Image src={img}/>
      <div className="flex flex-row gap-4" >
            <aside className="hidden lg:block w-80 sticky top-16 self-start">
                   <InnerSidebar />
                 </aside>
     <div className="bg-transparent text-amber-900 font-['Arial_Narrow']">
-     <header className="relative h-[480px] sm:h-[500px] flex items-center justify-center text-center text-white overflow-hidden">
-
-  {/* Background Image */}
-  <img
-    src={img}
-    alt="HSE Audit"
-    className="
-      absolute inset-0 w-full h-full
-      object-cover
-      sm:object-contain
-      lg:object-cover
-      xl:object-fill
-    "
-  />
-
-  {/* Dark Overlay for Readability */}
- 
-</header>
+   
 
 
-      <main className="max-w-7xl mx-auto px-6 py-16 sm:px-8 bg-white rounded-2xl shadow -mt-20 relative z-10">
+      <main className="max-w-7xl mx-auto px-6  sm:px-8 bg-white rounded-2xl shadow  relative z-10">
         {/* About the Standard */}
         <section className="py-12">
           <SectionHeader
