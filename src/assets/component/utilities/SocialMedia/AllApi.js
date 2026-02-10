@@ -21,6 +21,13 @@ const useEmailAPI = () => {
     const organization = formData.organization || formData.Organization || "N/A";
     const email = formData.email || formData.Email || "N/A";
     const country = formData.country || formData.Country || "N/A";
+
+    const vat_pan=formData.vatPanNumber || formData.vatPan || "N/A"
+    const Company_registeration_no=formData.registrationNumber || formData.companyRegNo || "N/A"
+    const RoleInOrganization=formData.role
+    const noOFEmployee=formData.employees 
+
+
     const address = formData.address || formData.Address || "N/A";
     const message = formData.message || formData.Message || "N/A";
     const selectedStandards = formData.selectedStandards || "N/A"
@@ -28,7 +35,7 @@ const useEmailAPI = () => {
 
     const custom = `Services: ${formData.customServices || "N/A"} - Standards: ${formData.customStandards || " N/A"}`;
 
-    const payload = { name, phone, organization, email, country, address, message, selectedStandards, selectedServices, custom, today: new Date().toDateString() };
+    const payload = { name, phone, organization, email, vat_pan,Company_registeration_no,RoleInOrganization,noOFEmployee, country, address, message, selectedStandards, selectedServices, custom, today: new Date().toDateString() };
     // console.log("Final Payload to EmailJS:", payload);
 
     try {

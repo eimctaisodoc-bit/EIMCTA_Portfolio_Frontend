@@ -363,7 +363,7 @@ export default function ISO9001Certification() {
         </motion.div>
 
         {/* --- Video Section --- */}
-        <VideoPlayer url="https://www.youtube.com/watch?v=kiDe9QhUpDM&t=1s" title=" " />
+        <VideoPlayer src="https://youtu.be/kiDe9QhUpDM?si=R7Phlb4OA05rL0-n" title=" this is qiality management system" />
       </div>
     </div>
     </div>
